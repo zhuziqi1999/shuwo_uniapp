@@ -1,0 +1,110 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "书窝"
+			}
+		}
+	    ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "授权登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/group/group",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "小组",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/file/file",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "文件管理",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/my/my",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的主页",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/message/message",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "私信",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "书窝",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	
+	"tabBar": {
+		"color":"black",
+		"selectedColor":"#1E8DD5",
+		// "borderStyle":"",
+		"backgroundColor":"#F8F8F8",
+		
+		"list": [{
+			"index": 0,
+			"text": "首页",
+			"iconPath": "static/home.png",
+			"selectedIconPath": "static/home1.png",
+			"pagePath":"pages/index/index"
+		},
+		{
+			"index": 1,
+			"text": "小组",
+			"iconPath": "static/layer-group.png",
+			"selectedIconPath": "static/layer-group1.png",
+			"pagePath":"pages/group/group"
+		},
+		{
+			"index": 2,
+			"text": "文件",
+			"iconPath": "static/logo8.png",
+			"selectedIconPath": "static/logo7.png",
+			"pagePath":"pages/file/file"
+		},
+		{
+			"index": 3,
+			"text": "私信",
+			"iconPath": "static/envelope.png",
+			"selectedIconPath": "static/envelope1.png",
+			"pagePath":"pages/message/message"
+		},
+		{
+			"index": 4,
+			"text": "我",
+			"iconPath": "static/user.png",
+			"selectedIconPath": "static/user1.png",
+			"pagePath":"pages/my/my"
+		}
+		
+		
+		]
+		
+		
+	}
+}

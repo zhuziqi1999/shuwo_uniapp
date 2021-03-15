@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "书窝",
+  "usingComponents": {
+    "m-search": "/components/mehaotian-search/mehaotian-search"
+  }
+}

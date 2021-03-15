@@ -1,0 +1,1 @@
+<view class="content"><m-search bind:search="__e" vue-id="471c2b80-1" data-event-opts="{{[['^search',[['search',['$event',0]]]]]}}" bind:__l="__l"></m-search></view>
