@@ -1,12 +1,11 @@
 <script>
+
+
+var windowheight =  wx.getSystemInfoSync().windowHeight    // 获取当前窗口的高度
+
 	export default {
 		onLaunch: function() {
 			console.log('App Launch')
-
-
-
-
-
 		},
 		onShow: function() {
 			console.log('App Show')
@@ -72,5 +71,5 @@
 </script>
 
 <style>
-	/*每个页面公共css */
+
 </style>

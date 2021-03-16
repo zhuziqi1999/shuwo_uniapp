@@ -1,10 +1,7 @@
 
-.content {
-	
+.content.data-v-57280228 {
 	display: -webkit-box;
-	
 	display: -webkit-flex;
-	
 	display: flex;
 	-webkit-box-orient: vertical;
 	-webkit-box-direction: normal;
@@ -18,11 +15,35 @@
 	        justify-content: center;
 	height: 100%;
 }
-.content-scroll {
-	width: 100%;
-	height: var(windowheight);
+.content-plus.data-v-57280228 {
+	position: fixed;
+	z-index: 99;
+	left: 600rpx;
+	bottom: 80rpx;
+	background-color: #1E8DD5;
+	border-radius: 50%;
+	width: 120rpx;
+	height: 120rpx;
+	box-shadow: 5px 5px 10px #888888;
+	vertical-align: middle;
 }
-.logo {
+.content-plus-flex.data-v-57280228 {
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.content-scroll.data-v-57280228 {
+	width: 100%;
+}
+.logo.data-v-57280228 {
 	position: relative;
 	height: 200rpx;
 	width: 200rpx;
@@ -31,7 +52,7 @@
 	margin-right: auto;
 	margin-bottom: 50rpx;
 }
-.text-area {
+.text-area.data-v-57280228 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -39,11 +60,11 @@
 	-webkit-justify-content: center;
 	        justify-content: center;
 }
-.title {
+.title.data-v-57280228 {
 	font-size: 36rpx;
 	color: #8f8f94;
 }
-.content-list {
+.content-list.data-v-57280228 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -56,7 +77,7 @@
 	background-color: #FFFFFF;
 	border: #333333 1rpx;
 }
-.content-title {
+.content-title.data-v-57280228 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -67,7 +88,7 @@
 	width: auto;
 	height: 100rpx;
 }
-.content-avatar {
+.content-avatar.data-v-57280228 {
 	position: relative;
 	width: 70rpx;
 	height: 70rpx;
@@ -76,7 +97,7 @@
 	background-size: 100% 100%;
 	margin-top: 24rpx;
 }
-.content-name-from {
+.content-name-from.data-v-57280228 {
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -87,14 +108,14 @@
 	margin-left: 28rpx;
 	margin-top: 26rpx;
 }
-.content-username {
+.content-username.data-v-57280228 {
 	position: relative;
 	height: 30rpx;
 	width: auto;
 	font-size: 26rpx;
 	font-weight: bold;
 }
-.content-share-from {
+.content-share-from.data-v-57280228 {
 	position: relative;
 	width: auto;
 	height: 30rpx;
@@ -103,7 +124,7 @@
 	top: 10rpx;
 	color: #cdcdcd;
 }
-.content-share-time {
+.content-share-time.data-v-57280228 {
 	position: relative;
 	top: 45rpx;
 	width: auto;
@@ -114,7 +135,7 @@
 	color: #cdcdcd;
 	margin-right: 50rpx;
 }
-.content-share-more {
+.content-share-more.data-v-57280228 {
 	position: relative;
 	width: 50rpx;
 	height: 50rpx;
@@ -122,7 +143,7 @@
 	left: 260rpx;
 	margin-right: 100rpx;
 }
-.content-share-word {
+.content-share-word.data-v-57280228 {
 	font-size: medium;
 	position: relative;
 	padding-top: 20rpx;
@@ -131,9 +152,63 @@
 	margin-bottom: 20rpx;
 	height: auto;
 }
-.content-share-image {
+.content-share-image.data-v-57280228 {
 	padding-left: 40rpx;
 	width: 300rpx;
-	margin-bottom: 40rpx;
+}
+.content-operate.data-v-57280228 {
+	margin-top: 20rpx;
+	width: 100%;
+	height: 100rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+.content-operate-icon.data-v-57280228 {
+	width: 45rpx;
+	height: 45rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	padding-left: 95rpx;
+	padding-right: 95rpx;
+}
+@font-face {
+	font-family: 'iconfont';
+	/* project id 2415376 */
+	src: url('//at.alicdn.com/t/font_2415376_goytk0t66mq.eot');
+	src: url('//at.alicdn.com/t/font_2415376_goytk0t66mq.eot?#iefix') format('embedded-opentype'),
+		url('//at.alicdn.com/t/font_2415376_goytk0t66mq.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_2415376_goytk0t66mq.woff') format('woff'),
+		url('//at.alicdn.com/t/font_2415376_goytk0t66mq.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_2415376_goytk0t66mq.svg#iconfont') format('svg');
+}
+.icon.data-v-57280228 {
+	font-family: iconfont;
+	font-size: 32rpx;
+	font-style: normal;
+	color: #999;
+}
+.icon-plus.data-v-57280228 {
+	color: #FFFFFF;
+	font-size: 50rpx;
+	position: relative;
+	text-align: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
 }
 

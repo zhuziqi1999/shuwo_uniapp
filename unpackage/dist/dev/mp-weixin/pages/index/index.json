@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "书窝",
+  "disableScroll": true,
   "usingComponents": {
+    "ygc-comment": "/components/ygc-comment/ygc-comment",
     "m-search": "/components/mehaotian-search/mehaotian-search"
   }
 }

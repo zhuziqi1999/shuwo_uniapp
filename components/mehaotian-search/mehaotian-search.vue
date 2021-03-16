@@ -114,7 +114,7 @@ export default {
 		border-radius: 30px;
 
 		.content-box {
-			width: 400rpx;
+			width: 100%;
 			display: flex;
 			align-items: center;
 			&.center {
@@ -156,7 +156,7 @@ export default {
 	.search-img{
 		position: relative;
 		top: 10rpx;
-		margin-right: 10rpx;
+		right: 10rpx;
 		width: 200rpx;
 		height: 45rpx;
 	}

@@ -3,8 +3,10 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "书窝"
+				"navigationBarTitleText": "书窝",
+				"disableScroll":true
 			}
+
 		}
 	    ,{
             "path" : "pages/login/login",
@@ -38,7 +40,8 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我的主页",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom" 
             }
             
         }
