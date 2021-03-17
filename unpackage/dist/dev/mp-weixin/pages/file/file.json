@@ -2,6 +2,7 @@
   "navigationBarTitleText": "文件管理",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "ren-dropdown-filter": "/components/ren-dropdown-filter/ren-dropdown-filter",
     "m-search": "/components/mehaotian-search/mehaotian-search"
   }
 }

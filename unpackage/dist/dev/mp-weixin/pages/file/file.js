@@ -93,6 +93,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    renDropdownFilter: function() {
+      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 87))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -130,7 +153,27 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 53));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 62));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 87));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -142,23 +185,98 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   components: {
-    mSearch: mSearch },
+    mSearch: mSearch,
+    RenDropdownFilter: RenDropdownFilter },
 
 
   data: function data() {
     return {
+      content_height: '',
       val0: '',
       val1: '',
       val2: '',
       val3: '',
-      placeholder: '动态占位内容' };
+      placeholder: '动态占位内容',
+      // 筛选
+      filterData: [
+      [{ text: '排序', value: '' }, { text: '按修改时间', value: 1 }, { text: '按文件名', value: 2 }],
+      [{ text: '文件类型', value: '' }, { text: 'Word文件', value: 1 }, { text: 'PDF文件', value: 2 }]],
 
+      content_list: [{
+        id: 1,
+        is_filefold: 1,
+        file_type: 0,
+        file_name: '奥里给1',
+        file_time: '2020/03/17' },
+
+      {
+        id: 2,
+        is_filefold: 1,
+        file_type: 0,
+        file_name: '奥里给2',
+        file_time: '2020/03/17' },
+
+      {
+        id: 3,
+        is_filefold: 1,
+        file_type: 0,
+        file_name: '奥里给3',
+        file_time: '2020/03/17' },
+
+      {
+        id: 4,
+        is_filefold: 0,
+        file_type: 1,
+        file_name: 'word文件1',
+        file_time: '2020/03/17' },
+
+      {
+        id: 5,
+        is_filefold: 0,
+        file_type: 1,
+        file_name: 'word文件2',
+        file_time: '2020/03/17' },
+
+      {
+        id: 6,
+        is_filefold: 0,
+        file_type: 2,
+        file_name: 'PDF文件1',
+        file_time: '2020/03/17' },
+
+      {
+        id: 7,
+        is_filefold: 0,
+        file_type: 2,
+        file_name: 'PDF文件2',
+        file_time: '2020/03/17' }],
+
+
+
+      defaultIndex: [0, 0] };
+
+  },
+  onLoad: function onLoad() {
+    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
   },
   methods: {
     search: function search(e, val) {
       console.log(e, val);
       this['val' + val] = e;
+    },
+    onSelected: function onSelected(res) {
+      uni.showToast({
+        icon: 'none',
+        title: '控制台查看筛选结果' });
+
+    },
+    dateChange: function dateChange(d) {
+      uni.showToast({
+        icon: 'none',
+        title: d });
+
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

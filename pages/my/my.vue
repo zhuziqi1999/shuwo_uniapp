@@ -12,18 +12,26 @@
 						<open-data type="userAvatarUrl" class="userAvatarUrl"></open-data>
 						<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
 					</view>
-
-				</view>
-				<view class="order_status">
-					<view class="status" v-for="item in status">
-						<image class="icon" :src="item.url" mode="aspectFill"></image>
-						<text>{{item.name}}</text>
+				
+				
+				<view class="center_box_number">
+					<view class="cbn_content">
+						<text class="cbn_name">发布</text>
+						<text class="cbn_number">44</text>
+					</view>
+					<view class="cbn_content">
+						<text class="cbn_name">粉丝</text>
+						<text class="cbn_number">44</text>
+					</view>
+					<view class="cbn_content">
+						<text class="cbn_name">关注</text>
+						<text class="cbn_number">44</text>
 					</view>
 				</view>
+				
+		</view>
 			</view>
-			<view class="baiban">
-
-			</view>
+			
 			<view class="center_menu">
 				<view class="menu_item" v-for="item in menus">
 					<image :src="item.icon" mode="aspectFill"></image>
@@ -77,7 +85,7 @@
 		width: 100%;
 		align-items: center;
 		position: relative;
-		top: -50rpx;
+		top: -100rpx;
 	}
 	
 	.userAvatarUrl {
@@ -141,12 +149,13 @@
 
 	.base {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		border-bottom: 2px solid #F6F6F6;
 		padding-bottom: 20rpx;
 		position: relative;
 		width: 100%;
-		height: 40rpx;
+		height: 10rpx;
 
 		.profily_header {
 			height: 120upx;
@@ -154,10 +163,6 @@
 			background-size: 100%;
 		}
 
-		text {
-			margin-left: 20px;
-			font-size: 30upx;
-		}
 
 		image {
 			position: absolute;
@@ -239,4 +244,33 @@
 			}
 		}
 	}
+	
+	.center_box_number {
+		display: flex;
+		flex-direction: row;
+		height: 100rpx;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		top: -40rpx;
+	}
+	
+	.cbn_content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-left: 60rpx;
+		padding-right: 60rpx;
+	}
+	
+	.cbn_name {
+		font-weight: bold;
+		font-size: 30rpx;
+	}
+	
+	
+
+	
 </style>

@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "私信",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "swiper-nav-bar": "/components/swiperNavBar/swiperNavBar"
+  }
 }

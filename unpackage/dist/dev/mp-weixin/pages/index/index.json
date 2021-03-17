@@ -3,6 +3,7 @@
   "disableScroll": true,
   "usingComponents": {
     "ygc-comment": "/components/ygc-comment/ygc-comment",
+    "swiper-nav-bar": "/components/swiperNavBar/swiperNavBar",
     "m-search": "/components/mehaotian-search/mehaotian-search"
   }
 }

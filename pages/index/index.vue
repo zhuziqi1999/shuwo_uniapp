@@ -14,6 +14,24 @@
 		</view>
 
 		<mSearch @search="search($event,0)" style="justify-content: center;width: 100%;"></mSearch>
+		<swiperNavBar
+			:scrollIntoView="scrollIntoView"
+			:swiperTabList='swiperTabList' 
+			:swiperTabIdx='swiperTabIdx' 
+			:currentSwiperWidth='currentSwiperWidth' 
+			:currentSwiperHeight='currentSwiperHeight' 
+			:swiperCurrentSize='swiperCurrentSize'
+			:swiperColor='swiperColor' 
+			:swiperCurrentColor='swiperCurrentColor' 
+			:currentSwiperLineShow="currentSwiperLineShow"
+			:currentSwiperLineActiveWidth="currentSwiperLineActiveWidth"
+			:currentSwiperLineActiveHeight="currentSwiperLineActiveHeight"
+			:currentSwiperLineActiveBg="currentSwiperLineActiveBg"
+			:currentSwiperLineAnimatie="currentSwiperLineAnimatie" 
+			v-if=" swiperTabList.length > 1 "
+			@change="CurrentTab" style="width: 100%;">
+		</swiperNavBar>
+		
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 
@@ -57,7 +75,7 @@
 <script>
 	import mSearch from '@/components/mehaotian-search/mehaotian-search.vue';
 	import ygcComment from '@/components/ygc-comment/ygc-comment.vue';
-	
+	import swiperNavBar from "@/components/swiperNavBar/swiperNavBar.vue";
 	var loginRes = uni.getStorageSync('loginRes')
 	var SynsUserOpenid = uni.getStorageSync('UserOpenid')
 	var SynsUserName = uni.getStorageSync('UserName')
@@ -67,7 +85,8 @@
 	export default {
 		components: {
 			mSearch,
-			ygcComment
+			ygcComment,
+			swiperNavBar
 		},
 
 		data() {
@@ -119,15 +138,32 @@
 					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
 					like: 0,
 					bookmark: 0
-				}]
-
+				}],
+			//导航
+			scrollIntoView:0,//设置哪个方向可滚动，则在哪个方向滚动到该元素
+			swiperTabList:[ '热门','关注' ],//导航列表
+			swiperTabIdx:0,
+			swiperCurrentSize:'26rpx',//导航的字体大小
+			swiperColor:'#333333',//导航栏字体未选中前颜色
+			swiperCurrentColor:'#1E8DD5',//选中当前导航栏字体颜色
+			currentSwiperWidth:'16%',//当前导航的宽度 % upx rpx px  （导航超出可左右滑动 ）
+			currentSwiperHeight:70,//当前导航的高度度 rpx px
+			mainHeight:200,//全屏或者局部滑动设置的高度
+			currentSwiperLineShow:true,//是否显示导航栏的线条 （线条距离标题太近的话可自行修改.swiperLine的css）
+			currentSwiperLineActiveBg:'#1E8DD5',//当前选中的导航栏线条颜色
+			currentSwiperLineActiveWidth:'30rpx', //当前选中的导航栏线条的宽度 upx rpx px
+			currentSwiperLineActiveHeight:'6rpx',//当前选中的导航栏线条的高度度 upx rpx px
+			currentSwiperLineAnimatie: 300//当前选中的导航栏线条过渡效果
+			
+			
+			//（全屏出现滚动条 去掉paddingTop 但导航栏会遮住部分内容 自行改.swiperCont .swiper里css）
+			//也可获取导航栏的高度  屏幕高度减去导航栏高度 = 你的内容全屏高度  不会出现滚动条
 			}
-
 
 		},
 		onLoad() {
 			// 加载定义好的方法
-			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
+			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 38;
 			if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
 				loginRes = this.checkLogin('../index/index', 2);
 			}
@@ -163,6 +199,20 @@
 			search(e, val) {
 				console.log(e, val);
 				this['val' + val] = e;
+			},
+			//tab点击事件 自行完善需要的代码
+			CurrentTab:function(index,item){
+				this.swiperTabIdx = index;
+				this.scrollIntoView = Math.max(0, index - 1);
+				//console.log(index + '----' + item)
+			},
+			//滑动事件  自行完善需要的代码
+			SwiperChange:function(e){
+				console.log(e)
+				console.log(e.detail)
+				console.log(e.detail.current);
+				this.swiperTabIdx = e.detail.current;
+				this.scrollIntoView = Math.max(0, e.detail.current - 1);
 			}
 		}
 	}
