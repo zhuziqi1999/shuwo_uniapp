@@ -190,17 +190,29 @@ var _default =
       uni.getUserInfo({
         provider: 'weixin',
         success: function success(infoRes) {
-          console.log(infoRes);
           _self.userInfo = infoRes.userInfo;
+
+
           // 2.提交数据到后台、写入数据库
           uni.request({
             url: _self.apiServer + 'appletsUserInfo',
+            header: {
+              'content-type': 'application/json' },
+
+            dataType: "json",
             data: {
               useropenid: _self.openId,
-              username: _self.userInfo.nickName },
+              username: _self.userInfo.nickName,
+              useravatarurl: _self.userInfo.avatarUrl },
+
 
             method: 'POST',
             success: function success(res) {
+              uni.hideLoading();
+              uni.showToast({
+                title: '登录成功',
+                icon: 'success',
+                duration: 2000 });
 
               if (res.data.code == 0) {
                 uni.showToast({
@@ -210,17 +222,20 @@ var _default =
                 return false;
               }
               // 用户信息写入缓存
-              uni.showToast({
-                title: '登录成功' });
 
+              // 已经授权了、查询到用户的数据了
+              if (res.data.code == 1) {
+                // 用户信息写入缓存
+
+                uni.setStorageSync('loginRes', 1);
+
+                uni.switchTab({
+                  url: '../index/index' });
+
+
+              }
 
               console.log(res.data);
-              uni.setStorageSync('UserOpenid', res.data.user.UserOpenid);
-              uni.setStorageSync('UserName', res.data.user.UserName);
-              uni.setStorageSync('loginRes', 1);
-              // 然后跳回原页面
-              uni.redirectTo({
-                url: '../index/index' });
 
             },
             fail: function fail() {
@@ -245,12 +260,11 @@ var _default =
 
       // 0. 显示加载的效果
       uni.showLoading({
-        title: '登录中...' });
+        title: '加载中...' });
 
       uni.login({
         provider: 'weixin',
         success: function success(loginRes) {
-          console.log(loginRes);
           _self.code = loginRes.code;
           // 2. 将用户登录code传递到后台置换用户SessionKey、OpenId等信息
           uni.request({
@@ -263,12 +277,21 @@ var _default =
               _self.openId = codeRes.data.openid;
               _self.sessionKey = codeRes.data.session_key;
 
+              uni.setStorageSync('UserOpenid', _self.openId);
+              uni.setStorageSync('UserSession', _self.sessionKey);
+
               // 3.通过 openId 判断用户是否授权
               uni.request({
                 url: _self.apiServer + 'loginApplets',
+                header: {
+                  'content-type': 'application/json' },
+
+                dataType: "json",
                 data: {
-                  username: "zzq",
-                  useropenid: _self.openId },
+                  "username": _self.nickName,
+                  "useropenid": _self.openId },
+
+
 
                 method: 'POST',
                 success: function success(openIdRes) {
@@ -283,33 +306,7 @@ var _default =
                       icon: 'none' });
 
                   }
-                  // 已经授权了、查询到用户的数据了
-                  if (openIdRes.data.code == 1) {
-                    // 用户信息写入缓存
-                    uni.showToast({
-                      title: '登录成功' });
 
-
-                    uni.setStorageSync('UserOpenid', res.data.res.UserOpenid);
-                    uni.setStorageSync('UserName', res.data.res.UserName);
-                    uni.setStorageSync('loginRes', 1);
-                    //然后跳回原页面
-                    // if (_self.pageOption.backtype == 1) {
-                    // 	uni.redirectTo({
-                    // 		url: _self.pageOption
-                    // 			.backpage
-                    // 	})
-                    // } else {
-                    // 	uni.switchTab({
-                    // 		url: _self.pageOption
-                    // 			.backpage
-                    // 	})
-                    // }
-
-                    uni.redirectTo({
-                      url: '../index/index' });
-
-                  }
                 },
                 fail: function fail() {
                   uni.showToast({

@@ -4,6 +4,13 @@
 	<view class="content">
 		<mSearch @search="search($event,0)" ></mSearch>
 		
+		<view class="content-plus">
+			<view class="content-plus-flex">
+				<text class="icon icon-plus">&#xf081;</text>
+			</view>
+			
+		</view>
+		
 		<ren-dropdown-filter :filterData='filterData' :defaultIndex='defaultIndex'
 		@onSelected='onSelected' @dateChange='dateChange' style="width: 100%;"></ren-dropdown-filter>
 		
@@ -174,5 +181,55 @@
 		color: #808080;
 		padding-left: 20rpx;
 		padding-top: 10rpx;
+	}
+	
+	.content-plus {
+		position: fixed;
+		z-index: 99;
+		left: 600rpx;
+		bottom: 80rpx;
+		background-color: #1E8DD5;
+		border-radius: 50%;
+		width: 120rpx;
+		height: 120rpx;
+		box-shadow: 5px 5px 10px #888888;
+		vertical-align: middle;
+		
+	}
+	
+	.content-plus-flex {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		
+	}
+	
+	
+	@font-face {
+		font-family: 'iconfont';
+		/* project id 2415376 */
+		src: url('//at.alicdn.com/t/font_2415376_goytk0t66mq.eot');
+		src: url('//at.alicdn.com/t/font_2415376_goytk0t66mq.eot?#iefix') format('embedded-opentype'),
+			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.woff2') format('woff2'),
+			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.woff') format('woff'),
+			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.ttf') format('truetype'),
+			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.svg#iconfont') format('svg');
+	}
+	
+	.icon {
+		font-family: iconfont;
+		font-size: 32upx;
+		font-style: normal;
+		color: #999;
+	}
+	
+	.icon-plus {
+		color: #FFFFFF;
+		font-size: 50rpx;
+		position: relative;
+		text-align: center;
+		align-items: center;
 	}
 </style>

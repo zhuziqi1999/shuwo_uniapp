@@ -1,37 +1,28 @@
 <template>
 
-	<view class="content" >
-		
-		<ygc-comment ref="ygcComment" 
-		        :placeholder="'发布评论'" 
-		        @pubComment="pubComment" style="z-index: 999;"></ygc-comment>
-		
+	<view class="content">
+
+		<ygc-comment ref="ygcComment" :placeholder="'发布评论'" @pubComment="pubComment" style="z-index: 999;">
+		</ygc-comment>
+
 		<view class="content-plus">
 			<view class="content-plus-flex">
 				<text class="icon icon-plus">&#xf081;</text>
 			</view>
-			
+
 		</view>
 
 		<mSearch @search="search($event,0)" style="justify-content: center;width: 100%;"></mSearch>
-		<swiperNavBar
-			:scrollIntoView="scrollIntoView"
-			:swiperTabList='swiperTabList' 
-			:swiperTabIdx='swiperTabIdx' 
-			:currentSwiperWidth='currentSwiperWidth' 
-			:currentSwiperHeight='currentSwiperHeight' 
-			:swiperCurrentSize='swiperCurrentSize'
-			:swiperColor='swiperColor' 
-			:swiperCurrentColor='swiperCurrentColor' 
-			:currentSwiperLineShow="currentSwiperLineShow"
-			:currentSwiperLineActiveWidth="currentSwiperLineActiveWidth"
+		<swiperNavBar :scrollIntoView="scrollIntoView" :swiperTabList='swiperTabList' :swiperTabIdx='swiperTabIdx'
+			:currentSwiperWidth='currentSwiperWidth' :currentSwiperHeight='currentSwiperHeight'
+			:swiperCurrentSize='swiperCurrentSize' :swiperColor='swiperColor' :swiperCurrentColor='swiperCurrentColor'
+			:currentSwiperLineShow="currentSwiperLineShow" :currentSwiperLineActiveWidth="currentSwiperLineActiveWidth"
 			:currentSwiperLineActiveHeight="currentSwiperLineActiveHeight"
 			:currentSwiperLineActiveBg="currentSwiperLineActiveBg"
-			:currentSwiperLineAnimatie="currentSwiperLineAnimatie" 
-			v-if=" swiperTabList.length > 1 "
+			:currentSwiperLineAnimatie="currentSwiperLineAnimatie" v-if=" swiperTabList.length > 1 "
 			@change="CurrentTab" style="width: 100%;">
 		</swiperNavBar>
-		
+
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 
@@ -50,20 +41,34 @@
 				</view>
 
 				<view class="content-share-word">{{item.word}}</view>
+				<!-- 图片 -->
+				<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
+					</iamge> -->
+				<view class="content-share-file">
+					<image class="content-share-file-img" src="../../static/W.png"></image>
+					<text class="content-share-file-word">《小妇人》.word</text>
+				</view>
 
-				<image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
-					</iamge>
-
-					<view class="content-operate">
+				<view class="content-operate">
+					<view class="content-operate-likes">
 						<image src="../../static/heart1.png" v-if="item.like == 0" class="content-operate-icon"></image>
 						<image src="../../static/heart.png" v-if="item.like == 1" class="content-operate-icon"></image>
-						<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon" @click="toggleMask('show')">
-						</image>
-						<image src="../../static/bookmark1.png" v-if="item.bookmark == 0" class="content-operate-icon">
-						</image>
-						<image src="../../static/bookmark.png" v-if="item.bookmark == 1" class="content-operate-icon">
-						</image>
+						<text class="content-operate-likes-number">123</text>
 					</view>
+					<view class="content-operate-comments">
+						<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon"
+							@click="toggleMask('show')">
+						</image>
+						<text class="content-operate-comments-number">123</text>
+					</view>
+					
+					<image src="../../static/bookmark1.png" v-if="item.bookmark == 0" class="content-operate-icon" style="padding-left: 90rpx;
+		padding-right: 90rpx;">
+					</image>
+					<image src="../../static/bookmark.png" v-if="item.bookmark == 1" class="content-operate-icon" style="padding-left: 90rpx;
+		padding-right: 90rpx;">
+					</image>
+				</view>
 
 			</view>
 		</scroll-view>
@@ -139,31 +144,33 @@
 					like: 0,
 					bookmark: 0
 				}],
-			//导航
-			scrollIntoView:0,//设置哪个方向可滚动，则在哪个方向滚动到该元素
-			swiperTabList:[ '热门','关注' ],//导航列表
-			swiperTabIdx:0,
-			swiperCurrentSize:'26rpx',//导航的字体大小
-			swiperColor:'#333333',//导航栏字体未选中前颜色
-			swiperCurrentColor:'#1E8DD5',//选中当前导航栏字体颜色
-			currentSwiperWidth:'16%',//当前导航的宽度 % upx rpx px  （导航超出可左右滑动 ）
-			currentSwiperHeight:70,//当前导航的高度度 rpx px
-			mainHeight:200,//全屏或者局部滑动设置的高度
-			currentSwiperLineShow:true,//是否显示导航栏的线条 （线条距离标题太近的话可自行修改.swiperLine的css）
-			currentSwiperLineActiveBg:'#1E8DD5',//当前选中的导航栏线条颜色
-			currentSwiperLineActiveWidth:'30rpx', //当前选中的导航栏线条的宽度 upx rpx px
-			currentSwiperLineActiveHeight:'6rpx',//当前选中的导航栏线条的高度度 upx rpx px
-			currentSwiperLineAnimatie: 300//当前选中的导航栏线条过渡效果
-			
-			
-			//（全屏出现滚动条 去掉paddingTop 但导航栏会遮住部分内容 自行改.swiperCont .swiper里css）
-			//也可获取导航栏的高度  屏幕高度减去导航栏高度 = 你的内容全屏高度  不会出现滚动条
+				//导航
+				scrollIntoView: 0, //设置哪个方向可滚动，则在哪个方向滚动到该元素
+				swiperTabList: ['热门', '关注'], //导航列表
+				swiperTabIdx: 0,
+				swiperCurrentSize: '26rpx', //导航的字体大小
+				swiperColor: '#333333', //导航栏字体未选中前颜色
+				swiperCurrentColor: '#1E8DD5', //选中当前导航栏字体颜色
+				currentSwiperWidth: '16%', //当前导航的宽度 % upx rpx px  （导航超出可左右滑动 ）
+				currentSwiperHeight: 70, //当前导航的高度度 rpx px
+				mainHeight: 200, //全屏或者局部滑动设置的高度
+				currentSwiperLineShow: true, //是否显示导航栏的线条 （线条距离标题太近的话可自行修改.swiperLine的css）
+				currentSwiperLineActiveBg: '#1E8DD5', //当前选中的导航栏线条颜色
+				currentSwiperLineActiveWidth: '30rpx', //当前选中的导航栏线条的宽度 upx rpx px
+				currentSwiperLineActiveHeight: '6rpx', //当前选中的导航栏线条的高度度 upx rpx px
+				currentSwiperLineAnimatie: 300 //当前选中的导航栏线条过渡效果
+
+
+				//（全屏出现滚动条 去掉paddingTop 但导航栏会遮住部分内容 自行改.swiperCont .swiper里css）
+				//也可获取导航栏的高度  屏幕高度减去导航栏高度 = 你的内容全屏高度  不会出现滚动条
 			}
 
 		},
 		onLoad() {
 			// 加载定义好的方法
-			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 38;
+			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
+				38;
+			
 			if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
 				loginRes = this.checkLogin('../index/index', 2);
 			}
@@ -173,6 +180,9 @@
 				console.log("fail")
 				return;
 			}
+			
+			// 刷新动态列表
+			this.refresh();
 
 		},
 		// onReady() {
@@ -201,18 +211,45 @@
 				this['val' + val] = e;
 			},
 			//tab点击事件 自行完善需要的代码
-			CurrentTab:function(index,item){
+			CurrentTab: function(index, item) {
 				this.swiperTabIdx = index;
 				this.scrollIntoView = Math.max(0, index - 1);
+				console.log(index)
+				
+				
 				//console.log(index + '----' + item)
 			},
 			//滑动事件  自行完善需要的代码
-			SwiperChange:function(e){
+			SwiperChange: function(e) {
 				console.log(e)
 				console.log(e.detail)
 				console.log(e.detail.current);
 				this.swiperTabIdx = e.detail.current;
 				this.scrollIntoView = Math.max(0, e.detail.current - 1);
+			},
+			
+			refresh(){
+				let _self = this
+				
+				uni.request({
+					url: _self.apiServer + 'getcontentlist',
+				
+				
+				header: {
+					'content-type': 'application/json',
+				},
+				dataType: "json",
+				data: {
+					"type" : 0 
+				},
+				
+				method: 'POST',
+				
+				success: res => {
+					this.content_list = res.data.contentlist
+					console.log(content_list)
+				},
+				})
 			}
 		}
 	}
@@ -238,16 +275,16 @@
 		height: 120rpx;
 		box-shadow: 5px 5px 10px #888888;
 		vertical-align: middle;
-		
+
 	}
-	
+
 	.content-plus-flex {
 		width: 100%;
 		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		
+
 	}
 
 	.content-scroll {
@@ -380,8 +417,7 @@
 		height: 45rpx;
 		align-items: center;
 		justify-content: center;
-		padding-left: 95rpx;
-		padding-right: 95rpx;
+		
 	}
 
 	@font-face {
@@ -408,5 +444,55 @@
 		position: relative;
 		text-align: center;
 		align-items: center;
+	}
+	
+	.content-share-file {
+		position: relative;
+		display: flex;
+		flex-direction: row;
+		width: 300rpx;
+		height: 100rpx;
+		background-color: #eeeeee;
+		border-radius: 10rpx;
+		padding-left: 20rpx;
+		top: 20rpx;
+		left: 40rpx;
+		text-align: center;
+		align-items: center;
+	}
+	
+	.content-share-file-img {
+		width: 80rpx;
+		height: 80rpx;
+	}
+	
+	.content-share-file-word {
+		padding-left: 10rpx;
+		font-size: 20rpx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.content-operate-likes {
+		display: flex;
+		flex-direction: row;
+		padding-left: 40rpx;
+		padding-right: 100rpx;
+	}
+	
+	.content-operate-comments {
+		display: flex;
+		flex-direction: row;
+		padding-left: 50rpx;
+		padding-right: 90rpx;
+	}
+	
+	.content-operate-likes-number {
+		padding-left: 20rpx;
+	}
+	
+	.content-operate-comments-number {
+		padding-left: 20rpx;
 	}
 </style>
