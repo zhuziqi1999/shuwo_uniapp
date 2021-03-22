@@ -5,7 +5,7 @@
 		<ygc-comment ref="ygcComment" :placeholder="'发布评论'" @pubComment="pubComment" style="z-index: 999;">
 		</ygc-comment>
 
-		<view class="content-plus">
+		<view class="content-plus" @click="addcontent">
 			<view class="content-plus-flex">
 				<text class="icon icon-plus">&#xf081;</text>
 			</view>
@@ -29,10 +29,12 @@
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
 				:key="index">
 				<view class="content-title">
-
-					<image class="content-avatar" src="../../static/go.jpg"></image>
+					<view class="content-avatar-view">
+						<image :src="item.useravatarurl" class="content-avatar" mode="scaleToFill"  webp="true"></image>
+					</view>
+					
 					<view class="content-name-from">
-						<view class="content-username">{{item.name}}</view>
+						<view class="content-username">{{item.username}}</view>
 						<view class="content-share-from">发布自{{item.from}}</view>
 					</view>
 					<view class="content-share-time">{{item.time}}</view>
@@ -40,7 +42,7 @@
 
 				</view>
 
-				<view class="content-share-word">{{item.word}}</view>
+				<view class="content-share-word">{{item.contenttext}}</view>
 				<!-- 图片 -->
 				<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
 					</iamge> -->
@@ -53,13 +55,13 @@
 					<view class="content-operate-likes">
 						<image src="../../static/heart1.png" v-if="item.like == 0" class="content-operate-icon"></image>
 						<image src="../../static/heart.png" v-if="item.like == 1" class="content-operate-icon"></image>
-						<text class="content-operate-likes-number">123</text>
+						<text class="content-operate-likes-number">{{item.contentlikes}}</text>
 					</view>
 					<view class="content-operate-comments">
 						<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon"
 							@click="toggleMask('show')">
 						</image>
-						<text class="content-operate-comments-number">123</text>
+						<text class="content-operate-comments-number">{{item.contentcomments}}</text>
 					</view>
 					
 					<image src="../../static/bookmark1.png" v-if="item.bookmark == 0" class="content-operate-icon" style="padding-left: 90rpx;
@@ -81,6 +83,8 @@
 	import mSearch from '@/components/mehaotian-search/mehaotian-search.vue';
 	import ygcComment from '@/components/ygc-comment/ygc-comment.vue';
 	import swiperNavBar from "@/components/swiperNavBar/swiperNavBar.vue";
+	import SOtime from '@/utils/fl-SOtime/SOtime.js'
+
 	var loginRes = uni.getStorageSync('loginRes')
 	var SynsUserOpenid = uni.getStorageSync('UserOpenid')
 	var SynsUserName = uni.getStorageSync('UserName')
@@ -232,23 +236,32 @@
 				let _self = this
 				
 				uni.request({
-					url: _self.apiServer + 'getcontentlist',
+					url: _self.apiServer + 'getHotContentList',
 				
 				
 				header: {
 					'content-type': 'application/json',
 				},
-				dataType: "json",
-				data: {
-					"type" : 0 
-				},
 				
 				method: 'POST',
 				
 				success: res => {
-					this.content_list = res.data.contentlist
-					console.log(content_list)
+					this.content_list = res.data.content
+					
+					for (var i=0;i<res.data.content.length;i++)
+					{ 
+					    res.data.content[i].time = SOtime.time1(res.data.content[1].contentcreatedtimeunix)
+					}
+					console.log(this.content_list)
+
 				},
+				})
+			},
+			
+			addcontent() {
+				console.log("111")
+				uni.redirectTo({
+					url:'/pages/index/addcontent'
 				})
 			}
 		}
@@ -333,9 +346,15 @@
 		position: relative;
 		width: 70rpx;
 		height: 70rpx;
-		margin-left: 38rpx;
+		
 		border-radius: 50%;
 		background-size: 100% 100%;
+		
+	}
+	
+	.content-avatar-view {
+		margin-left: 38rpx;
+		
 		margin-top: 24rpx;
 	}
 
@@ -344,6 +363,7 @@
 		flex-direction: column;
 		margin-left: 28rpx;
 		margin-top: 26rpx;
+		width: 150rpx;
 	}
 
 	.content-username {

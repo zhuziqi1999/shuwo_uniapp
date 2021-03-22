@@ -71,5 +71,7 @@ var windowheight =  wx.getSystemInfoSync().windowHeight    // 获取当前窗口
 </script>
 
 <style>
-
+	      uni-page-body,html,body{  
+	        height: 100%;  
+	    } 
 </style>

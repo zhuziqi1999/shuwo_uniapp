@@ -53,6 +53,14 @@
                 "enablePullDownRefresh": false
             }
             
+        },{
+            "path" : "pages/index/addcontent",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
         }
 
     ],

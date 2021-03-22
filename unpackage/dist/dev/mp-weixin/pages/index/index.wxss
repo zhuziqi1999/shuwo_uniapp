@@ -92,9 +92,13 @@
 	position: relative;
 	width: 70rpx;
 	height: 70rpx;
-	margin-left: 38rpx;
+	
 	border-radius: 50%;
 	background-size: 100% 100%;
+}
+.content-avatar-view.data-v-57280228 {
+	margin-left: 38rpx;
+	
 	margin-top: 24rpx;
 }
 .content-name-from.data-v-57280228 {
@@ -107,6 +111,7 @@
 	        flex-direction: column;
 	margin-left: 28rpx;
 	margin-top: 26rpx;
+	width: 150rpx;
 }
 .content-username.data-v-57280228 {
 	position: relative;
