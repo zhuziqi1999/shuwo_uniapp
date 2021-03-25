@@ -65,6 +65,8 @@
 							},
 							method: 'POST',
 							success: res => {
+								
+								
 									uni.hideLoading();
 									uni.showToast({
 										title: '登录成功',
@@ -91,7 +93,7 @@
 									})
 
 								}
-								
+
 								console.log(res.data)
 								
 							},

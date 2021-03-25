@@ -8,36 +8,37 @@
 		<!-- 滚动区域 -->
 		<view class="scroll-panel" id="scroll-panel">
 			<view class="list-box">
-				<view class="left">
+				<!-- <view class="left">
 					<scroll-view scroll-y="true" :style="{ 'height':scrollHeight + 'px' }"
 						:scroll-into-view="leftIntoView">
 						<view class="item" v-for="(item,index) in leftArray" :key="index"
 							:class="{ 'active':index==leftIndex }" :id="'left-'+index" :data-index="index"
 							@tap="leftTap">{{item}}</view>
 					</scroll-view>
-				</view>
+				</view> -->
 				<view class="main">
 					<scroll-view scroll-y="true" :style="{ 'height':scrollHeight + 'px' }" @scroll="mainScroll"
 						:scroll-into-view="scrollInto" scroll-with-animation="true">
 						<view class="item main-item" v-for="(item,index) in mainArray" :key="index" :id="'item-'+index">
-							<view class="title">
+							<!-- <view class="title">
 								<view>{{item.title}}</view>
-							</view>
-							<view class="goods" v-for="(item2,index2) in item.list" :key="index2">
+							</view> -->
+							<view class="goods">
 								<view class="goods-top">
 									<image class="goods-image" src="/static/logo.png" mode=""></image>
 									<view>
-										<view style="font-weight: bold;">第{{index2+1}}个商品标题</view>
-										<view class="number">第{{index2+1}}个商品的描述内容</view>
+										<!-- <view style="font-weight: bold;">第{{index2+1}}个商品标题</view> -->
+										<view class="number">{{item.groupname}}</view>
 									</view>
-									<view class="goods-plus" v-if="isplus == 0">
+									<view class="goods-plus" v-if="item.IsInGroup == 0" @click="inGroup(item.groupid,index)">
 										<text class="icon icon-search"
 											style="color: #FFFFFF;font-size: 25rpx;margin-left: 7rpx;margin-top: 2rpx;">&#xf081;</text>
 										<view
 											style="color: #FFFFFF; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;">
 											加入小组</view>
 									</view>
-									<view class="goods-plus" v-if="isplus == 1" style="background-color: #B6B9BB;">
+									<view class="goods-plus" v-if="item.IsInGroup == 1"
+										style="background-color: #B6B9BB;" @click="outGroup(item.groupid,index)">
 										<view class="goods-words">已加入</view>
 									</view>
 
@@ -47,12 +48,12 @@
 										style="color: #ff8522;font-size: 25rpx;margin-left: 7rpx;margin-top: 6rpx;height: 25rpx;">&#xef7e;</text>
 									<view
 										style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 25rpx;">
-										小组信息</view>
+										{{item.groupremark}}</view>
 
 								</view>
 							</view>
 						</view>
-						<view class="fill-last" :style="{ 'height':fillHeight + 'px' }"></view>
+						<!-- <view class="fill-last" :style="{ 'height':fillHeight + 'px' }"></view> -->
 					</scroll-view>
 				</view>
 			</view>
@@ -137,40 +138,48 @@
 					/* 因无真实数据，当前方法模拟数据。正式项目中将此处替换为 数据请求即可 */
 					uni.showLoading();
 					setTimeout(() => {
-						let [left, main] = [
-							[],
-							[]
-						];
 
-						for (let i = 0; i < 25; i++) {
-							left.push(`${i+1}类商品`);
-
-							let list = [];
-							let r = Math.floor(Math.random() * 10);
-							r = r < 1 ? 3 : r;
-							for (let j = 0; j < r; j++) {
-								list.push(j);
-							}
-							main.push({
-								title: `第${i+1}类商品标题`,
-								list
-							})
-						}
+						// let [left, main] = [
+						// 	[],
+						// 	[]
+						// ];
 
 						// 将请求接口返回的数据传递给 Promise 对象的 then 函数。
-						resolve({
-							left,
-							main
-						});
+						let _self = this
+
+						uni.request({
+							url: _self.apiServer + 'getGroupList',
+							header: {
+								'content-type': 'application/json',
+							},
+							dataType: "json",
+							data: {
+								useropenid : uni.getStorageSync('UserOpenid')
+							},
+
+
+							method: 'POST',
+
+							success: res => {
+								let main = res.data.content;
+
+
+								resolve({
+									main
+								});
+							},
+						})
+
+
+
 					}, 1000);
 				}).then((res) => {
 					console.log('-----------请求接口返回数据示例-------------');
 					console.log(res);
 
 					uni.hideLoading();
-					this.leftArray = res.left;
 					this.mainArray = res.main;
-
+					console.log(this.mainArray)
 					// DOM 挂载后 再调用 getElementTop 获取高度的方法。
 					this.$nextTick(() => {
 						this.getElementTop();
@@ -215,7 +224,121 @@
 			leftTap(e) {
 				let index = e.currentTarget.dataset.index;
 				this.scrollInto = `item-${index}`;
+			},
+			
+			inGroup(e,id) {
+				let _self = this;
+				let groupid = e
+				let index = id
+
+				uni.request({
+					url: _self.apiServer + 'inGroup',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						userid : uni.getStorageSync('UserOpenid'),
+						groupid : groupid
+						
+					},
+					method: 'POST',
+					success: res => {
+						
+						
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '加入失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+						
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							uni.hideLoading();
+							uni.showToast({
+								title: '加入成功',
+								icon: "none",
+								duration: 2000
+							})
+							
+							this.mainArray[index].IsInGroup = 1
+							console.log(this.mainArray[index].IsInGroup)
+						}
+				
+						
+						
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			
+			outGroup(e,id) {
+				let _self = this;
+				let groupid = e
+				let index = id
+			
+				uni.request({
+					url: _self.apiServer + 'outGroup',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						userid : uni.getStorageSync('UserOpenid'),
+						groupid : groupid
+						
+					},
+					method: 'POST',
+					success: res => {
+						
+						
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '退出失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+						
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							uni.hideLoading();
+							uni.showToast({
+								title: '退出成功',
+								icon: "none",
+								duration: 2000
+							})
+							
+							this.mainArray[index].IsInGroup = 0
+							console.log(this.mainArray[index].IsInGroup)
+						}
+				
+						
+						
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
 			}
+			
+			
 		},
 	};
 </script>
@@ -348,6 +471,7 @@
 				align-items: center;
 				align-content: center;
 				margin-bottom: 10rpx;
+				margin-top: 10rpx;
 				height: 240rpx;
 
 				.goods-image {
@@ -376,14 +500,17 @@
 					align-content: center;
 					text-align: center;
 					vertical-align: middle;
-					left: 60rpx;
+					left: 210rpx;
 
 				}
 
 				.number {
-					font-size: 24rpx;
+					margin-left: 10rpx;
+					font-size: 30rpx;
 					margin-top: 10rpx;
-					color: #999;
+					color: #000000;
+					font-weight: bold;
+					width: 220rpx;
 				}
 
 				.money {

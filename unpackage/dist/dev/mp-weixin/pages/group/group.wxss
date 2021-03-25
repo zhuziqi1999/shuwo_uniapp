@@ -182,6 +182,7 @@ page,
   -webkit-align-content: center;
           align-content: center;
   margin-bottom: 10rpx;
+  margin-top: 10rpx;
   height: 240rpx;
 }
 .list-box .main .goods .goods-image {
@@ -218,12 +219,15 @@ page,
           align-content: center;
   text-align: center;
   vertical-align: middle;
-  left: 60rpx;
+  left: 210rpx;
 }
 .list-box .main .goods .number {
-  font-size: 24rpx;
+  margin-left: 10rpx;
+  font-size: 30rpx;
   margin-top: 10rpx;
-  color: #999;
+  color: #000000;
+  font-weight: bold;
+  width: 220rpx;
 }
 .list-box .main .goods .money {
   font-size: 24rpx;

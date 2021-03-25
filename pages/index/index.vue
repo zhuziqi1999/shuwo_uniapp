@@ -330,7 +330,8 @@
 		width: 100%;
 		height: auto;
 		background-color: #FFFFFF;
-		border: #333333 1rpx;
+		border-bottom: #e3e3e3 solid 1rpx;
+		margin-top: 10rpx;
 
 	}
 
@@ -353,7 +354,7 @@
 	}
 	
 	.content-avatar-view {
-		margin-left: 38rpx;
+		margin-left: 20rpx;
 		
 		margin-top: 24rpx;
 	}
@@ -391,10 +392,10 @@
 		width: auto;
 		height: 30rpx;
 		font-size: 27rpx;
-		left: 280rpx;
+		left: 320rpx;
 		font-weight: bold;
 		color: #cdcdcd;
-		margin-right: 50rpx;
+
 	}
 
 	.content-share-more {
@@ -402,22 +403,22 @@
 		width: 50rpx;
 		height: 50rpx;
 		top: 38rpx;
-		left: 260rpx;
-		margin-right: 100rpx;
+		left: 340rpx;
+		margin-right: 20rpx;
 	}
 
 	.content-share-word {
 		font-size: medium;
 		position: relative;
 		padding-top: 20rpx;
-		padding-left: 40rpx;
+		padding-left: 20rpx;
 		padding-right: 40rpx;
 		margin-bottom: 20rpx;
 		height: auto;
 	}
 
 	.content-share-image {
-		padding-left: 40rpx;
+		padding-left: 20rpx;
 		width: 300rpx;
 	}
 
@@ -476,7 +477,7 @@
 		border-radius: 10rpx;
 		padding-left: 20rpx;
 		top: 20rpx;
-		left: 40rpx;
+		left: 20rpx;
 		text-align: center;
 		align-items: center;
 	}
