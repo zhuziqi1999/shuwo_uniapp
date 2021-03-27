@@ -27,22 +27,22 @@
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
-				:key="index">
+				:key="index" >
 				<view class="content-title">
 					<view class="content-avatar-view">
-						<image :src="item.useravatarurl" class="content-avatar" mode="scaleToFill"  webp="true"></image>
+						<image :src="item.useravatarurl" class="content-avatar" mode="scaleToFill" webp="true"></image>
 					</view>
-					
+
 					<view class="content-name-from">
 						<view class="content-username">{{item.username}}</view>
-						<view class="content-share-from">发布自{{item.from}}</view>
+						<view class="content-share-from">发布自{{item.groupname}}</view>
 					</view>
-					<view class="content-share-time">{{item.time}}</view>
+					<view class="content-share-time" @click="gotoContent(item)">{{item.time}}</view>
 					<image class="content-share-more" src="../../static/ellipsis-h.png"></image>
 
 				</view>
 
-				<view class="content-share-word">{{item.contenttext}}</view>
+				<view class="content-share-word" @click="gotoContent(item)">{{item.contenttext}}</view>
 				<!-- 图片 -->
 				<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
 					</iamge> -->
@@ -53,23 +53,29 @@
 
 				<view class="content-operate">
 					<view class="content-operate-likes">
-						<image src="../../static/heart1.png" v-if="item.like == 0" class="content-operate-icon"></image>
-						<image src="../../static/heart.png" v-if="item.like == 1" class="content-operate-icon"></image>
+						<image src="../../static/heart1.png" v-if="item.isliked == 0" class="content-operate-icon"
+							@click="LikeContent(item.contentid,index)"></image>
+						<image src="../../static/heart.png" v-if="item.isliked == 1" class="content-operate-icon"
+							@click="UnlikeContent(item.contentid,index)"></image>
 						<text class="content-operate-likes-number">{{item.contentlikes}}</text>
 					</view>
 					<view class="content-operate-comments">
 						<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon"
-							@click="toggleMask('show')">
+							@click="toggleMask('show',item)">
 						</image>
 						<text class="content-operate-comments-number">{{item.contentcomments}}</text>
 					</view>
-					
-					<image src="../../static/bookmark1.png" v-if="item.bookmark == 0" class="content-operate-icon" style="padding-left: 90rpx;
-		padding-right: 90rpx;">
-					</image>
-					<image src="../../static/bookmark.png" v-if="item.bookmark == 1" class="content-operate-icon" style="padding-left: 90rpx;
-		padding-right: 90rpx;">
-					</image>
+
+					<view class="content-operate-collect">
+
+						<image src="../../static/bookmark1.png" v-if="item.iscollected == 0"
+							class="content-operate-icon" @click="CollectContent(item.contentid,index)">
+						</image>
+						<image src="../../static/bookmark.png" v-if="item.iscollected == 1" class="content-operate-icon"
+							@click="UncollectContent(item.contentid,index)">
+						</image>
+
+					</view>
 				</view>
 
 			</view>
@@ -91,6 +97,7 @@
 	var windowheight = wx.getSystemInfoSync().windowHeight + 'px'
 	var loginflag = 0
 	var comments = 0
+	var content = []
 	export default {
 		components: {
 			mSearch,
@@ -115,39 +122,7 @@
 				val3: '',
 				placeholder: '动态占位内容',
 
-				content_list: [{
-					id: 1,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 1,
-					bookmark: 1
-				}, {
-					id: 2,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 0,
-					bookmark: 0
-				}, {
-					id: 3,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 1,
-					bookmark: 1
-				}, {
-					id: 4,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 0,
-					bookmark: 0
-				}],
+				content_list: [],
 				//导航
 				scrollIntoView: 0, //设置哪个方向可滚动，则在哪个方向滚动到该元素
 				swiperTabList: ['热门', '关注'], //导航列表
@@ -174,7 +149,7 @@
 			// 加载定义好的方法
 			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
 				38;
-			
+
 			if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
 				loginRes = this.checkLogin('../index/index', 2);
 			}
@@ -184,7 +159,7 @@
 				console.log("fail")
 				return;
 			}
-			
+
 			// 刷新动态列表
 			this.refresh();
 
@@ -207,8 +182,9 @@
 		// 	        console.log('w' + this.scrollviewHigh);
 		// },
 		methods: {
-			toggleMask(type) {
+			toggleMask(type,content) {
 				this.$refs.ygcComment.toggleMask(type);
+				this.content = content
 			},
 			search(e, val) {
 				console.log(e, val);
@@ -219,9 +195,9 @@
 				this.swiperTabIdx = index;
 				this.scrollIntoView = Math.max(0, index - 1);
 				console.log(index)
-				
-				
-				//console.log(index + '----' + item)
+
+
+				console.log(index + '----' + item)
 			},
 			//滑动事件  自行完善需要的代码
 			SwiperChange: function(e) {
@@ -231,39 +207,300 @@
 				this.swiperTabIdx = e.detail.current;
 				this.scrollIntoView = Math.max(0, e.detail.current - 1);
 			},
-			
-			refresh(){
+
+			refresh() {
 				let _self = this
-				
+
 				uni.request({
 					url: _self.apiServer + 'getHotContentList',
-				
-				
-				header: {
-					'content-type': 'application/json',
-				},
-				
-				method: 'POST',
-				
-				success: res => {
-					this.content_list = res.data.content
-					
-					for (var i=0;i<res.data.content.length;i++)
-					{ 
-					    res.data.content[i].time = SOtime.time1(res.data.content[1].contentcreatedtimeunix)
-					}
-					console.log(this.content_list)
 
-				},
+					data: {
+						useropenid: uni.getStorageSync("UserOpenid")
+					},
+
+					header: {
+						'content-type': 'application/json',
+					},
+
+					method: 'POST',
+
+					success: res => {
+						this.content_list = res.data.content
+
+						for (var i = 0; i < res.data.content.length; i++) {
+							res.data.content[i].time = SOtime.time1(res.data.content[1].contentcreatedtimeunix)
+						}
+						console.log(this.content_list)
+
+					},
 				})
 			},
-			
+
 			addcontent() {
 				console.log("111")
 				uni.redirectTo({
-					url:'/pages/index/addcontent'
+					url: '/pages/index/addcontent'
 				})
+			},
+
+			LikeContent(e, id) {
+				let _self = this;
+				let contentid = e
+				let index = id
+
+				uni.request({
+					url: _self.apiServer + 'likeContent',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						userid: uni.getStorageSync('UserOpenid'),
+						contentid: contentid
+
+					},
+					method: 'POST',
+					success: res => {
+
+
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '点赞失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							uni.hideLoading();
+							
+							this.content_list[index].isliked = 1
+							
+							this.content_list[index].contentlikes++
+						}
+
+
+
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+
+			UnlikeContent(e, id) {
+				let _self = this;
+				let contentid = e
+				let index = id
+
+				uni.request({
+					url: _self.apiServer + 'unlikeContent',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						userid: uni.getStorageSync('UserOpenid'),
+						contentid: contentid
+
+					},
+					method: 'POST',
+					success: res => {
+
+
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '点赞取消失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							uni.hideLoading();
+							this.content_list[index].isliked = 0
+							this.content_list[index].contentlikes--
+						}
+
+
+
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+
+			CollectContent(e, id) {
+				let _self = this;
+				let contentid = e
+				let index = id
+
+				uni.request({
+					url: _self.apiServer + 'collectContent',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						userid: uni.getStorageSync('UserOpenid'),
+						contentid: contentid
+
+					},
+					method: 'POST',
+					success: res => {
+
+
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '收藏失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							this.content_list[index].iscollected = 1
+						}
+
+
+
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+
+			UncollectContent(e, id) {
+				let _self = this;
+				let contentid = e
+				let index = id
+
+				uni.request({
+					url: _self.apiServer + 'uncollectContent',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						userid: uni.getStorageSync('UserOpenid'),
+						contentid: contentid
+
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '收藏取消失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							this.content_list[index].iscollected = 0
+						}
+
+
+
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			
+			gotoContent(e) {
+				let content = e;
+				let _self = this;
+
+				var navData = JSON.stringify(content);
+				uni.navigateTo({
+					url: '/pages/index/content?data=' + navData
+				})
+			},
+			pubComment(e) {
+				let text = e
+				let _self = this
+				
+				uni.request({
+					url: _self.apiServer + 'createComment',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						commentcreatedby: uni.getStorageSync('UserOpenid'),
+						commenttext : text,
+						commentcontentid : this.content.contentid,
+						commentbackuserid : this.content.contentcreatedby
+					},
+					method: 'POST',
+					success: res => {
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '评论失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+				
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							
+							uni.hideLoading();
+							uni.showToast({
+								title: '评论成功',
+								duration: 2000
+							})
+							this.$refs.ygcComment.toggleMask("false");
+							
+						}
+				
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+				
+				
 			}
+
 		}
 	}
 </script>
@@ -347,15 +584,15 @@
 		position: relative;
 		width: 70rpx;
 		height: 70rpx;
-		
+
 		border-radius: 50%;
 		background-size: 100% 100%;
-		
+
 	}
-	
+
 	.content-avatar-view {
 		margin-left: 20rpx;
-		
+
 		margin-top: 24rpx;
 	}
 
@@ -364,7 +601,7 @@
 		flex-direction: column;
 		margin-left: 28rpx;
 		margin-top: 26rpx;
-		width: 150rpx;
+		width: 300rpx;
 	}
 
 	.content-username {
@@ -392,7 +629,7 @@
 		width: auto;
 		height: 30rpx;
 		font-size: 27rpx;
-		left: 320rpx;
+		left: 170rpx;
 		font-weight: bold;
 		color: #cdcdcd;
 
@@ -403,7 +640,7 @@
 		width: 50rpx;
 		height: 50rpx;
 		top: 38rpx;
-		left: 340rpx;
+		left: 190rpx;
 		margin-right: 20rpx;
 	}
 
@@ -438,7 +675,7 @@
 		height: 45rpx;
 		align-items: center;
 		justify-content: center;
-		
+
 	}
 
 	@font-face {
@@ -466,7 +703,7 @@
 		text-align: center;
 		align-items: center;
 	}
-	
+
 	.content-share-file {
 		position: relative;
 		display: flex;
@@ -481,12 +718,12 @@
 		text-align: center;
 		align-items: center;
 	}
-	
+
 	.content-share-file-img {
 		width: 80rpx;
 		height: 80rpx;
 	}
-	
+
 	.content-share-file-word {
 		padding-left: 10rpx;
 		font-size: 20rpx;
@@ -494,26 +731,37 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
-	
+
 	.content-operate-likes {
 		display: flex;
 		flex-direction: row;
 		padding-left: 40rpx;
 		padding-right: 100rpx;
 	}
-	
+
 	.content-operate-comments {
 		display: flex;
 		flex-direction: row;
 		padding-left: 50rpx;
 		padding-right: 90rpx;
 	}
-	
+
+	.content-operate-collect {
+		display: flex;
+		flex-direction: row;
+		padding-left: 90rpx;
+		padding-right: 50rpx;
+	}
+
 	.content-operate-likes-number {
 		padding-left: 20rpx;
 	}
-	
+
 	.content-operate-comments-number {
 		padding-left: 20rpx;
+	}
+
+	.content-list-hover {
+		background-color: #f8f8f8;
 	}
 </style>

@@ -93,13 +93,13 @@
 	position: relative;
 	width: 70rpx;
 	height: 70rpx;
-	
+
 	border-radius: 50%;
 	background-size: 100% 100%;
 }
 .content-avatar-view.data-v-57280228 {
 	margin-left: 20rpx;
-	
+
 	margin-top: 24rpx;
 }
 .content-name-from.data-v-57280228 {
@@ -112,7 +112,7 @@
 	        flex-direction: column;
 	margin-left: 28rpx;
 	margin-top: 26rpx;
-	width: 150rpx;
+	width: 300rpx;
 }
 .content-username.data-v-57280228 {
 	position: relative;
@@ -136,7 +136,7 @@
 	width: auto;
 	height: 30rpx;
 	font-size: 27rpx;
-	left: 320rpx;
+	left: 170rpx;
 	font-weight: bold;
 	color: #cdcdcd;
 }
@@ -145,7 +145,7 @@
 	width: 50rpx;
 	height: 50rpx;
 	top: 38rpx;
-	left: 340rpx;
+	left: 190rpx;
 	margin-right: 20rpx;
 }
 .content-share-word.data-v-57280228 {
@@ -268,10 +268,24 @@
 	padding-left: 50rpx;
 	padding-right: 90rpx;
 }
+.content-operate-collect.data-v-57280228 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	padding-left: 90rpx;
+	padding-right: 50rpx;
+}
 .content-operate-likes-number.data-v-57280228 {
 	padding-left: 20rpx;
 }
 .content-operate-comments-number.data-v-57280228 {
 	padding-left: 20rpx;
+}
+.content-list-hover.data-v-57280228 {
+	background-color: #f8f8f8;
 }
 

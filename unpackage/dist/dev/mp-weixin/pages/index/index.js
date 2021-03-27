@@ -103,10 +103,10 @@ var components
 try {
   components = {
     ygcComment: function() {
-      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 68))
+      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 76))
     },
     swiperNavBar: function() {
-      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 75))
+      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 83))
     }
   }
 } catch (e) {
@@ -246,14 +246,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 82));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 68));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 75));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+
+
+
+
+
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 90));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var loginRes = uni.getStorageSync('loginRes');
 var SynsUserOpenid = uni.getStorageSync('UserOpenid');
 var SynsUserName = uni.getStorageSync('UserName');
 var windowheight = wx.getSystemInfoSync().windowHeight + 'px';
 var loginflag = 0;
-var comments = 0;var _default =
+var comments = 0;
+var content = [];var _default =
 {
   components: {
     mSearch: mSearch,
@@ -278,39 +285,7 @@ var comments = 0;var _default =
       val3: '',
       placeholder: '动态占位内容',
 
-      content_list: [{
-        id: 1,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 1,
-        bookmark: 1 },
-      {
-        id: 2,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 0,
-        bookmark: 0 },
-      {
-        id: 3,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 1,
-        bookmark: 1 },
-      {
-        id: 4,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 0,
-        bookmark: 0 }],
-
+      content_list: [],
       //导航
       scrollIntoView: 0, //设置哪个方向可滚动，则在哪个方向滚动到该元素
       swiperTabList: ['热门', '关注'], //导航列表
@@ -370,8 +345,9 @@ var comments = 0;var _default =
   // 	        console.log('w' + this.scrollviewHigh);
   // },
   methods: {
-    toggleMask: function toggleMask(type) {
+    toggleMask: function toggleMask(type, content) {
       this.$refs.ygcComment.toggleMask(type);
+      this.content = content;
     },
     search: function search(e, val) {
       console.log(e, val);
@@ -384,7 +360,7 @@ var comments = 0;var _default =
       console.log(index);
 
 
-      //console.log(index + '----' + item)
+      console.log(index + '----' + item);
     },
     //滑动事件  自行完善需要的代码
     SwiperChange: function SwiperChange(e) {
@@ -401,6 +377,9 @@ var comments = 0;var _default =
       uni.request({
         url: _self.apiServer + 'getHotContentList',
 
+        data: {
+          useropenid: uni.getStorageSync("UserOpenid") },
+
 
         header: {
           'content-type': 'application/json' },
@@ -411,8 +390,7 @@ var comments = 0;var _default =
         success: function success(res) {
           _this.content_list = res.data.content;
 
-          for (var i = 0; i < res.data.content.length; i++)
-          {
+          for (var i = 0; i < res.data.content.length; i++) {
             res.data.content[i].time = _SOtime.default.time1(res.data.content[1].contentcreatedtimeunix);
           }
           console.log(_this.content_list);
@@ -425,6 +403,264 @@ var comments = 0;var _default =
       console.log("111");
       uni.redirectTo({
         url: '/pages/index/addcontent' });
+
+    },
+
+    LikeContent: function LikeContent(e, id) {var _this2 = this;
+      var _self = this;
+      var contentid = e;
+      var index = id;
+
+      uni.request({
+        url: _self.apiServer + 'likeContent',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          userid: uni.getStorageSync('UserOpenid'),
+          contentid: contentid },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '点赞失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            uni.hideLoading();
+
+            _this2.content_list[index].isliked = 1;
+
+            _this2.content_list[index].contentlikes++;
+          }
+
+
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    UnlikeContent: function UnlikeContent(e, id) {var _this3 = this;
+      var _self = this;
+      var contentid = e;
+      var index = id;
+
+      uni.request({
+        url: _self.apiServer + 'unlikeContent',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          userid: uni.getStorageSync('UserOpenid'),
+          contentid: contentid },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '点赞取消失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            uni.hideLoading();
+            _this3.content_list[index].isliked = 0;
+            _this3.content_list[index].contentlikes--;
+          }
+
+
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    CollectContent: function CollectContent(e, id) {var _this4 = this;
+      var _self = this;
+      var contentid = e;
+      var index = id;
+
+      uni.request({
+        url: _self.apiServer + 'collectContent',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          userid: uni.getStorageSync('UserOpenid'),
+          contentid: contentid },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '收藏失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            _this4.content_list[index].iscollected = 1;
+          }
+
+
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    UncollectContent: function UncollectContent(e, id) {var _this5 = this;
+      var _self = this;
+      var contentid = e;
+      var index = id;
+
+      uni.request({
+        url: _self.apiServer + 'uncollectContent',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          userid: uni.getStorageSync('UserOpenid'),
+          contentid: contentid },
+
+
+        method: 'POST',
+        success: function success(res) {
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '收藏取消失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            _this5.content_list[index].iscollected = 0;
+          }
+
+
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    gotoContent: function gotoContent(e) {
+      var content = e;
+      var _self = this;
+
+      var navData = JSON.stringify(content);
+      uni.navigateTo({
+        url: '/pages/index/content?data=' + navData });
+
+    },
+    pubComment: function pubComment(e) {var _this6 = this;
+      var text = e;
+      var _self = this;
+
+      uni.request({
+        url: _self.apiServer + 'createComment',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          commentcreatedby: uni.getStorageSync('UserOpenid'),
+          commenttext: text,
+          commentcontentid: this.content.contentid,
+          commentbackuserid: this.content.contentcreatedby },
+
+        method: 'POST',
+        success: function success(res) {
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '评论失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+
+            uni.hideLoading();
+            uni.showToast({
+              title: '评论成功',
+              duration: 2000 });
+
+            _this6.$refs.ygcComment.toggleMask("false");
+
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
