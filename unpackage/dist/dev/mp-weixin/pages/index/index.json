@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "书窝",
   "disableScroll": true,
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "ygc-comment": "/components/ygc-comment/ygc-comment",
     "swiper-nav-bar": "/components/swiperNavBar/swiperNavBar",

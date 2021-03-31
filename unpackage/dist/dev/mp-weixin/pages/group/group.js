@@ -245,6 +245,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 200);
     });
   },
+  onShow: function onShow() {
+    this.getListData();
+  },
   methods: {
     search: function search(e, val) {
       console.log(e, val);
@@ -263,6 +266,17 @@ __webpack_require__.r(__webpack_exports__);
         }).exec();
       });
     },
+
+    gotogroup: function gotogroup(e) {
+      var group = e;
+      var _self = this;
+
+      var navData = JSON.stringify(group);
+      uni.navigateTo({
+        url: '/pages/group/groupinfo?data=' + navData });
+
+    },
+
     /* 获取列表数据 */
     getListData: function getListData() {var _this3 = this;
       // Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
@@ -271,12 +285,7 @@ __webpack_require__.r(__webpack_exports__);
         uni.showLoading();
         setTimeout(function () {
 
-          // let [left, main] = [
-          // 	[],
-          // 	[]
-          // ];
 
-          // 将请求接口返回的数据传递给 Promise 对象的 then 函数。
           var _self = _this3;
 
           uni.request({

@@ -4,7 +4,8 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "书窝",
-				"disableScroll":true
+				"disableScroll":true,
+				"enablePullDownRefresh": true
 			}
 
 		}
@@ -22,7 +23,7 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "小组",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true
             }
             
         }
@@ -50,7 +51,7 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "私信",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true
             }
             
         },{
@@ -68,7 +69,27 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/group/groupinfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true,
+				"navigationStyle":"custom" 
+            }
+            
+        }
+        ,{
+            "path" : "pages/group/selectgroup",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true,
+				"navigationBarTitleText": "我的小组"
             }
             
         }

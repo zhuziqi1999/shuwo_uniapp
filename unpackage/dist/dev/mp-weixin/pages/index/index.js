@@ -327,6 +327,9 @@ var content = [];var _default =
     this.refresh();
 
   },
+  onShow: function onShow() {
+    this.refresh();
+  },
   // onReady() {
   // 	 let _this = this;
   // 	        uni.getSystemInfo({
@@ -375,10 +378,11 @@ var content = [];var _default =
       var _self = this;
 
       uni.request({
-        url: _self.apiServer + 'getHotContentList',
+        url: _self.apiServer + 'getContentList',
 
         data: {
-          useropenid: uni.getStorageSync("UserOpenid") },
+          useropenid: uni.getStorageSync("UserOpenid"),
+          groupid: "" },
 
 
         header: {
@@ -391,7 +395,7 @@ var content = [];var _default =
           _this.content_list = res.data.content;
 
           for (var i = 0; i < res.data.content.length; i++) {
-            res.data.content[i].time = _SOtime.default.time1(res.data.content[1].contentcreatedtimeunix);
+            res.data.content[i].time = _SOtime.default.time1(res.data.content[i].contentcreatedtimeunix);
           }
           console.log(_this.content_list);
 
@@ -400,8 +404,7 @@ var content = [];var _default =
     },
 
     addcontent: function addcontent() {
-      console.log("111");
-      uni.redirectTo({
+      uni.navigateTo({
         url: '/pages/index/addcontent' });
 
     },

@@ -19,16 +19,16 @@
 				<view class="main">
 					<scroll-view scroll-y="true" :style="{ 'height':scrollHeight + 'px' }" @scroll="mainScroll"
 						:scroll-into-view="scrollInto" scroll-with-animation="true">
-						<view class="item main-item" v-for="(item,index) in mainArray" :key="index" :id="'item-'+index">
+						<view class="item main-item"  v-for="(item,index) in mainArray" :key="index" :id="'item-'+index">
 							<!-- <view class="title">
 								<view>{{item.title}}</view>
 							</view> -->
 							<view class="goods">
 								<view class="goods-top">
-									<image class="goods-image" src="/static/logo.png" mode=""></image>
-									<view>
+									<image class="goods-image" @click="gotogroup(item)" src="/static/logo.png" mode=""></image>
+									<view style="width: 440rpx;" @click="gotogroup(item)">
 										<!-- <view style="font-weight: bold;">第{{index2+1}}个商品标题</view> -->
-										<view class="number">{{item.groupname}}</view>
+										<view class="number" >{{item.groupname}}</view>
 									</view>
 									<view class="goods-plus" v-if="item.IsInGroup == 0" @click="inGroup(item.groupid,index)">
 										<text class="icon icon-search"
@@ -43,7 +43,7 @@
 									</view>
 
 								</view>
-								<view class="goods-bottom">
+								<view class="goods-bottom" @click="gotogroup(item)">
 									<text class="icon icon-search"
 										style="color: #ff8522;font-size: 25rpx;margin-left: 7rpx;margin-top: 6rpx;height: 25rpx;">&#xef7e;</text>
 									<view
@@ -113,6 +113,9 @@
 				}, 200);
 			})
 		},
+		onShow() {
+			this.getListData()
+		},
 		methods: {
 			search(e, val) {
 				console.log(e, val);
@@ -131,6 +134,17 @@
 					}).exec();
 				});
 			},
+			
+			gotogroup(e) {
+				let group = e;
+				let _self = this;
+			
+				var navData = JSON.stringify(group);
+				uni.navigateTo({
+					url: '/pages/group/groupinfo?data=' + navData
+				})
+			},
+			
 			/* 获取列表数据 */
 			getListData() {
 				// Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
@@ -139,12 +153,7 @@
 					uni.showLoading();
 					setTimeout(() => {
 
-						// let [left, main] = [
-						// 	[],
-						// 	[]
-						// ];
 
-						// 将请求接口返回的数据传递给 Promise 对象的 then 函数。
 						let _self = this
 
 						uni.request({
@@ -500,7 +509,7 @@
 					align-content: center;
 					text-align: center;
 					vertical-align: middle;
-					left: 210rpx;
+					
 
 				}
 

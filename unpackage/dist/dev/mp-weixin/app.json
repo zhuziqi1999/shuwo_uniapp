@@ -7,7 +7,9 @@
     "pages/my/my",
     "pages/message/message",
     "pages/index/addcontent",
-    "pages/index/content"
+    "pages/index/content",
+    "pages/group/groupinfo",
+    "pages/group/selectgroup"
   ],
   "subPackages": [],
   "window": {
@@ -58,6 +60,5 @@
       }
     ]
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap90.json"
+  "usingComponents": {}
 }

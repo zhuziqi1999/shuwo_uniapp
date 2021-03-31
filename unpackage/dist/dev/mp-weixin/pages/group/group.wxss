@@ -219,7 +219,6 @@ page,
           align-content: center;
   text-align: center;
   vertical-align: middle;
-  left: 210rpx;
 }
 .list-box .main .goods .number {
   margin-left: 10rpx;

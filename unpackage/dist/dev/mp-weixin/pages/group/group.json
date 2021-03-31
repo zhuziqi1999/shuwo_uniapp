@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "小组",
-  "enablePullDownRefresh": false,
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "m-search": "/components/mehaotian-search/mehaotian-search"
   }

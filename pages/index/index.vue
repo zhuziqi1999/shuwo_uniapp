@@ -164,6 +164,9 @@
 			this.refresh();
 
 		},
+		onShow() {
+			this.refresh();
+		},
 		// onReady() {
 		// 	 let _this = this;
 		// 	        uni.getSystemInfo({
@@ -212,10 +215,11 @@
 				let _self = this
 
 				uni.request({
-					url: _self.apiServer + 'getHotContentList',
+					url: _self.apiServer + 'getContentList',
 
 					data: {
-						useropenid: uni.getStorageSync("UserOpenid")
+						useropenid: uni.getStorageSync("UserOpenid"),
+						groupid: ""
 					},
 
 					header: {
@@ -228,7 +232,7 @@
 						this.content_list = res.data.content
 
 						for (var i = 0; i < res.data.content.length; i++) {
-							res.data.content[i].time = SOtime.time1(res.data.content[1].contentcreatedtimeunix)
+							res.data.content[i].time = SOtime.time1(res.data.content[i].contentcreatedtimeunix)
 						}
 						console.log(this.content_list)
 
@@ -237,8 +241,7 @@
 			},
 
 			addcontent() {
-				console.log("111")
-				uni.redirectTo({
+				uni.navigateTo({
 					url: '/pages/index/addcontent'
 				})
 			},
