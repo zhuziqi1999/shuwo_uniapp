@@ -21,10 +21,12 @@
 	left: 600rpx;
 	bottom: 80rpx;
 	background-color: #1E8DD5;
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
 	width: 120rpx;
 	height: 120rpx;
-	box-shadow: 5px 5px 10px #888888;
+	-webkit-box-shadow: 5px 5px 10px #888888;
+	        box-shadow: 5px 5px 10px #888888;
 	vertical-align: middle;
 }
 .content-plus-flex.data-v-57280228 {
@@ -94,7 +96,9 @@
 	width: 70rpx;
 	height: 70rpx;
 
-	border-radius: 50%;
+	-webkit-border-radius: 50%;
+
+	        border-radius: 50%;
 	background-size: 100% 100%;
 }
 .content-avatar-view.data-v-57280228 {
@@ -226,7 +230,8 @@
 	width: 300rpx;
 	height: 100rpx;
 	background-color: #eeeeee;
-	border-radius: 10rpx;
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
 	padding-left: 20rpx;
 	top: 20rpx;
 	left: 20rpx;

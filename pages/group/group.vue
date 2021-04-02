@@ -150,7 +150,7 @@
 				// Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
 				new Promise((resolve, reject) => {
 					/* 因无真实数据，当前方法模拟数据。正式项目中将此处替换为 数据请求即可 */
-					uni.showLoading();
+					
 					setTimeout(() => {
 
 
@@ -186,7 +186,7 @@
 					console.log('-----------请求接口返回数据示例-------------');
 					console.log(res);
 
-					uni.hideLoading();
+					
 					this.mainArray = res.main;
 					console.log(this.mainArray)
 					// DOM 挂载后 再调用 getElementTop 获取高度的方法。

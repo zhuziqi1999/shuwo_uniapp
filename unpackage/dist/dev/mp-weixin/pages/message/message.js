@@ -96,7 +96,7 @@ var components
 try {
   components = {
     swiperNavBar: function() {
-      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 83))
+      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 99))
     }
   }
 } catch (e) {
@@ -153,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -233,6 +233,36 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 99));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // var navbar == 0 
 var _default = {
   components: {
@@ -247,42 +277,13 @@ var _default = {
       val3: '',
       placeholder: '动态占位内容',
       navbar: '',
-      content_list: [{
-        id: 1,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 1,
-        bookmark: 1 },
-      {
-        id: 2,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 0,
-        bookmark: 0 },
-      {
-        id: 3,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 1,
-        bookmark: 1 },
-      {
-        id: 4,
-        name: "小尘埃呀。",
-        from: "推理世界",
-        time: "14:10",
-        word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-        like: 0,
-        bookmark: 0 }],
+      like_list: [],
+      comment_list: [],
+      collect_list: [],
 
       //导航
       scrollIntoView: 0, //设置哪个方向可滚动，则在哪个方向滚动到该元素
-      swiperTabList: ['点赞', '评论', '小组'], //导航列表
+      swiperTabList: ['点赞', '评论', '收藏'], //导航列表
       swiperTabIdx: 0,
       swiperCurrentSize: '26rpx', //导航的字体大小
       swiperColor: '#333333', //导航栏字体未选中前颜色
@@ -303,6 +304,7 @@ var _default = {
   },
   onLoad: function onLoad() {
     this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
+    this.GetLikeList();
   },
   methods: {
     //tab点击事件 自行完善需要的代码
@@ -310,7 +312,18 @@ var _default = {
       this.swiperTabIdx = index;
       this.scrollIntoView = Math.max(0, index - 1);
       this.navbar = index;
-      //console.log(index + '----' + item)
+      console.log(index);
+      if (index == 0) {
+        this.GetLikeList();
+      }
+
+      if (index == 1) {
+        this.GetCommentList();
+      }
+
+      if (index == 2) {
+        this.GetCollectList();
+      }
     },
     //滑动事件  自行完善需要的代码
     SwiperChange: function SwiperChange(e) {
@@ -319,6 +332,150 @@ var _default = {
       console.log(e.detail.current);
       this.swiperTabIdx = e.detail.current;
       this.scrollIntoView = Math.max(0, e.detail.current - 1);
+    },
+
+    GetLikeList: function GetLikeList() {var _this = this;
+      var _self = this;
+
+      uni.request({
+        url: _self.apiServer + 'getLikeMessageList',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          useropenid: uni.getStorageSync("UserOpenid") },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '获取点赞列表失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+
+            for (var i = 0; i < res.data.likelist.length; i++) {
+              res.data.likelist[i].time = _SOtime.default.time1(res.data.likelist[i].intimeunix);
+            }
+
+            _this.like_list = res.data.likelist;
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    GetCommentList: function GetCommentList() {var _this2 = this;
+      var _self = this;
+
+      uni.request({
+        url: _self.apiServer + 'getCommentMessageList',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          useropenid: uni.getStorageSync("UserOpenid") },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '获取评论列表失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+
+            for (var i = 0; i < res.data.commentlist.length; i++) {
+              res.data.commentlist[i].time = _SOtime.default.time1(res.data.commentlist[i].commentcreatedtimeunix);
+            }
+
+            _this2.comment_list = res.data.commentlist;
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    GetCollectList: function GetCollectList() {var _this3 = this;
+      var _self = this;
+
+      uni.request({
+        url: _self.apiServer + 'getCollectMessageList',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          useropenid: uni.getStorageSync("UserOpenid") },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '获取收藏列表失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+
+            for (var i = 0; i < res.data.collectlist.length; i++) {
+              res.data.collectlist[i].time = _SOtime.default.time1(res.data.collectlist[i].intimeunix);
+            }
+
+            _this3.collect_list = res.data.collectlist;
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

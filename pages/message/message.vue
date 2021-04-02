@@ -14,49 +14,55 @@
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 			
 			<!-- 点赞 -->
-			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
+			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in like_list"
 				:key="index" v-if="navbar == 0">
 				<view class="content-title">
 
-					<image class="content-avatar" src="../../static/go.jpg"></image>
+					<image class="content-avatar" :src="item.useravatarurl"></image>
 					<view class="content-name-from">
-						<view class="content-username">{{item.name}}</view>
+						<view class="content-username">{{item.username}}</view>
 					</view>
 					<view class="content-share-time">{{item.time}}</view>
 
 				</view>
 				<view class="content-share-from">点赞了你的内容</view>
 				<view class="goods-bottom">
-					<view class="goods-bottom-name">@小尘埃呀</view>
+					<view class="goods-bottom-name">
+						<text>@</text>
+						<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
+						</view>
 					<view style="color: #515151; font-weight: bold; font-size: 25rpx;height: 25rpx;margin-top: 15rpx;">
-						动态内容</view>
+						{{item.contenttext}}</view>
 
 				</view>
 			</view>
 			<!-- 评论 -->
-			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
+			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in comment_list"
 				:key="index" v-if="navbar == 1">
 				<view class="content-title">
 			
-					<image class="content-avatar" src="../../static/go.jpg"></image>
+					<image class="content-avatar" :src="item.useravatarurl"></image>
 					<view class="content-name-from">
-						<view class="content-username1">{{item.name}}</view>
+						<view class="content-username1">{{item.username}}</view>
 						<view class="content-pinlun">评论了你</view>
 					</view>
 					<view class="content-share-time">{{item.time}}</view>
 			
 				</view>
-				<view class="content-share-from">评论内容</view>
+				<view class="content-share-from">{{item.commenttext}}</view>
 				<view class="goods-bottom">
-					<view class="goods-bottom-name">@小尘埃呀</view>
+					<view class="goods-bottom-name">
+					<text>@</text>
+					<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
+					</view>
 					<view style="color: #515151; font-weight: bold; font-size: 25rpx;height: 25rpx;margin-top: 15rpx;">
-						动态内容</view>
+						{{item.contenttext}}</view>
 			
 				</view>
 			</view>
 			
 			<!-- 小组 -->
-			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
+<!-- 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
 				:key="index" v-if="navbar == 2">
 				<view class="content-title">
 			
@@ -69,8 +75,31 @@
 				</view>
 				<view class="content-share-from1">信息内容</view>
 				
+			</view> -->
+			<!-- 收藏 -->
+			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in collect_list"
+				:key="index" v-if="navbar == 2">
+				<view class="content-title">
+			
+					<image class="content-avatar" :src="item.useravatarurl"></image>
+					<view class="content-name-from">
+						<view class="content-username">{{item.username}}</view>
+					</view>
+					<view class="content-share-time">{{item.time}}</view>
+			
+				</view>
+				<view class="content-share-from">收藏了你的内容</view>
+				<view class="goods-bottom">
+					<view class="goods-bottom-name">
+						<text>@</text>
+						<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
+			
+						</view>
+					<view style="color: #515151; font-weight: bold; font-size: 25rpx;height: 25rpx;margin-top: 15rpx;">
+						{{item.contenttext}}</view>
+			
+				</view>
 			</view>
-
 		</scroll-view>
 
 	</view>
@@ -78,6 +107,7 @@
 
 <script>
 	import swiperNavBar from "@/components/swiperNavBar/swiperNavBar.vue";
+	import SOtime from '@/utils/fl-SOtime/SOtime.js'
 	// var navbar == 0 
 	export default {
 		components: {
@@ -92,42 +122,13 @@
 				val3: '',
 				placeholder: '动态占位内容',
 				navbar: '',
-				content_list: [{
-					id: 1,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 1,
-					bookmark: 1
-				}, {
-					id: 2,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 0,
-					bookmark: 0
-				}, {
-					id: 3,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 1,
-					bookmark: 1
-				}, {
-					id: 4,
-					name: "小尘埃呀。",
-					from: "推理世界",
-					time: "14:10",
-					word: "在黎明前最黑暗的时刻，贝丝依偎在温暖的怀抱中，在她来到人世后吸进第一口气的地方，静静地咽下了最后一口气，没有道别，只有深情的一瞥，加上一声轻叹。",
-					like: 0,
-					bookmark: 0
-				}],
+				like_list : [],
+				comment_list : [],
+				collect_list : [],
+				
 				//导航
 				scrollIntoView: 0, //设置哪个方向可滚动，则在哪个方向滚动到该元素
-				swiperTabList: ['点赞', '评论', '小组'], //导航列表
+				swiperTabList: ['点赞', '评论', '收藏'], //导航列表
 				swiperTabIdx: 0,
 				swiperCurrentSize: '26rpx', //导航的字体大小
 				swiperColor: '#333333', //导航栏字体未选中前颜色
@@ -148,6 +149,7 @@
 		},
 		onLoad() {
 			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
+			this.GetLikeList();
 		},
 		methods: {
 			//tab点击事件 自行完善需要的代码
@@ -155,7 +157,18 @@
 				this.swiperTabIdx = index;
 				this.scrollIntoView = Math.max(0, index - 1);
 				this.navbar = index;
-				//console.log(index + '----' + item)
+				console.log(index)
+				if(index == 0) {
+					this.GetLikeList();
+				}
+				
+				if(index == 1) {
+					this.GetCommentList()
+				}
+				
+				if(index == 2) {
+					this.GetCollectList()
+				}
 			},
 			//滑动事件  自行完善需要的代码
 			SwiperChange: function(e) {
@@ -164,6 +177,150 @@
 				console.log(e.detail.current);
 				this.swiperTabIdx = e.detail.current;
 				this.scrollIntoView = Math.max(0, e.detail.current - 1);
+			},
+			
+			GetLikeList (){
+				let _self = this
+				
+				uni.request({
+					url: _self.apiServer + 'getLikeMessageList',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						useropenid: uni.getStorageSync("UserOpenid")
+				
+					},
+					method: 'POST',
+					success: res => {
+				
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '获取点赞列表失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+				
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							console.log(res.data)
+							
+							for (var i = 0; i < res.data.likelist.length; i++) {
+								res.data.likelist[i].time = SOtime.time1(res.data.likelist[i].intimeunix)
+							}
+							
+							this.like_list = res.data.likelist
+						}
+				
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			
+			GetCommentList (){
+				let _self = this
+				
+				uni.request({
+					url: _self.apiServer + 'getCommentMessageList',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						useropenid: uni.getStorageSync("UserOpenid")
+				
+					},
+					method: 'POST',
+					success: res => {
+				
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '获取评论列表失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+				
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							console.log(res.data)
+							
+							for (var i = 0; i < res.data.commentlist.length; i++) {
+								res.data.commentlist[i].time = SOtime.time1(res.data.commentlist[i].commentcreatedtimeunix)
+							}
+							
+							this.comment_list = res.data.commentlist
+						}
+				
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			
+			GetCollectList (){
+				let _self = this
+				
+				uni.request({
+					url: _self.apiServer + 'getCollectMessageList',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						useropenid: uni.getStorageSync("UserOpenid")
+				
+					},
+					method: 'POST',
+					success: res => {
+				
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '获取收藏列表失败',
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+				
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							console.log(res.data)
+							
+							for (var i = 0; i < res.data.collectlist.length; i++) {
+								res.data.collectlist[i].time = SOtime.time1(res.data.collectlist[i].intimeunix)
+							}
+							
+							this.collect_list = res.data.collectlist
+						}
+				
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
 			}
 		}
 	}

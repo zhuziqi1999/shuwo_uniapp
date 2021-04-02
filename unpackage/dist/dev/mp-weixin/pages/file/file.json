@@ -1,8 +1,11 @@
 {
   "navigationBarTitleText": "文件管理",
   "enablePullDownRefresh": false,
+  "disableScroll": true,
   "usingComponents": {
     "ren-dropdown-filter": "/components/ren-dropdown-filter/ren-dropdown-filter",
-    "m-search": "/components/mehaotian-search/mehaotian-search"
+    "m-search": "/components/mehaotian-search/mehaotian-search",
+    "h-form-alert": "/components/h-form-alert/h-form-alert",
+    "h-form-alert1": "/components/h-form-alert/h-form-alert1"
   }
 }

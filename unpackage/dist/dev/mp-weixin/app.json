@@ -59,6 +59,8 @@
         "pagePath": "pages/my/my"
       }
     ]
+    
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap77.json"
 }

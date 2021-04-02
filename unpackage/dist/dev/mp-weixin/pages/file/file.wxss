@@ -17,6 +17,8 @@
 }
 .content-scroll {
 		width: 100%;
+		position: relative;
+		top: 59px;
 }
 .content-list {
 		display: -webkit-box;
@@ -29,9 +31,10 @@
 		
 		width: 100%;
 		background-color: #FFFFFF;
-		position: relative;
-		top: 59px;
 		height: 110rpx;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
 }
 .file-img {
 		padding-left: 20rpx;
@@ -47,7 +50,7 @@
 		-webkit-flex-direction: column;
 		        flex-direction: column;
 		text-align: left;
-		padding-top: 20rpx;
+		width: 570rpx;
 }
 .file-name {
 		font-weight: bold;
@@ -67,10 +70,26 @@
 		left: 600rpx;
 		bottom: 80rpx;
 		background-color: #1E8DD5;
-		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		        border-radius: 50%;
 		width: 120rpx;
 		height: 120rpx;
-		box-shadow: 5px 5px 10px #888888;
+		-webkit-box-shadow: 5px 5px 10px #888888;
+		        box-shadow: 5px 5px 10px #888888;
+		vertical-align: middle;
+}
+.content-upload {
+		position: fixed;
+		z-index: 99;
+		left: 600rpx;
+		bottom: 240rpx;
+		background-color: #1E8DD5;
+		-webkit-border-radius: 50%;
+		        border-radius: 50%;
+		width: 120rpx;
+		height: 120rpx;
+		-webkit-box-shadow: 5px 5px 10px #888888;
+		        box-shadow: 5px 5px 10px #888888;
 		vertical-align: middle;
 }
 .content-plus-flex {
@@ -86,15 +105,20 @@
 		-webkit-justify-content: center;
 		        justify-content: center;
 }
+.prefolder {
+		
+		width: 100%;
+		height: 40rpx;
+		padding-left: 30rpx;
+}
 @font-face {
-		font-family: 'iconfont';
-		/* project id 2415376 */
-		src: url('//at.alicdn.com/t/font_2415376_goytk0t66mq.eot');
-		src: url('//at.alicdn.com/t/font_2415376_goytk0t66mq.eot?#iefix') format('embedded-opentype'),
-			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.woff2') format('woff2'),
-			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.woff') format('woff'),
-			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.ttf') format('truetype'),
-			url('//at.alicdn.com/t/font_2415376_goytk0t66mq.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 2415376 */
+  src: url('//at.alicdn.com/t/font_2415376_6vr0ad3x53d.eot');
+  src: url('//at.alicdn.com/t/font_2415376_6vr0ad3x53d.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2415376_6vr0ad3x53d.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2415376_6vr0ad3x53d.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2415376_6vr0ad3x53d.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2415376_6vr0ad3x53d.svg#iconfont') format('svg');
 }
 .icon {
 		font-family: iconfont;
@@ -105,6 +129,24 @@
 .icon-plus {
 		color: #FFFFFF;
 		font-size: 50rpx;
+		position: relative;
+		text-align: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.icon-delete {
+		color: #bfbfbf;
+		font-size: 30rpx;
+		position: relative;
+		text-align: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.icon-prefolder {
+		color: #bfbfbf;
+		font-size: 30rpx;
 		position: relative;
 		text-align: center;
 		-webkit-box-align: center;

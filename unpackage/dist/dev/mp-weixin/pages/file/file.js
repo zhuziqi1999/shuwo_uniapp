@@ -96,7 +96,7 @@ var components
 try {
   components = {
     renDropdownFilter: function() {
-      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 97))
+      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 113))
     }
   }
 } catch (e) {
@@ -153,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 90));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 97));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -190,14 +190,58 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var hFormAlert = function hFormAlert() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert */ "components/h-form-alert/h-form-alert").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert.vue */ 120));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hFormAlert1 = function hFormAlert1() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert1 */ "components/h-form-alert/h-form-alert1").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert1.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 113));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     mSearch: mSearch,
-    RenDropdownFilter: RenDropdownFilter },
+    RenDropdownFilter: RenDropdownFilter,
+    hFormAlert: hFormAlert,
+    hFormAlert1: hFormAlert1 },
 
 
   data: function data() {
     return {
+      folders: [""],
+      index: 0,
+      folderflag: [],
+      curfolder: "",
+      perfolder: "",
+      folderid: '',
+      formalert1: 0,
+      formalert: 0,
+      folder_list: [],
+      file_list: [],
       content_height: '',
       val0: '',
       val1: '',
@@ -209,63 +253,18 @@ __webpack_require__.r(__webpack_exports__);
       [{ text: '排序', value: '' }, { text: '按修改时间', value: 1 }, { text: '按文件名', value: 2 }],
       [{ text: '文件类型', value: '' }, { text: 'Word文件', value: 1 }, { text: 'PDF文件', value: 2 }]],
 
-      content_list: [{
-        id: 1,
-        is_filefold: 1,
-        file_type: 0,
-        file_name: '奥里给1',
-        file_time: '2020/03/17' },
-
-      {
-        id: 2,
-        is_filefold: 1,
-        file_type: 0,
-        file_name: '奥里给2',
-        file_time: '2020/03/17' },
-
-      {
-        id: 3,
-        is_filefold: 1,
-        file_type: 0,
-        file_name: '奥里给3',
-        file_time: '2020/03/17' },
-
-      {
-        id: 4,
-        is_filefold: 0,
-        file_type: 1,
-        file_name: 'word文件1',
-        file_time: '2020/03/17' },
-
-      {
-        id: 5,
-        is_filefold: 0,
-        file_type: 1,
-        file_name: 'word文件2',
-        file_time: '2020/03/17' },
-
-      {
-        id: 6,
-        is_filefold: 0,
-        file_type: 2,
-        file_name: 'PDF文件1',
-        file_time: '2020/03/17' },
-
-      {
-        id: 7,
-        is_filefold: 0,
-        file_type: 2,
-        file_name: 'PDF文件2',
-        file_time: '2020/03/17' }],
-
-
 
       defaultIndex: [0, 0] };
 
   },
   onLoad: function onLoad() {
     this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
+
   },
+  onShow: function onShow() {
+    this.getFolderList();
+  },
+
   methods: {
     search: function search(e, val) {
       console.log(e, val);
@@ -282,6 +281,215 @@ __webpack_require__.r(__webpack_exports__);
         icon: 'none',
         title: d });
 
+    },
+
+    getFolderList: function getFolderList(e) {var _this = this;
+      var _self = this;
+
+      uni.request({
+        url: _self.apiServer + 'getFolderList',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          foldercreatedby: uni.getStorageSync("UserOpenid"),
+          folderparentid: e },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '获取文件夹列表失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+            _this.folder_list = res.data.folderlist;
+            // this.perfolder = this.curfolder
+            // if(this.folderflag.parentid != null){
+            // 	this.perfolder = this.curfolder
+            // }
+            // if(this.folderflag.parentid == null){
+            // 	this.perfolder = this.folderflag.parentid
+            // }
+
+            for (var i = 0; i < res.data.folderlist.length; i++) {
+              _this.folder_list[i].foldercreatedtime = _SOtime.default.time1(_this.folder_list[i].foldercreatedtimeunix);
+            }
+
+
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    createfolder: function createfolder(e) {var _this2 = this;
+      var _self = this;
+      var foldername = e.text;
+
+      uni.request({
+        url: _self.apiServer + 'createFolder',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          foldercreatedby: uni.getStorageSync("UserOpenid"),
+          foldername: foldername,
+          folderparentid: this.curfolder },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '新建文件夹失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+
+
+            wx.showToast({
+              title: '创建成功',
+              icon: "success",
+              duration: 2000 });
+
+
+            setTimeout(function () {
+
+            }, 2000);
+            _this2.formalert = 0;
+            _this2.getFolderList(_this2.folders[_this2.index]);
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+
+
+    },
+
+    showformalert: function showformalert() {
+      this.formalert = 1;
+    },
+
+    hiddenformalert: function hiddenformalert() {
+      this.formalert = 0;
+    },
+
+
+    showformalert1: function showformalert1(e) {
+      this.folderid = e.folderid;
+      this.formalert1 = 1;
+    },
+
+    hiddenformalert1: function hiddenformalert1() {
+      this.formalert1 = 0;
+    },
+
+    deleteFolder: function deleteFolder() {var _this3 = this;
+      var _self = this;
+
+
+      uni.request({
+        url: _self.apiServer + 'deleteFolder',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          foldercreatedby: uni.getStorageSync("UserOpenid"),
+          folderid: this.folderid },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '删除失败',
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+
+
+            wx.showToast({
+              title: '删除成功',
+              icon: "none",
+              duration: 2000 });
+
+
+            setTimeout(function () {
+            }, 2000);
+            _this3.formalert1 = 0;
+            _this3.getFolderList();
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+    infolder: function infolder(e) {
+      this.folderflag = e;
+      this.folders.push(this.folderflag.folderid);
+      this.index++;
+
+      this.curfolder = this.folders[this.index];
+
+      this.getFolderList(this.folders[this.index]);
+    },
+
+    outfolder: function outfolder() {
+      this.folders.pop();
+      this.index--;
+
+      this.curfolder = this.folders[this.index];
+      this.getFolderList(this.folders[this.index]);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

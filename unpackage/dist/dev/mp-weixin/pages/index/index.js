@@ -103,10 +103,10 @@ var components
 try {
   components = {
     ygcComment: function() {
-      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 76))
+      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 92))
     },
     swiperNavBar: function() {
-      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 83))
+      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 99))
     }
   }
 } catch (e) {
@@ -252,7 +252,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 90));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 76));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 83));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 92));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 99));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var loginRes = uni.getStorageSync('loginRes');
 var SynsUserOpenid = uni.getStorageSync('UserOpenid');
@@ -324,7 +324,7 @@ var content = [];var _default =
     }
 
     // 刷新动态列表
-    this.refresh();
+
 
   },
   onShow: function onShow() {

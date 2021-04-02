@@ -161,7 +161,7 @@
 			}
 
 			// 刷新动态列表
-			this.refresh();
+			
 
 		},
 		onShow() {

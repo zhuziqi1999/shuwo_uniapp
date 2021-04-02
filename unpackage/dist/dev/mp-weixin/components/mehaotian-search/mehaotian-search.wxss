@@ -29,7 +29,8 @@
   display: -webkit-flex;
   display: flex;
   width: 100%;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding: 15rpx;
   font-size: 28rpx;
   background: #fff;
@@ -48,7 +49,8 @@
   overflow: hidden;
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
-  border-radius: 30px;
+  -webkit-border-radius: 30px;
+          border-radius: 30px;
 }
 .search .content .content-box.data-v-c742fcb8 {
   width: 100%;

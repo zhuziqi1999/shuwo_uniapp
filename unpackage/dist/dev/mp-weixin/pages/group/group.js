@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 90));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -282,7 +282,7 @@ __webpack_require__.r(__webpack_exports__);
       // Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
       new Promise(function (resolve, reject) {
         /* 因无真实数据，当前方法模拟数据。正式项目中将此处替换为 数据请求即可 */
-        uni.showLoading();
+
         setTimeout(function () {
 
 
@@ -318,7 +318,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log('-----------请求接口返回数据示例-------------');
         console.log(res);
 
-        uni.hideLoading();
+
         _this3.mainArray = res.main;
         console.log(_this3.mainArray);
         // DOM 挂载后 再调用 getElementTop 获取高度的方法。
