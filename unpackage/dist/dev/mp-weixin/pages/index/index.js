@@ -252,6 +252,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 92));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 99));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var loginRes = uni.getStorageSync('loginRes');
@@ -273,7 +289,13 @@ var content = [];var _default =
       // spanStyle: {
       //    "--windowheight": uni.getSystemInfoSync().windowHeight
       // },
+      buttonTop: 0,
+      buttonLeft: 0,
+      windowHeight: '',
+      windowWidth: '',
+      contentid: '',
       content_height: '',
+      content: [],
       windowheight: windowheight,
       loginRes: loginRes,
       SynsUserOpenid: SynsUserOpenid,
@@ -310,8 +332,9 @@ var content = [];var _default =
   },
   onLoad: function onLoad() {
     // 加载定义好的方法
-    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
-    38;
+
+
+    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 38;
 
     if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
       loginRes = this.checkLogin('../index/index', 2);
@@ -327,6 +350,9 @@ var content = [];var _default =
 
 
   },
+
+
+
   onShow: function onShow() {
     this.refresh();
   },
@@ -348,9 +374,10 @@ var content = [];var _default =
   // 	        console.log('w' + this.scrollviewHigh);
   // },
   methods: {
-    toggleMask: function toggleMask(type, content) {
+    toggleMask: function toggleMask(type, content, id) {
       this.$refs.ygcComment.toggleMask(type);
       this.content = content;
+      this.contentid = id;
     },
     search: function search(e, val) {
       console.log(e, val);
@@ -395,7 +422,8 @@ var content = [];var _default =
           _this.content_list = res.data.content;
 
           for (var i = 0; i < res.data.content.length; i++) {
-            res.data.content[i].time = _SOtime.default.time1(res.data.content[i].contentcreatedtimeunix);
+            res.data.content[i].time = _SOtime.default.time1(res.data.content[i].
+            contentcreatedtimeunix);
           }
           console.log(_this.content_list);
 
@@ -444,6 +472,9 @@ var content = [];var _default =
             // 用户信息写入缓存
             uni.hideLoading();
 
+            setTimeout(function () {
+
+            }, 2000);
             _this2.content_list[index].isliked = 1;
 
             _this2.content_list[index].contentlikes++;
@@ -495,6 +526,9 @@ var content = [];var _default =
           if (res.data.code == 1) {
             // 用户信息写入缓存
             uni.hideLoading();
+            setTimeout(function () {
+
+            }, 2000);
             _this3.content_list[index].isliked = 0;
             _this3.content_list[index].contentlikes--;
           }
@@ -614,7 +648,7 @@ var content = [];var _default =
         url: '/pages/index/content?data=' + navData });
 
     },
-    pubComment: function pubComment(e) {var _this6 = this;
+    pubComment: function pubComment(e, id) {var _this6 = this;
       var text = e;
       var _self = this;
 
@@ -652,7 +686,7 @@ var content = [];var _default =
               duration: 2000 });
 
             _this6.$refs.ygcComment.toggleMask("false");
-
+            _this6.content_list[_this6.contentid].contentcomments++;
           }
 
         },

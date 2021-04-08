@@ -5,12 +5,15 @@
 		<ygc-comment ref="ygcComment" :placeholder="'发布评论'" @pubComment="pubComment" style="z-index: 999;">
 		</ygc-comment>
 
-		<view class="content-plus" @click="addcontent">
+<!-- 		<view class="content-plus" @click="addcontent">
 			<view class="content-plus-flex">
 				<text class="icon icon-plus">&#xf081;</text>
 			</view>
 
-		</view>
+		</view> -->
+
+
+
 
 		<mSearch @search="search($event,0)" style="justify-content: center;width: 100%;"></mSearch>
 		<swiperNavBar :scrollIntoView="scrollIntoView" :swiperTabList='swiperTabList' :swiperTabIdx='swiperTabIdx'
@@ -22,12 +25,21 @@
 			:currentSwiperLineAnimatie="currentSwiperLineAnimatie" v-if=" swiperTabList.length > 1 "
 			@change="CurrentTab" style="width: 100%;">
 		</swiperNavBar>
+		<movable-area :style="{height:content_height+'px',}"  class="content-scroll">
+			
+			  	<movable-view class="content-plus" direction="all" style="pointer-events: auto; z-index: 99;" @click="addcontent">
+					<view class="content-plus-flex">
+						<text class="icon icon-plus">&#xf081;</text>
+						<text style="font-size: 28rpx;color: #FFFFFF;padding: 10rpx;font-weight: bold; padding-left: 5rpx;">发布动态</text>
+					</view>
+				</movable-view>
 
+			
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
-				:key="index" >
+				:key="index">
 				<view class="content-title">
 					<view class="content-avatar-view">
 						<image :src="item.useravatarurl" class="content-avatar" mode="scaleToFill" webp="true"></image>
@@ -37,9 +49,10 @@
 						<view class="content-username">{{item.username}}</view>
 						<view class="content-share-from">发布自{{item.groupname}}</view>
 					</view>
+					<view class="content-right">
 					<view class="content-share-time" @click="gotoContent(item)">{{item.time}}</view>
 					<image class="content-share-more" src="../../static/ellipsis-h.png"></image>
-
+					</view>
 				</view>
 
 				<view class="content-share-word" @click="gotoContent(item)">{{item.contenttext}}</view>
@@ -47,8 +60,10 @@
 				<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
 					</iamge> -->
 				<view class="content-share-file">
-					<image class="content-share-file-img" src="../../static/W.png"></image>
-					<text class="content-share-file-word">《小妇人》.word</text>
+					<image class="content-share-file-img" v-if="item.filetype == 'doc'" src="../../static/W.png"></image>
+					<image class="content-share-file-img" v-if="item.filetype == 'docx'" src="../../static/W.png"></image>
+					<image class="content-share-file-img" v-if="item.filetype == 'pdf'" src="../../static/P.png"></image>
+					<text class="content-share-file-word">{{item.filename}}</text>
 				</view>
 
 				<view class="content-operate">
@@ -61,7 +76,7 @@
 					</view>
 					<view class="content-operate-comments">
 						<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon"
-							@click="toggleMask('show',item)">
+							@click="toggleMask('show',item,index)">
 						</image>
 						<text class="content-operate-comments-number">{{item.contentcomments}}</text>
 					</view>
@@ -80,6 +95,7 @@
 
 			</view>
 		</scroll-view>
+		</movable-area>
 		<navigator url="../login/login" v-if="loginRes == 0"><button type="default">授权登录界面</button></navigator>
 	</view>
 
@@ -110,7 +126,13 @@
 				// spanStyle: {
 				//    "--windowheight": uni.getSystemInfoSync().windowHeight
 				// },
+				buttonTop: 0,
+				buttonLeft: 0,
+				windowHeight: '',
+				windowWidth: '',
+				contentid : '',
 				content_height: '',
+				content: [],
 				windowheight,
 				loginRes,
 				SynsUserOpenid,
@@ -147,8 +169,9 @@
 		},
 		onLoad() {
 			// 加载定义好的方法
-			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
-				38;
+
+
+			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 38;
 
 			if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
 				loginRes = this.checkLogin('../index/index', 2);
@@ -161,9 +184,12 @@
 			}
 
 			// 刷新动态列表
-			
+
 
 		},
+
+
+
 		onShow() {
 			this.refresh();
 		},
@@ -185,9 +211,10 @@
 		// 	        console.log('w' + this.scrollviewHigh);
 		// },
 		methods: {
-			toggleMask(type,content) {
+			toggleMask(type, content,id) {
 				this.$refs.ygcComment.toggleMask(type);
 				this.content = content
+				this.contentid = id
 			},
 			search(e, val) {
 				console.log(e, val);
@@ -232,7 +259,8 @@
 						this.content_list = res.data.content
 
 						for (var i = 0; i < res.data.content.length; i++) {
-							res.data.content[i].time = SOtime.time1(res.data.content[i].contentcreatedtimeunix)
+							res.data.content[i].time = SOtime.time1(res.data.content[i]
+								.contentcreatedtimeunix)
 						}
 						console.log(this.content_list)
 
@@ -281,6 +309,9 @@
 							// 用户信息写入缓存
 							uni.hideLoading();
 							
+							setTimeout(function() {
+							
+							}, 2000)
 							this.content_list[index].isliked = 1
 							
 							this.content_list[index].contentlikes++
@@ -332,6 +363,9 @@
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							uni.hideLoading();
+							setTimeout(function() {
+							
+							}, 2000)
 							this.content_list[index].isliked = 0
 							this.content_list[index].contentlikes--
 						}
@@ -441,7 +475,7 @@
 					}
 				});
 			},
-			
+
 			gotoContent(e) {
 				let content = e;
 				let _self = this;
@@ -451,10 +485,10 @@
 					url: '/pages/index/content?data=' + navData
 				})
 			},
-			pubComment(e) {
+			pubComment(e, id) {
 				let text = e
 				let _self = this
-				
+
 				uni.request({
 					url: _self.apiServer + 'createComment',
 					header: {
@@ -463,9 +497,9 @@
 					dataType: "json",
 					data: {
 						commentcreatedby: uni.getStorageSync('UserOpenid'),
-						commenttext : text,
-						commentcontentid : this.content.contentid,
-						commentbackuserid : this.content.contentcreatedby
+						commenttext: text,
+						commentcontentid: this.content.contentid,
+						commentbackuserid: this.content.contentcreatedby
 					},
 					method: 'POST',
 					success: res => {
@@ -478,20 +512,20 @@
 							return false;
 						}
 						// 用户信息写入缓存
-				
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
-							
+
 							uni.hideLoading();
 							uni.showToast({
 								title: '评论成功',
 								duration: 2000
 							})
 							this.$refs.ygcComment.toggleMask("false");
-							
+							this.content_list[this.contentid].contentcomments++
 						}
-				
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -500,8 +534,8 @@
 						});
 					}
 				});
-				
-				
+
+
 			}
 
 		}
@@ -517,19 +551,21 @@
 		height: 100%;
 	}
 
+
+
 	.content-plus {
-		position: fixed;
-		z-index: 99;
-		left: 600rpx;
-		bottom: 80rpx;
+		left: 285rpx;
+		top: 1050rpx;
 		background-color: #1E8DD5;
-		border-radius: 50%;
-		width: 120rpx;
-		height: 120rpx;
-		box-shadow: 5px 5px 10px #888888;
+		border-radius: 30rpx;
+		width: 180rpx;
+		height: 60rpx;
+		box-shadow: 0px 5px 10px #888888;
 		vertical-align: middle;
 
+
 	}
+
 
 	.content-plus-flex {
 		width: 100%;
@@ -680,7 +716,13 @@
 		justify-content: center;
 
 	}
-
+	
+	.content-right {
+		width: 400rpx;
+		display: flex;
+		flex-direction: row;
+	}
+	
 	@font-face {
 		font-family: 'iconfont';
 		/* project id 2415376 */
@@ -701,7 +743,7 @@
 
 	.icon-plus {
 		color: #FFFFFF;
-		font-size: 50rpx;
+		font-size: 30rpx;
 		position: relative;
 		text-align: center;
 		align-items: center;
@@ -730,6 +772,7 @@
 	.content-share-file-word {
 		padding-left: 10rpx;
 		font-size: 20rpx;
+		width: 200rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;

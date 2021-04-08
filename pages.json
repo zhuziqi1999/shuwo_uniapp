@@ -32,7 +32,7 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "文件管理",
-                "enablePullDownRefresh": false,
+                "enablePullDownRefresh": true,
 				"disableScroll":true
 				
             }
@@ -52,7 +52,7 @@
             "path" : "pages/message/message",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "私信",
+                "navigationBarTitleText": "消息",
                 "enablePullDownRefresh": true
             }
             
@@ -95,6 +95,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/file/selectfile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -132,7 +141,7 @@
 		},
 		{
 			"index": 3,
-			"text": "私信",
+			"text": "消息",
 			"iconPath": "static/envelope.png",
 			"selectedIconPath": "static/envelope1.png",
 			"pagePath":"pages/message/message"

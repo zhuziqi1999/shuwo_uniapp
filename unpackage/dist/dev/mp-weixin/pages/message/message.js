@@ -304,7 +304,12 @@ var _default = {
   },
   onLoad: function onLoad() {
     this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
+
+  },
+  onShow: function onShow() {
     this.GetLikeList();
+    this.GetCollectList();
+    this.GetCommentList();
   },
   methods: {
     //tab点击事件 自行完善需要的代码

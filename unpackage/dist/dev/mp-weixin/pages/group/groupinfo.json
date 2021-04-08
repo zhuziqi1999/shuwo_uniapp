@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": true,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "ygc-comment": "/components/ygc-comment/ygc-comment",
+    "swiper-nav-bar": "/components/swiperNavBar/swiperNavBar",
+    "nav-bar": "/components/zhouWei-navBar/index"
+  }
+}

@@ -9,7 +9,8 @@
     "pages/index/addcontent",
     "pages/index/content",
     "pages/group/groupinfo",
-    "pages/group/selectgroup"
+    "pages/group/selectgroup",
+    "pages/file/selectfile"
   ],
   "subPackages": [],
   "window": {
@@ -46,7 +47,7 @@
       },
       {
         "index": 3,
-        "text": "私信",
+        "text": "消息",
         "iconPath": "static/envelope.png",
         "selectedIconPath": "static/envelope1.png",
         "pagePath": "pages/message/message"
@@ -59,8 +60,6 @@
         "pagePath": "pages/my/my"
       }
     ]
-    
   },
-  "usingComponents": {},
-  "sitemapLocation": "sitemap77.json"
+  "usingComponents": {}
 }

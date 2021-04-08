@@ -19,18 +19,20 @@
 				<view class="main">
 					<scroll-view scroll-y="true" :style="{ 'height':scrollHeight + 'px' }" @scroll="mainScroll"
 						:scroll-into-view="scrollInto" scroll-with-animation="true">
-						<view class="item main-item"  v-for="(item,index) in mainArray" :key="index" :id="'item-'+index">
+						<view class="item main-item" v-for="(item,index) in mainArray" :key="index" :id="'item-'+index">
 							<!-- <view class="title">
 								<view>{{item.title}}</view>
 							</view> -->
 							<view class="goods">
 								<view class="goods-top">
-									<image class="goods-image" @click="gotogroup(item)" src="/static/logo.png" mode=""></image>
+									<image class="goods-image" @click="gotogroup(item)" src="/static/logo.png" mode="">
+									</image>
 									<view style="width: 440rpx;" @click="gotogroup(item)">
 										<!-- <view style="font-weight: bold;">第{{index2+1}}个商品标题</view> -->
-										<view class="number" >{{item.groupname}}</view>
+										<view class="number">{{item.groupname}}</view>
 									</view>
-									<view class="goods-plus" v-if="item.IsInGroup == 0" @click="inGroup(item.groupid,index)">
+									<view class="goods-plus" v-if="item.IsInGroup == 0"
+										@click="inGroup(item.groupid,index)">
 										<text class="icon icon-search"
 											style="color: #FFFFFF;font-size: 25rpx;margin-left: 7rpx;margin-top: 2rpx;">&#xf081;</text>
 										<view
@@ -48,7 +50,8 @@
 										style="color: #ff8522;font-size: 25rpx;margin-left: 7rpx;margin-top: 6rpx;height: 25rpx;">&#xef7e;</text>
 									<view
 										style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 25rpx;">
-										{{item.groupremark}}</view>
+										{{item.groupremark}}
+									</view>
 
 								</view>
 							</view>
@@ -134,23 +137,23 @@
 					}).exec();
 				});
 			},
-			
+
 			gotogroup(e) {
 				let group = e;
 				let _self = this;
-			
+
 				var navData = JSON.stringify(group);
 				uni.navigateTo({
 					url: '/pages/group/groupinfo?data=' + navData
 				})
 			},
-			
+
 			/* 获取列表数据 */
 			getListData() {
 				// Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
 				new Promise((resolve, reject) => {
 					/* 因无真实数据，当前方法模拟数据。正式项目中将此处替换为 数据请求即可 */
-					
+
 					setTimeout(() => {
 
 
@@ -163,7 +166,7 @@
 							},
 							dataType: "json",
 							data: {
-								useropenid : uni.getStorageSync('UserOpenid')
+								useropenid: uni.getStorageSync('UserOpenid')
 							},
 
 
@@ -186,7 +189,7 @@
 					console.log('-----------请求接口返回数据示例-------------');
 					console.log(res);
 
-					
+
 					this.mainArray = res.main;
 					console.log(this.mainArray)
 					// DOM 挂载后 再调用 getElementTop 获取高度的方法。
@@ -234,8 +237,8 @@
 				let index = e.currentTarget.dataset.index;
 				this.scrollInto = `item-${index}`;
 			},
-			
-			inGroup(e,id) {
+
+			inGroup(e, id) {
 				let _self = this;
 				let groupid = e
 				let index = id
@@ -247,14 +250,14 @@
 					},
 					dataType: "json",
 					data: {
-						userid : uni.getStorageSync('UserOpenid'),
-						groupid : groupid
-						
+						userid: uni.getStorageSync('UserOpenid'),
+						groupid: groupid
+
 					},
 					method: 'POST',
 					success: res => {
-						
-						
+
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -264,7 +267,7 @@
 							return false;
 						}
 						// 用户信息写入缓存
-						
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
@@ -274,13 +277,13 @@
 								icon: "none",
 								duration: 2000
 							})
-							
+
 							this.mainArray[index].IsInGroup = 1
 							console.log(this.mainArray[index].IsInGroup)
 						}
-				
-						
-						
+
+
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -290,12 +293,12 @@
 					}
 				});
 			},
-			
-			outGroup(e,id) {
+
+			outGroup(e, id) {
 				let _self = this;
 				let groupid = e
 				let index = id
-			
+
 				uni.request({
 					url: _self.apiServer + 'outGroup',
 					header: {
@@ -303,14 +306,14 @@
 					},
 					dataType: "json",
 					data: {
-						userid : uni.getStorageSync('UserOpenid'),
-						groupid : groupid
-						
+						userid: uni.getStorageSync('UserOpenid'),
+						groupid: groupid
+
 					},
 					method: 'POST',
 					success: res => {
-						
-						
+
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -320,7 +323,7 @@
 							return false;
 						}
 						// 用户信息写入缓存
-						
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
@@ -330,13 +333,13 @@
 								icon: "none",
 								duration: 2000
 							})
-							
+
 							this.mainArray[index].IsInGroup = 0
 							console.log(this.mainArray[index].IsInGroup)
 						}
-				
-						
-						
+
+
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -345,9 +348,11 @@
 						});
 					}
 				});
-			}
+			},
+
 			
-			
+
+
 		},
 	};
 </script>
@@ -509,7 +514,7 @@
 					align-content: center;
 					text-align: center;
 					vertical-align: middle;
-					
+
 
 				}
 
