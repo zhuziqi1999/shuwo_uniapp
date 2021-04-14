@@ -2,5 +2,9 @@
   "navigationBarTitleText": "我的主页",
   "enablePullDownRefresh": false,
   "navigationStyle": "custom",
-  "usingComponents": {}
+  "usingComponents": {
+    "ygc-comment": "/components/ygc-comment/ygc-comment",
+    "wyb-action-sheet": "/components/wyb-action-sheet/wyb-action-sheet",
+    "nav-bar": "/components/zhouWei-navBar/index1"
+  }
 }

@@ -5,13 +5,7 @@
 		<ygc-comment ref="ygcComment" :placeholder="'发布评论'" @pubComment="pubComment" style="z-index: 999;">
 		</ygc-comment>
 
-<!-- 		<view class="content-plus" @click="addcontent">
-			<view class="content-plus-flex">
-				<text class="icon icon-plus">&#xf081;</text>
-			</view>
-
-		</view> -->
-
+		<wyb-action-sheet ref="actionSheet" :options="options" @itemclick="onItemClick"/>
 
 
 
@@ -25,76 +19,86 @@
 			:currentSwiperLineAnimatie="currentSwiperLineAnimatie" v-if=" swiperTabList.length > 1 "
 			@change="CurrentTab" style="width: 100%;">
 		</swiperNavBar>
-		<movable-area :style="{height:content_height+'px',}"  class="content-scroll">
-			
-			  	<movable-view class="content-plus" direction="all" style="pointer-events: auto; z-index: 99;" @click="addcontent">
-					<view class="content-plus-flex">
-						<text class="icon icon-plus">&#xf081;</text>
-						<text style="font-size: 28rpx;color: #FFFFFF;padding: 10rpx;font-weight: bold; padding-left: 5rpx;">发布动态</text>
-					</view>
-				</movable-view>
+		<movable-area :style="{height:content_height+'px',}" class="content-scroll">
 
-			
-		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
-			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
-
-			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
-				:key="index">
-				<view class="content-title">
-					<view class="content-avatar-view">
-						<image :src="item.useravatarurl" class="content-avatar" mode="scaleToFill" webp="true"></image>
-					</view>
-
-					<view class="content-name-from">
-						<view class="content-username">{{item.username}}</view>
-						<view class="content-share-from">发布自{{item.groupname}}</view>
-					</view>
-					<view class="content-right">
-					<view class="content-share-time" @click="gotoContent(item)">{{item.time}}</view>
-					<image class="content-share-more" src="../../static/ellipsis-h.png"></image>
-					</view>
+			<movable-view class="content-plus" direction="all" style="pointer-events: auto; z-index: 99;"
+				@click="addcontent">
+				<view class="content-plus-flex">
+					<text class="icon icon-plus">&#xf081;</text>
+					<text
+						style="font-size: 28rpx;color: #FFFFFF;padding: 10rpx;font-weight: bold; padding-left: 5rpx;">发布动态</text>
 				</view>
+			</movable-view>
 
-				<view class="content-share-word" @click="gotoContent(item)">{{item.contenttext}}</view>
-				<!-- 图片 -->
-				<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
+
+			<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
+				scroll-y :style="{height:content_height+'px',}" class="content-scroll">
+
+				<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
+					:key="index">
+					<view class="content-title">
+						<view class="content-avatar-view" @click="gotoUser(item)">
+							<image :src="item.useravatarurl" class="content-avatar" mode="scaleToFill" webp="true" >
+							</image>
+						</view>
+
+						<view class="content-name-from">
+							<view class="content-username">{{item.username}}</view>
+							<view class="content-share-from">发布自{{item.groupname}}</view>
+						</view>
+						<view class="content-right">
+							<view class="content-right-info">
+							<view class="content-share-time" @click="gotoContent(item)">{{item.time}}</view>
+							<image class="content-share-more" src="../../static/ellipsis-h.png"
+								@click="showactionsheet(item)"></image>
+							</view>
+						</view>
+					</view>
+
+					<view class="content-share-word" @click="gotoContent(item)">{{item.contenttext}}</view>
+					<!-- 图片 -->
+					<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
 					</iamge> -->
-				<view class="content-share-file">
-					<image class="content-share-file-img" v-if="item.filetype == 'doc'" src="../../static/W.png"></image>
-					<image class="content-share-file-img" v-if="item.filetype == 'docx'" src="../../static/W.png"></image>
-					<image class="content-share-file-img" v-if="item.filetype == 'pdf'" src="../../static/P.png"></image>
-					<text class="content-share-file-word">{{item.filename}}</text>
+					<view class="content-share-bar" v-if="item.filename" @click="gotoContent(item)">
+					<view class="content-share-file" >
+						<image class="content-share-file-img" v-if="item.filetype == 'doc'" src="../../static/W.png">
+						</image>
+						<image class="content-share-file-img" v-if="item.filetype == 'docx'" src="../../static/W.png">
+						</image>
+						<image class="content-share-file-img" v-if="item.filetype == 'pdf'" src="../../static/P.png">
+						</image>
+						<text class="content-share-file-word">{{item.filename}}</text>
+					</view>
+					</view>
+					<view class="content-operate">
+						<view class="content-operate-likes">
+							<image src="../../static/heart1.png" v-if="item.isliked == 0" class="content-operate-icon"
+								@click="LikeContent(item.contentid,index)"></image>
+							<image src="../../static/heart.png" v-if="item.isliked == 1" class="content-operate-icon"
+								@click="UnlikeContent(item.contentid,index)"></image>
+							<text class="content-operate-likes-number">{{item.contentlikes}}</text>
+						</view>
+						<view class="content-operate-comments">
+							<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon"
+								@click="toggleMask('show',item,index)">
+							</image>
+							<text class="content-operate-comments-number">{{item.contentcomments}}</text>
+						</view>
+
+						<view class="content-operate-collect">
+
+							<image src="../../static/bookmark1.png" v-if="item.iscollected == 0"
+								class="content-operate-icon" @click="CollectContent(item.contentid,index)">
+							</image>
+							<image src="../../static/bookmark.png" v-if="item.iscollected == 1"
+								class="content-operate-icon" @click="UncollectContent(item.contentid,index)">
+							</image>
+
+						</view>
+					</view>
+
 				</view>
-
-				<view class="content-operate">
-					<view class="content-operate-likes">
-						<image src="../../static/heart1.png" v-if="item.isliked == 0" class="content-operate-icon"
-							@click="LikeContent(item.contentid,index)"></image>
-						<image src="../../static/heart.png" v-if="item.isliked == 1" class="content-operate-icon"
-							@click="UnlikeContent(item.contentid,index)"></image>
-						<text class="content-operate-likes-number">{{item.contentlikes}}</text>
-					</view>
-					<view class="content-operate-comments">
-						<image src="../../static/comments1.png" v-if="comments == 0" class="content-operate-icon"
-							@click="toggleMask('show',item,index)">
-						</image>
-						<text class="content-operate-comments-number">{{item.contentcomments}}</text>
-					</view>
-
-					<view class="content-operate-collect">
-
-						<image src="../../static/bookmark1.png" v-if="item.iscollected == 0"
-							class="content-operate-icon" @click="CollectContent(item.contentid,index)">
-						</image>
-						<image src="../../static/bookmark.png" v-if="item.iscollected == 1" class="content-operate-icon"
-							@click="UncollectContent(item.contentid,index)">
-						</image>
-
-					</view>
-				</view>
-
-			</view>
-		</scroll-view>
+			</scroll-view>
 		</movable-area>
 		<navigator url="../login/login" v-if="loginRes == 0"><button type="default">授权登录界面</button></navigator>
 	</view>
@@ -102,6 +106,7 @@
 </template>
 
 <script>
+	import wybActionSheet from '@/components/wyb-action-sheet/wyb-action-sheet.vue';
 	import mSearch from '@/components/mehaotian-search/mehaotian-search.vue';
 	import ygcComment from '@/components/ygc-comment/ygc-comment.vue';
 	import swiperNavBar from "@/components/swiperNavBar/swiperNavBar.vue";
@@ -118,11 +123,19 @@
 		components: {
 			mSearch,
 			ygcComment,
-			swiperNavBar
+			swiperNavBar,
+			wybActionSheet
 		},
 
 		data() {
 			return {
+				// 这里的options有两种写法
+				// 简写形式：
+				// 完整形式
+
+				options: [],
+
+
 				// spanStyle: {
 				//    "--windowheight": uni.getSystemInfoSync().windowHeight
 				// },
@@ -130,8 +143,9 @@
 				buttonLeft: 0,
 				windowHeight: '',
 				windowWidth: '',
-				contentid : '',
+				contentid: '',
 				content_height: '',
+				curcontent: [],
 				content: [],
 				windowheight,
 				loginRes,
@@ -171,7 +185,8 @@
 			// 加载定义好的方法
 
 
-			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 38;
+			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
+				38;
 
 			if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
 				loginRes = this.checkLogin('../index/index', 2);
@@ -189,29 +204,44 @@
 		},
 
 
-
 		onShow() {
-			this.refresh();
+			this.getContentList();
 		},
-		// onReady() {
-		// 	 let _this = this;
-		// 	        uni.getSystemInfo({
-		// 	            success(res) {
-		// 	                _this.phoneHeight = res.windowHeight;
-		// 	                console.log(res.windowHeight);
-		// 	                // 计算组件的高度
-		// 	                let view = uni.createSelectorQuery().select('.hd-height');
-		// 	                view.boundingClientRect(data => {
-		// 	                    _this.navHeight = data.height;
-		// 	                    console.log(_this.navHeight);
-		// 	                    _this.scrollviewHigh = _this.phoneHeight - _this.navHeight;
-		// 	                }).exec();
-		// 	            }
-		// 	        });
-		// 	        console.log('w' + this.scrollviewHigh);
-		// },
+
 		methods: {
-			toggleMask(type, content,id) {
+			
+			showactionsheet(e) {
+				this.options = [{
+					label: '删除动态', // 显示的文字
+					color: '#ff0000', // 文字颜色
+					fontSize: '', // 文字大小
+					disabled: false // 是否禁用
+				}, {
+					label: '投诉动态',
+					color: '#000000',
+					fontSize: '',
+					disabled: false
+				}]
+				let content = e
+				this.curcontent = content
+				if(content.contentcreatedby == uni.getStorageSync("UserOpenid")){
+					console.log("sdf")
+					this.options[1].disabled = true
+				}
+				this.$refs.actionSheet.showActionSheet(); // 显示
+			},
+			
+			onItemClick(e) {
+				let index = e.index
+				let label = e.label
+				if (label == "删除动态") {
+					this.deleteContent(this.curcontent)
+				}
+				
+			},
+
+
+			toggleMask(type, content, id) {
 				this.$refs.ygcComment.toggleMask(type);
 				this.content = content
 				this.contentid = id
@@ -238,7 +268,7 @@
 				this.scrollIntoView = Math.max(0, e.detail.current - 1);
 			},
 
-			refresh() {
+			getContentList() {
 				let _self = this
 
 				uni.request({
@@ -273,6 +303,62 @@
 					url: '/pages/index/addcontent'
 				})
 			},
+			
+			deleteContent(e) {
+				let _self = this
+				let content = e
+				console.log(content.contentid)
+				uni.request({
+					url: _self.apiServer + 'deleteContent',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						contentcreatedby : uni.getStorageSync("UserOpenid"),
+						contentid : content.contentid
+			
+					},
+					method: 'POST',
+					success: res => {
+			
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '删除失败',
+								icon: "none",
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+			
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							console.log(res.data)
+			
+							wx.showToast({
+								title: '删除成功',
+								icon: "none",
+								duration: 2000
+							})
+			
+							setTimeout(function() {}, 2000)
+							this.options[1].disabled = false
+							this.getContentList()
+						}
+			
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			
 
 			LikeContent(e, id) {
 				let _self = this;
@@ -308,12 +394,12 @@
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							uni.hideLoading();
-							
+
 							setTimeout(function() {
-							
+
 							}, 2000)
 							this.content_list[index].isliked = 1
-							
+
 							this.content_list[index].contentlikes++
 						}
 
@@ -364,7 +450,7 @@
 							// 用户信息写入缓存
 							uni.hideLoading();
 							setTimeout(function() {
-							
+
 							}, 2000)
 							this.content_list[index].isliked = 0
 							this.content_list[index].contentlikes--
@@ -485,6 +571,17 @@
 					url: '/pages/index/content?data=' + navData
 				})
 			},
+			
+			gotoUser(e) {
+				let content = e;
+				let _self = this;
+			
+				var navData = JSON.stringify(content);
+				uni.navigateTo({
+					url: '/pages/my/myinfo?data=' + navData
+				})
+			},
+			
 			pubComment(e, id) {
 				let text = e
 				let _self = this
@@ -555,7 +652,7 @@
 
 	.content-plus {
 		left: 285rpx;
-		top: 1050rpx;
+		top: 92%;
 		background-color: #1E8DD5;
 		border-radius: 30rpx;
 		width: 180rpx;
@@ -651,6 +748,8 @@
 		font-weight: bold;
 	}
 
+
+
 	.content-share-from {
 		position: relative;
 		width: auto;
@@ -665,11 +764,12 @@
 	.content-share-time {
 		position: relative;
 		top: 45rpx;
-		width: auto;
+		width: 150rpx;
 		height: 30rpx;
 		font-size: 27rpx;
-		left: 170rpx;
 		font-weight: bold;
+		padding-right: 20rpx;
+		text-align: right;
 		color: #cdcdcd;
 
 	}
@@ -679,7 +779,6 @@
 		width: 50rpx;
 		height: 50rpx;
 		top: 38rpx;
-		left: 190rpx;
 		margin-right: 20rpx;
 	}
 
@@ -716,13 +815,15 @@
 		justify-content: center;
 
 	}
-	
+
 	.content-right {
-		width: 400rpx;
+		width: 100%;
 		display: flex;
 		flex-direction: row;
+		margin-left:auto;
+		justify-content: flex-end;
 	}
-	
+
 	@font-face {
 		font-family: 'iconfont';
 		/* project id 2415376 */
@@ -758,11 +859,19 @@
 		background-color: #eeeeee;
 		border-radius: 10rpx;
 		padding-left: 20rpx;
-		top: 20rpx;
-		left: 20rpx;
+		margin-left: 20rpx;
 		text-align: center;
 		align-items: center;
+		margin-right: 500rpx;
 	}
+	.content-share-bar {
+		width: 100%;
+		height: 100rpx;
+		position: relative;
+		top: 20rpx;
+
+	}
+
 
 	.content-share-file-img {
 		width: 80rpx;
@@ -809,5 +918,12 @@
 
 	.content-list-hover {
 		background-color: #f8f8f8;
+	}
+	
+	.content-right-info {
+		display: flex;
+		flex-direction: row;
+		position: relative;
+
 	}
 </style>

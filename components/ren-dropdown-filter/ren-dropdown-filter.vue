@@ -9,14 +9,14 @@
                     <image src="https://i.loli.net/2020/07/15/xjVSvzWcH9NO7al.png" mode="" class="icon-triangle" v-else></image>
                 </view>
 
-                <view class="date-wrapper">
+<!--                <view class="date-wrapper">
                     <picker mode="date" @change="handleDate">
                         <view class="date c-flex-align" :style="{ height: height + 'rpx' }" @click="dateClick">
                             <view>{{ selDate }}</view>
                             <image src="https://i.loli.net/2020/07/15/xjVSvzWcH9NO7al.png" mode="" class="icon-triangle"></image>
                         </view>
                     </picker>
-                </view>
+                </view> -->
             </view>
             <scroll-view scroll-y="true" class="popup" :class="popupShow ? 'popupShow' : ''">
                 <view class="item-opt c-flex-align" :class="item.select ? 'actOpt' : ''" v-for="(item, index) in navData[actNav]" :key="index" @click="handleOpt(index)">
@@ -115,7 +115,6 @@ export default {
                 let sel = item.filter(child => child.select);
                 data.push(sel);
             });
-            console.log(data);
             this.$emit('onSelected', data);
         },
         dateClick() {

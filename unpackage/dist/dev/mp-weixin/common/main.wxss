@@ -1,5 +1,21 @@
 
 uni-page-body,page,page{  
         height: 100%;
-} 
+}
+uni-page-head{
+		display: none;
+}
+uni-page-wrapper{
+		height: 100vh !important;
+}
+uni-tabbar .uni-tabbar-border{background: rgba(100,100,100,.3) !important; -webkit-transform: scaleY(.3) !important; transform: scaleY(.3) !important;}
+uni-tabbar .uni-tabbar__icon{
+		width: 20px; 
+		height: 20px; 
+
+		width: 18px;
+		height: 18px; 
+
+		margin-top: 10px;
+}	
 

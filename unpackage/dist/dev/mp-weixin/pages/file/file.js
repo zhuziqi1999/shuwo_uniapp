@@ -96,7 +96,7 @@ var components
 try {
   components = {
     renDropdownFilter: function() {
-      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 113))
+      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 144))
     }
   }
 } catch (e) {
@@ -234,7 +234,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var hFormAlert = function hFormAlert() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert */ "components/h-form-alert/h-form-alert").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert.vue */ 120));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hFormAlert1 = function hFormAlert1() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert1 */ "components/h-form-alert/h-form-alert1").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert1.vue */ 127));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 113));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var hFormAlert = function hFormAlert() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert */ "components/h-form-alert/h-form-alert").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert.vue */ 151));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hFormAlert1 = function hFormAlert1() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert1 */ "components/h-form-alert/h-form-alert1").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert1.vue */ 158));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 137));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 144));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     mSearch: mSearch,
@@ -245,6 +245,8 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
 
   data: function data() {
     return {
+      code1: 0,
+      code2: 0,
       folders: [""],
       index: 0,
       folderflag: [],
@@ -267,7 +269,7 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
       filterData: [
       [{
         text: '排序',
-        value: '' },
+        value: 0 },
       {
         text: '按修改时间',
         value: 1 },
@@ -277,7 +279,7 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
 
       [{
         text: '文件类型',
-        value: '' },
+        value: 0 },
       {
         text: 'Word文件',
         value: 1 },
@@ -305,10 +307,13 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
       this['val' + val] = e;
     },
     onSelected: function onSelected(res) {
-      uni.showToast({
-        icon: 'none',
-        title: '控制台查看筛选结果' });
 
+
+      this.code1 = res[0][0].value;
+      this.code2 = res[1][0].value;
+      console.log(this.code1);
+      console.log(this.code2);
+      this.getFileList();
     },
     dateChange: function dateChange(d) {
       uni.showToast({
@@ -484,7 +489,8 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
             uni.hideLoading();
             uni.showToast({
               title: '删除失败',
-              duration: 2000 });
+              duration: 2000,
+              icon: "none" });
 
             return false;
           }
@@ -671,7 +677,9 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
         dataType: "json",
         data: {
           filecreatedby: uni.getStorageSync("UserOpenid"),
-          filefolderid: _self.curfolder },
+          filefolderid: _self.curfolder,
+          code1: this.code1,
+          code2: this.code2 },
 
 
         method: 'POST',
@@ -708,6 +716,36 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
             icon: 'none' });
 
         } });
+
+    },
+
+    openfile: function openfile(e) {
+
+      var file = e;
+      console.log("11");
+      var downloadpath = 'https://shuwo.ltd/download/';
+      console.log(downloadpath + file.fileid + '.' + file.filetype);
+      wx.downloadFile({
+
+        url: downloadpath + file.fileid + '.' + file.filetype,
+        header: {
+          'Content-Type': 'application/' + file.filetype },
+
+        success: function success(res) {
+          var filePath = res.tempFilePath;
+          console.log(res);
+          wx.openDocument({
+            filePath: filePath,
+            fileType: file.filetype,
+            success: function success(res) {
+              console.log('打开文档成功');
+            },
+            fail: function fail(res) {
+              console.log(res);
+            } });
+
+        } });
+
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

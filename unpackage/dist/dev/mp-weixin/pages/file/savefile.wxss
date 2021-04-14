@@ -1,0 +1,169 @@
+
+.content {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: column;
+		        flex-direction: column;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+
+		height: 100%;
+}
+.content-title {
+		font-weight: bold;
+		font-size: 40rpx;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: row;
+		        flex-direction: row;
+		width: 100%;
+		margin: 20rpx;
+		padding-left: 30rpx;
+}
+.content-scroll {
+		width: 100%;
+}
+.content-list {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: row;
+		        flex-direction: row;
+
+		width: 100%;
+		background-color: #FFFFFF;
+		height: 110rpx;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.file-img {
+		padding-left: 20rpx;
+		width: 100rpx;
+		height: 110rpx;
+}
+.file-infor {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: column;
+		        flex-direction: column;
+		text-align: left;
+		width: 530rpx;
+		padding-right: 40rpx;
+}
+.file-name {
+		font-weight: bold;
+		font-size: 30rpx;
+		padding-left: 20rpx;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		height: 40rpx;
+		white-space:nowrap;
+}
+.file-time {
+		font-size: 22rpx;
+		font-weight: bold;
+		color: #808080;
+		padding-left: 20rpx;
+		padding-top: 10rpx;
+}
+.content-more {
+		position: fixed;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: horizontal;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: row;
+		        flex-direction: row;
+		bottom: 30rpx;
+		z-index: 99;
+}
+.content-plus {
+		position: fixed;
+		z-index: 99;
+		left: 285rpx;
+		top: 1330rpx;
+		background-color: #1E8DD5;
+		-webkit-border-radius: 30rpx;
+		        border-radius: 30rpx;
+		width: 180rpx;
+		height: 60rpx;
+		-webkit-box-shadow: 0px 5px 10px #888888;
+		        box-shadow: 0px 5px 10px #888888;
+		vertical-align: middle;
+}
+.content-plus-flex {
+		width: 100%;
+		height: 100%;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		        justify-content: center;
+}
+.prefolder {
+
+		width: 100%;
+		height: 40rpx;
+		padding-left: 30rpx;
+}
+@font-face {
+  font-family: 'iconfont';  /* project id 2415376 */
+  src: url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.eot');
+  src: url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.svg#iconfont') format('svg');
+}
+.icon {
+		font-family: iconfont;
+		font-size: 32rpx;
+		font-style: normal;
+		color: #999;
+}
+.icon-plus {
+		color: #FFFFFF;
+		font-size: 30rpx;
+		position: relative;
+		text-align: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.icon-delete {
+		color: #bfbfbf;
+		font-size: 30rpx;
+		position: relative;
+		text-align: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.icon-prefolder {
+		color: #bfbfbf;
+		font-size: 30rpx;
+		position: relative;
+		text-align: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+

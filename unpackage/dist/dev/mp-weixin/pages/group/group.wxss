@@ -190,6 +190,8 @@ page,
 .list-box .main .goods .goods-image {
   width: 100rpx;
   height: 100rpx;
+  -webkit-border-radius: 10rpx;
+          border-radius: 10rpx;
   margin-right: 16rpx;
   margin-left: 2px;
 }
@@ -205,6 +207,7 @@ page,
 }
 .list-box .main .goods .goods-plus {
   position: relative;
+  top: 20rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;

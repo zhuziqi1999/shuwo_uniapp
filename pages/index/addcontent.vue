@@ -13,7 +13,7 @@
 		</view>
 		<view class="content-text">
 			<view class="content-text-input">
-				<textarea @blur="bindTextAreaBlur" maxlength=-1 placeholder="输入动态内容" @onfocus="this.placeholder=''"
+				<textarea v-on:input="bindTextAreaBlur" maxlength=-1 placeholder="输入动态内容" @onfocus="this.placeholder=''"
 					word-break:break-all />
 			</view>
 
@@ -58,7 +58,12 @@
 			}
 		},
 		onLoad(options) {
-
+			if(options.data){
+				var data = JSON.parse(options.data)
+				// 字符串转对象
+				this.group = data
+				console.log(this.group)
+			}
 			
 
 		},
@@ -67,7 +72,12 @@
 			var pages = getCurrentPages();
 
 			var currPage = pages[pages.length - 1];
+			if (currPage.data.group.length == 0) {
+				this.groupname = this.group.groupname
+			
+			}
 			if (currPage.data.group.length != 0) {
+
 				this.group = currPage.data.group
 				this.groupname = this.group.groupname
 
@@ -95,7 +105,6 @@
 			},
 			bindTextAreaBlur: function(e) {
 				this.text = e.detail.value
-				console.log(e.detail.value)
 			},
 
 			addcontent() {
@@ -113,7 +122,6 @@
 					})
 					return false;
 				}
-
 				console.log("text:" + this.text)
 				uni.request({
 					url: _self.apiServer + 'createContent',
@@ -345,7 +353,7 @@
 
 	.icon-plus {
 		color: #FFFFFF;
-		font-size: 50rpx;
+		font-size: 38rpx;
 		position: relative;
 		text-align: center;
 		align-items: center;

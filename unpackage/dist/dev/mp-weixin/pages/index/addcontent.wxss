@@ -194,7 +194,7 @@
 }
 .icon-plus {
 	color: #FFFFFF;
-	font-size: 50rpx;
+	font-size: 38rpx;
 	position: relative;
 	text-align: center;
 	-webkit-box-align: center;

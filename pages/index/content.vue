@@ -3,7 +3,9 @@
 
 		<ygc-comment ref="ygcComment" :placeholder="'发布评论'" @pubComment="pubComment" style="z-index: 999;">
 		</ygc-comment>
-
+		
+		<wyb-action-sheet ref="actionSheet" :options="options" @itemclick="onItemClick"/>
+		
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 			<view class="content-list">
@@ -17,18 +19,27 @@
 						<view class="content-username">{{content.username}}</view>
 						<view class="content-share-from">发布自{{content.groupname}}</view>
 					</view>
-					<view class="content-share-time">{{content.time}}</view>
-					<image class="content-share-more" src="../../static/ellipsis-h.png"></image>
-
+						<view class="content-right">
+							<view class="content-right-info">
+							<view class="content-share-time" >{{content.time}}</view>
+							<image class="content-share-more" src="../../static/ellipsis-h.png"
+								@click="showactionsheet(content)"></image>
+							</view>
+						</view>
 				</view>
 
 				<view class="content-share-word">{{content.contenttext}}</view>
 				<!-- 图片 -->
 				<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
 				</iamge> -->
-				<view class="content-share-file">
-					<image class="content-share-file-img" src="../../static/W.png"></image>
-					<text class="content-share-file-word">《小妇人》.word</text>
+				<view class="content-share-file" v-if="content.filename" @click="showactionsheet2(content.contentcreatedby)">
+						<image class="content-share-file-img" v-if="content.filetype == 'doc'" src="../../static/W.png">
+						</image>
+						<image class="content-share-file-img" v-if="content.filetype == 'docx'" src="../../static/W.png">
+						</image>
+						<image class="content-share-file-img" v-if="content.filetype == 'pdf'" src="../../static/P.png">
+						</image>
+						<text class="content-share-file-word">{{content.filename}}</text>
 				</view>
 
 
@@ -47,7 +58,13 @@
 					@change="CurrentTab"  style="width: 100%">
 				</swiperNavBar>
 			</view>
-			<view class="comment-list" v-if="is_comments == 1" v-for="(item,index) in comments_list" :key="index">
+			
+			<view v-if="likes_list.length == 0 && is_likes == 1"  class="nomessage">暂无点赞消息</view>
+			<view v-if="comments_list.length == 0 && is_comments == 1"  class="nomessage">暂无评论消息</view>
+
+			
+			
+			<view class="comment-list" v-if="is_comments == 1" v-for="(item,index) in comments_list" :key="index" @click="showactionsheet1(item)">
 				<view class="comment-title">
 					<view class="comment-avatar-view">
 						<image :src="item.useravatarurl" class="comment-avatar" mode="scaleToFill" webp="true"></image>
@@ -76,20 +93,12 @@
 						<view class="comment-username">{{item.username}}</view>
 			
 					</view>
-					
-					
+
 					<view class="content-plus-flex">
 						<text class="icon icon-heart">&#xf013;</text>
-					</view>
-					
+					</view>			
 				</view>
-			
-				
-			
 			</view>
-			
-
-
 		</scroll-view>
 
 
@@ -127,6 +136,7 @@
 </template>
 
 <script>
+	import wybActionSheet from '@/components/wyb-action-sheet/wyb-action-sheet.vue';
 	import ygcComment from '@/components/ygc-comment/ygc-comment.vue';
 	import SOtime from '@/utils/fl-SOtime/SOtime.js'
 	import swiperNavBar from "@/components/swiperNavBar/swiperNavBar.vue";
@@ -139,12 +149,16 @@
 	var height = 0
 	var navbarpostion = 'postion'
 	export default {
+		
 		components: {
 			ygcComment,
-			swiperNavBar
+			swiperNavBar,
+			wybActionSheet
 		},
 		data() {
 			return {
+				options: [],
+				curcomment: [],
 				content_height: '',
 				windowheight,
 				loginRes,
@@ -189,8 +203,7 @@
 			var data = JSON.parse(options.data) // 字符串转对象
 			this.content = data
 			// 加载定义好的方法
-			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
-				38;
+			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) ;
 
 
 
@@ -228,6 +241,91 @@
 		// },
 
 		methods: {
+			showactionsheet(e) {
+				let content = e
+				
+				this. options= [{
+					label: '删除动态', // 显示的文字
+					color: '#ff0000', // 文字颜色
+					fontSize: '', // 文字大小
+					disabled: false // 是否禁用
+				}, {
+					label: '投诉动态',
+					color: '#000000',
+					fontSize: '',
+					disabled: false
+				}]
+				if(content.contentcreatedby == uni.getStorageSync("UserOpenid")){
+					this.options[1].disabled = true
+				}
+				
+				
+				this.$refs.actionSheet.showActionSheet(); // 显示
+			},
+			
+			
+			showactionsheet1(e) {
+				let comment = e
+				
+				this. options= [{
+					label: '删除评论', // 显示的文字
+					color: '#ff0000', // 文字颜色
+					fontSize: '', // 文字大小
+					disabled: false // 是否禁用
+				}, {
+					label: '投诉评论',
+					color: '#000000',
+					fontSize: '',
+					disabled: false
+				}]
+				if(comment.commentcreatedby == uni.getStorageSync("UserOpenid")){
+					this.options[1].disabled = true
+				}
+				console.log(e)
+				this.curcomment = e
+				this.$refs.actionSheet.showActionSheet(); // 显示
+			},
+			
+			showactionsheet2(e) {
+				let contentcreatedby = e
+				
+				this. options= [{
+					label: '打开文件', // 显示的文字
+					color: '#000000', // 文字颜色
+					fontSize: '', // 文字大小
+					disabled: false // 是否禁用
+				}, {
+					label: '保存文件',
+					color: '#000000',
+					fontSize: '',
+					disabled: false
+				}]
+				if(contentcreatedby == uni.getStorageSync("UserOpenid")){
+					this.options[1].disabled = true
+				}
+
+				this.$refs.actionSheet.showActionSheet(); // 显示
+			},
+			
+			
+			onItemClick(e) {
+				let index = e.index
+				let label = e.label
+				if (label == "删除动态") {
+					this.deleteContent(this.content)
+				}
+				if (label == "删除评论") {
+					this.deleteComment( )
+				}
+				if (label == "打开文件") {
+					this.openfile()
+				}
+				if (label == "保存文件") {
+					this.gotosavefile()
+				}
+				
+			},
+			
 			toggleMask(type) {
 				this.$refs.ygcComment.toggleMask(type);
 			},
@@ -254,6 +352,158 @@
 
 			},
 			
+			openfile() {
+				let content = this.content
+				console.log("11")
+				console.log(content)
+
+				let downloadpath = 'https://shuwo.ltd/download/'
+				console.log(downloadpath + content.contentshare + '.' +content.filetype)
+				wx.downloadFile({
+				  
+				  url : downloadpath + content.contentshare + '.' +content.filetype,
+				  header: {
+				  'Content-Type': 'application/' + content.filetype
+				  },
+				  success: function (res) {
+				    var filePath = res.tempFilePath;
+					console.log(res)
+				    wx.openDocument({
+				      filePath: filePath,
+					  fileType: content.filetype,
+				      success: function (res) {
+				        console.log('打开文档成功');
+				      },
+					  fail:function(res) {
+					  	console.log(res)
+					  }
+				    });
+				  },
+				  
+				});
+			},
+			
+			gotosavefile() {
+				let content = this.content;
+				let _self = this;
+			
+				var navData = JSON.stringify(content);
+				uni.navigateTo({
+					url: '/pages/file/savefile?data=' + navData
+				})
+			},
+			
+			deleteContent(e) {
+				let _self = this
+				let content = e
+				uni.request({
+					url: _self.apiServer + 'deleteContent',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						contentcreatedby : uni.getStorageSync("UserOpenid"),
+						contentid : content.contentid
+			
+					},
+					method: 'POST',
+					success: res => {
+			
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '删除失败',
+								icon: "none",
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+			
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							console.log(res.data)
+			
+							wx.showToast({
+								title: '删除成功',
+								icon: "none",
+								duration: 2000
+							})
+			
+							setTimeout(function() {}, 2000)
+							this.options[1].disabled = false
+							wx.navigateBack({
+								delta: 1,
+							})
+						}
+			
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
+			deleteComment(e) {
+				let _self = this
+				console.log("sdf")
+				console.log(this.content.contentid)
+				uni.request({
+					url: _self.apiServer + 'deleteComment',
+					header: {
+						'content-type': 'application/json',
+					},
+					dataType: "json",
+					data: {
+						commentcreatedby : uni.getStorageSync("UserOpenid"),
+						commentid : this.curcomment.commentid,
+						commentcontentid : this.content.contentid
+			
+					},
+					method: 'POST',
+					success: res => {
+			
+						if (res.data.code == 0) {
+							uni.hideLoading();
+							uni.showToast({
+								title: '删除失败',
+								icon: "none",
+								duration: 2000
+							})
+							return false;
+						}
+						// 用户信息写入缓存
+			
+						// 已经授权了、查询到用户的数据了
+						if (res.data.code == 1) {
+							// 用户信息写入缓存
+							console.log(res.data)
+			
+							wx.showToast({
+								title: '删除成功',
+								icon: "none",
+								duration: 2000
+							})
+			
+							setTimeout(function() {}, 2000)
+							this.options[1].disabled = false
+							this.content.contentcomments --
+							this.getCommentList()
+						}
+			
+					},
+					fail: () => {
+						uni.showToast({
+							title: '操作失败',
+							icon: 'none'
+						});
+					}
+				});
+			},
 			getCommentList() {
 				let _self = this
 				
@@ -753,15 +1003,28 @@
 		color: #cdcdcd;
 
 	}
-
+.content-right {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		margin-left:auto;
+		justify-content: flex-end;
+	}
+	.content-right-info {
+		display: flex;
+		flex-direction: row;
+		position: relative;
+	
+	}
 	.content-share-time {
 		position: relative;
 		top: 45rpx;
-		width: auto;
+		width: 150rpx;
 		height: 30rpx;
 		font-size: 27rpx;
-		left: 170rpx;
 		font-weight: bold;
+		padding-right: 20rpx;
+		text-align: right;
 		color: #cdcdcd;
 
 	}
@@ -771,7 +1034,6 @@
 		width: 50rpx;
 		height: 50rpx;
 		top: 38rpx;
-		left: 190rpx;
 		margin-right: 20rpx;
 	}
 
@@ -853,6 +1115,7 @@
 		margin-bottom: 40rpx;
 		text-align: center;
 		align-items: center;
+
 	}
 
 	.content-share-file-img {
@@ -866,6 +1129,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		width: 200rpx;
 	}
 
 	.content-operate-likes {
@@ -998,5 +1262,12 @@
 		padding-right: 40rpx;
 		margin-bottom: 20rpx;
 		height: auto;
+	}
+	
+	.nomessage {
+		position: relative;
+		top: 20rpx;
+		color: #c7c7c7;
+		text-align: center;
 	}
 </style>

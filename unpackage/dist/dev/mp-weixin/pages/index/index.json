@@ -4,6 +4,7 @@
   "enablePullDownRefresh": true,
   "usingComponents": {
     "ygc-comment": "/components/ygc-comment/ygc-comment",
+    "wyb-action-sheet": "/components/wyb-action-sheet/wyb-action-sheet",
     "swiper-nav-bar": "/components/swiperNavBar/swiperNavBar",
     "m-search": "/components/mehaotian-search/mehaotian-search"
   }

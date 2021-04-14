@@ -103,10 +103,13 @@ var components
 try {
   components = {
     ygcComment: function() {
-      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 92))
+      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 116))
+    },
+    wybActionSheet: function() {
+      return __webpack_require__.e(/*! import() | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then(__webpack_require__.bind(null, /*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 123))
     },
     swiperNavBar: function() {
-      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 99))
+      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 130))
     }
   }
 } catch (e) {
@@ -268,7 +271,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 106));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 92));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 99));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+
+
+
+
+
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var wybActionSheet = function wybActionSheet() {__webpack_require__.e(/*! require.ensure | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then((function () {return resolve(__webpack_require__(/*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 123));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 137));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 116));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 130));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var loginRes = uni.getStorageSync('loginRes');
 var SynsUserOpenid = uni.getStorageSync('UserOpenid');
@@ -281,11 +289,19 @@ var content = [];var _default =
   components: {
     mSearch: mSearch,
     ygcComment: ygcComment,
-    swiperNavBar: swiperNavBar },
+    swiperNavBar: swiperNavBar,
+    wybActionSheet: wybActionSheet },
 
 
   data: function data() {
     return {
+      // 这里的options有两种写法
+      // 简写形式：
+      // 完整形式
+
+      options: [],
+
+
       // spanStyle: {
       //    "--windowheight": uni.getSystemInfoSync().windowHeight
       // },
@@ -295,6 +311,7 @@ var content = [];var _default =
       windowWidth: '',
       contentid: '',
       content_height: '',
+      curcontent: [],
       content: [],
       windowheight: windowheight,
       loginRes: loginRes,
@@ -334,7 +351,8 @@ var content = [];var _default =
     // 加载定义好的方法
 
 
-    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 38;
+    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
+    38;
 
     if (SynsUserOpenid == null || SynsUserName == null || loginRes == 0) {
       loginRes = this.checkLogin('../index/index', 2);
@@ -352,28 +370,43 @@ var content = [];var _default =
   },
 
 
-
   onShow: function onShow() {
-    this.refresh();
+    this.getContentList();
   },
-  // onReady() {
-  // 	 let _this = this;
-  // 	        uni.getSystemInfo({
-  // 	            success(res) {
-  // 	                _this.phoneHeight = res.windowHeight;
-  // 	                console.log(res.windowHeight);
-  // 	                // 计算组件的高度
-  // 	                let view = uni.createSelectorQuery().select('.hd-height');
-  // 	                view.boundingClientRect(data => {
-  // 	                    _this.navHeight = data.height;
-  // 	                    console.log(_this.navHeight);
-  // 	                    _this.scrollviewHigh = _this.phoneHeight - _this.navHeight;
-  // 	                }).exec();
-  // 	            }
-  // 	        });
-  // 	        console.log('w' + this.scrollviewHigh);
-  // },
+
   methods: {
+
+    showactionsheet: function showactionsheet(e) {
+      this.options = [{
+        label: '删除动态', // 显示的文字
+        color: '#ff0000', // 文字颜色
+        fontSize: '', // 文字大小
+        disabled: false // 是否禁用
+      }, {
+        label: '投诉动态',
+        color: '#000000',
+        fontSize: '',
+        disabled: false }];
+
+      var content = e;
+      this.curcontent = content;
+      if (content.contentcreatedby == uni.getStorageSync("UserOpenid")) {
+        console.log("sdf");
+        this.options[1].disabled = true;
+      }
+      this.$refs.actionSheet.showActionSheet(); // 显示
+    },
+
+    onItemClick: function onItemClick(e) {
+      var index = e.index;
+      var label = e.label;
+      if (label == "删除动态") {
+        this.deleteContent(this.curcontent);
+      }
+
+    },
+
+
     toggleMask: function toggleMask(type, content, id) {
       this.$refs.ygcComment.toggleMask(type);
       this.content = content;
@@ -401,7 +434,7 @@ var content = [];var _default =
       this.scrollIntoView = Math.max(0, e.detail.current - 1);
     },
 
-    refresh: function refresh() {var _this = this;
+    getContentList: function getContentList() {var _this = this;
       var _self = this;
 
       uni.request({
@@ -437,7 +470,63 @@ var content = [];var _default =
 
     },
 
-    LikeContent: function LikeContent(e, id) {var _this2 = this;
+    deleteContent: function deleteContent(e) {var _this2 = this;
+      var _self = this;
+      var content = e;
+      console.log(content.contentid);
+      uni.request({
+        url: _self.apiServer + 'deleteContent',
+        header: {
+          'content-type': 'application/json' },
+
+        dataType: "json",
+        data: {
+          contentcreatedby: uni.getStorageSync("UserOpenid"),
+          contentid: content.contentid },
+
+
+        method: 'POST',
+        success: function success(res) {
+
+          if (res.data.code == 0) {
+            uni.hideLoading();
+            uni.showToast({
+              title: '删除失败',
+              icon: "none",
+              duration: 2000 });
+
+            return false;
+          }
+          // 用户信息写入缓存
+
+          // 已经授权了、查询到用户的数据了
+          if (res.data.code == 1) {
+            // 用户信息写入缓存
+            console.log(res.data);
+
+            wx.showToast({
+              title: '删除成功',
+              icon: "none",
+              duration: 2000 });
+
+
+            setTimeout(function () {}, 2000);
+            _this2.options[1].disabled = false;
+            _this2.getContentList();
+          }
+
+        },
+        fail: function fail() {
+          uni.showToast({
+            title: '操作失败',
+            icon: 'none' });
+
+        } });
+
+    },
+
+
+    LikeContent: function LikeContent(e, id) {var _this3 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -475,9 +564,9 @@ var content = [];var _default =
             setTimeout(function () {
 
             }, 2000);
-            _this2.content_list[index].isliked = 1;
+            _this3.content_list[index].isliked = 1;
 
-            _this2.content_list[index].contentlikes++;
+            _this3.content_list[index].contentlikes++;
           }
 
 
@@ -492,7 +581,7 @@ var content = [];var _default =
 
     },
 
-    UnlikeContent: function UnlikeContent(e, id) {var _this3 = this;
+    UnlikeContent: function UnlikeContent(e, id) {var _this4 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -529,8 +618,8 @@ var content = [];var _default =
             setTimeout(function () {
 
             }, 2000);
-            _this3.content_list[index].isliked = 0;
-            _this3.content_list[index].contentlikes--;
+            _this4.content_list[index].isliked = 0;
+            _this4.content_list[index].contentlikes--;
           }
 
 
@@ -545,7 +634,7 @@ var content = [];var _default =
 
     },
 
-    CollectContent: function CollectContent(e, id) {var _this4 = this;
+    CollectContent: function CollectContent(e, id) {var _this5 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -578,7 +667,7 @@ var content = [];var _default =
           // 已经授权了、查询到用户的数据了
           if (res.data.code == 1) {
             // 用户信息写入缓存
-            _this4.content_list[index].iscollected = 1;
+            _this5.content_list[index].iscollected = 1;
           }
 
 
@@ -593,7 +682,7 @@ var content = [];var _default =
 
     },
 
-    UncollectContent: function UncollectContent(e, id) {var _this5 = this;
+    UncollectContent: function UncollectContent(e, id) {var _this6 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -624,7 +713,7 @@ var content = [];var _default =
           // 已经授权了、查询到用户的数据了
           if (res.data.code == 1) {
             // 用户信息写入缓存
-            _this5.content_list[index].iscollected = 0;
+            _this6.content_list[index].iscollected = 0;
           }
 
 
@@ -648,7 +737,18 @@ var content = [];var _default =
         url: '/pages/index/content?data=' + navData });
 
     },
-    pubComment: function pubComment(e, id) {var _this6 = this;
+
+    gotoUser: function gotoUser(e) {
+      var content = e;
+      var _self = this;
+
+      var navData = JSON.stringify(content);
+      uni.navigateTo({
+        url: '/pages/my/myinfo?data=' + navData });
+
+    },
+
+    pubComment: function pubComment(e, id) {var _this7 = this;
       var text = e;
       var _self = this;
 
@@ -685,8 +785,8 @@ var content = [];var _default =
               title: '评论成功',
               duration: 2000 });
 
-            _this6.$refs.ygcComment.toggleMask("false");
-            _this6.content_list[_this6.contentid].contentcomments++;
+            _this7.$refs.ygcComment.toggleMask("false");
+            _this7.content_list[_this7.contentid].contentcomments++;
           }
 
         },

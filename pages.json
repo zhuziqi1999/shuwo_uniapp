@@ -70,7 +70,7 @@
             "path" : "pages/index/content",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "动态",
                 "enablePullDownRefresh": true
             }
             
@@ -97,6 +97,43 @@
         }
         ,{
             "path" : "pages/file/selectfile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/my/myinfo",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle":"custom" 
+            }
+            
+        }
+        ,{
+            "path" : "components/zhouWei-navBar/index1",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/file/savefile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/group/addgroup",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

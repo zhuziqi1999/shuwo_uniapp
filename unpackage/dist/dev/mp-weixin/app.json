@@ -10,7 +10,11 @@
     "pages/index/content",
     "pages/group/groupinfo",
     "pages/group/selectgroup",
-    "pages/file/selectfile"
+    "pages/file/selectfile",
+    "pages/my/myinfo",
+    "components/zhouWei-navBar/index1",
+    "pages/file/savefile",
+    "pages/group/addgroup"
   ],
   "subPackages": [],
   "window": {

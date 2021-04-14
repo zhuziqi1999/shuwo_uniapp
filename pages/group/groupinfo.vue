@@ -19,7 +19,7 @@
 		<view class="content-scroll" :style="{height:content_height+'px'}">
 			<view class="group-title">
 				<view class="group-top">
-					<image class="group-image" src="/static/logo.png" mode=""></image>
+					<image class="group-image" :src="group.groupavatarurl" mode=""></image>
 					<view class="group-info">
 						<text class="group-name">{{group.groupname}}</text>
 						<text class="group-number">共有{{group.groupnumber}}组员</text>
@@ -69,8 +69,13 @@
 							<view class="content-username">{{item.username}}</view>
 							<view class="content-share-from">发布自{{item.groupname}}</view>
 						</view>
-						<view class="content-share-time" @click="gotoContent(item)">{{item.time}}</view>
-						<image class="content-share-more" src="../../static/ellipsis-h.png"></image>
+						<view class="content-right">
+							<view class="content-right-info">
+							<view class="content-share-time" @click="gotoContent(item)">{{item.time}}</view>
+							<image class="content-share-more" src="../../static/ellipsis-h.png"
+								@click="showactionsheet(item)"></image>
+							</view>
+						</view>
 
 					</view>
 
@@ -78,15 +83,22 @@
 					<!-- 图片 -->
 					<!-- <image class="content-share-image" mode="scaleToFill" src="../../static/1614174681858.jpg">
 					</iamge> -->
-					<view class="content-share-file">
-						<image class="content-share-file-img" src="../../static/W.png"></image>
-						<text class="content-share-file-word">《小妇人》.word</text>
+					<view class="content-share-bar" v-if="item.filename" @click="gotoContent(item)">
+					<view class="content-share-file" >
+						<image class="content-share-file-img" v-if="item.filetype == 'doc'" src="../../static/W.png">
+						</image>
+						<image class="content-share-file-img" v-if="item.filetype == 'docx'" src="../../static/W.png">
+						</image>
+						<image class="content-share-file-img" v-if="item.filetype == 'pdf'" src="../../static/P.png">
+						</image>
+						<text class="content-share-file-word">{{item.filename}}</text>
+					</view>
 					</view>
 
 					<view class="content-operate">
 						<view class="content-operate-likes">
 							<image src="../../static/heart1.png" v-if="item.isliked == 0" class="content-operate-icon"
-								@click="LikeContent(item.contentid)"></image>
+								@click="LikeContent(item.contentid,index)"></image>
 							<image src="../../static/heart.png" v-if="item.isliked == 1" class="content-operate-icon"
 								@click="UnlikeContent(item.contentid,index)"></image>
 							<text class="content-operate-likes-number">{{item.contentlikes}}</text>
@@ -195,9 +207,12 @@
 			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
 				38;
 
+			
+
+
+		},
+		onShow() {
 			this.refresh();
-
-
 		},
 
 		onPageScroll(e) {
@@ -245,7 +260,7 @@
 						this.content_list = res.data.content
 
 						for (var i = 0; i < res.data.content.length; i++) {
-							res.data.content[i].time = SOtime.time1(res.data.content[1].contentcreatedtimeunix)
+							res.data.content[i].time = SOtime.time1(res.data.content[i].contentcreatedtimeunix)
 						}
 						console.log(this.content_list)
 
@@ -375,7 +390,7 @@
 				let _self = this;
 				let contentid = e
 				let index = id
-
+				console.log(index)
 				uni.request({
 					url: _self.apiServer + 'likeContent',
 					header: {
@@ -764,7 +779,19 @@
 		font-size: 26rpx;
 		font-weight: bold;
 	}
-
+	.content-right {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		margin-left:auto;
+		justify-content: flex-end;
+	}
+	.content-right-info {
+		display: flex;
+		flex-direction: row;
+		position: relative;
+	
+	}
 	.content-share-from {
 		position: relative;
 		width: auto;
@@ -779,11 +806,12 @@
 	.content-share-time {
 		position: relative;
 		top: 45rpx;
-		width: auto;
+		width: 150rpx;
 		height: 30rpx;
 		font-size: 27rpx;
-		left: 170rpx;
 		font-weight: bold;
+		padding-right: 20rpx;
+		text-align: right;
 		color: #cdcdcd;
 
 	}
@@ -793,7 +821,6 @@
 		width: 50rpx;
 		height: 50rpx;
 		top: 38rpx;
-		left: 190rpx;
 		margin-right: 20rpx;
 	}
 
@@ -866,10 +893,10 @@
 		background-color: #eeeeee;
 		border-radius: 10rpx;
 		padding-left: 20rpx;
-		top: 20rpx;
-		left: 20rpx;
+		margin-left: 20rpx;
 		text-align: center;
 		align-items: center;
+		margin-right: 500rpx;
 	}
 
 	.content-share-file-img {
@@ -880,6 +907,7 @@
 	.content-share-file-word {
 		padding-left: 10rpx;
 		font-size: 20rpx;
+		width: 200rpx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -1023,5 +1051,12 @@
 		font-weight: bold;
 		text-align: center;
 		font-size: 25rpx;
+	}
+	
+	.content-share-bar {
+		width: 100%;
+		height: 100rpx;
+		position: relative;
+		top: 20rpx;
 	}
 </style>

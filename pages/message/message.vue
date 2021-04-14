@@ -12,10 +12,13 @@
 
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
-			
+			<view v-if="like_list.length == 0 && navbar == 0"  class="nomessage">暂无点赞消息</view>
+			<view v-if="comment_list.length == 0 && navbar == 1"  class="nomessage">暂无评论消息</view>
+			<view v-if="collect_list.length == 0 && navbar == 2"  class="nomessage">暂无收藏消息</view>
 			<!-- 点赞 -->
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in like_list"
 				:key="index" v-if="navbar == 0">
+				
 				<view class="content-title">
 
 					<image class="content-avatar" :src="item.useravatarurl"></image>
@@ -598,5 +601,12 @@
 		top: 10rpx;
 		color: #000;
 		padding-bottom: 40rpx;
+	}
+	
+	.nomessage {
+		position: relative;
+		top: 20rpx;
+		color: #c7c7c7;
+		text-align: center;
 	}
 </style>

@@ -30,7 +30,7 @@
 		</view>
 		
 
-		<ren-dropdown-filter :filterData='filterData' :defaultIndex='defaultIndex' @onSelected='onSelected'
+		<ren-dropdown-filter :filterData='filterData' :defaultIndex='defaultIndex' @onSelected='onSelected()'
 			@dateChange='dateChange' style="width: 100%;position: relative;"></ren-dropdown-filter>
 
 
@@ -56,12 +56,12 @@
 
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in file_list" :key="index">
 				<image v-if="item.filetype == 'doc' " src=" ../../static/W.png" class="file-img"
-					mode="scaleToFill"></image>
+					mode="scaleToFill" @click="openfile(item)"></image>
 				<image v-if="item.filetype == 'docx' " src=" ../../static/W.png" class="file-img"
-					mode="scaleToFill"></image>
-				<image v-if="item.filetype == 'pdf' " src="../../static/P.png" class="file-img" mode="scaleToFill">
+					mode="scaleToFill" @click="openfile(item)"></image>
+				<image v-if="item.filetype == 'pdf' " src="../../static/P.png" class="file-img" mode="scaleToFill" @click="openfile(item)">
 				</image>
-				<view class="file-infor">
+				<view class="file-infor" @click="openfile(item)">
 					<view class="file-name">{{item.filename}}</view>
 					<view class="file-time">{{item.filecreatedtime}}</view>
 				</view>
@@ -90,6 +90,8 @@
 
 		data() {
 			return {
+				code1 : 0,
+				code2 : 0,
 				folders: [""],
 				index: 0,
 				folderflag: [],
@@ -112,7 +114,7 @@
 				filterData: [
 					[{
 						text: '排序',
-						value: ''
+						value: 0
 					}, {
 						text: '按修改时间',
 						value: 1
@@ -122,7 +124,7 @@
 					}],
 					[{
 						text: '文件类型',
-						value: ''
+						value: 0
 					}, {
 						text: 'Word文件',
 						value: 1
@@ -150,10 +152,13 @@
 				this['val' + val] = e;
 			},
 			onSelected(res) {
-				uni.showToast({
-					icon: 'none',
-					title: '控制台查看筛选结果'
-				})
+				
+				
+				this.code1 = res[0][0].value
+				this.code2 = res[1][0].value
+				console.log(this.code1)
+				console.log(this.code2)
+				this.getFileList()
 			},
 			dateChange(d) {
 				uni.showToast({
@@ -329,7 +334,8 @@
 							uni.hideLoading();
 							uni.showToast({
 								title: '删除失败',
-								duration: 2000
+								duration: 2000,
+								icon:"none"
 							})
 							return false;
 						}
@@ -516,7 +522,9 @@
 					dataType: "json",
 					data: {
 						filecreatedby: uni.getStorageSync("UserOpenid"),
-						filefolderid: _self.curfolder
+						filefolderid: _self.curfolder,
+						code1 : this.code1,
+						code2 : this.code2
 			
 					},
 					method: 'POST',
@@ -556,7 +564,35 @@
 				});
 			},
 			
-			
+			openfile(e) {
+				
+				let file = e
+				console.log("11")
+				let downloadpath = 'https://shuwo.ltd/download/'
+				console.log(downloadpath + file.fileid + '.' +file.filetype)
+				wx.downloadFile({
+				  
+				  url : downloadpath + file.fileid + '.' +file.filetype,
+				  header: {
+				  'Content-Type': 'application/' + file.filetype
+				  },
+				  success: function (res) {
+				    var filePath = res.tempFilePath;
+					console.log(res)
+				    wx.openDocument({
+				      filePath: filePath,
+					  fileType: file.filetype,
+				      success: function (res) {
+				        console.log('打开文档成功');
+				      },
+					  fail:function(res) {
+					  	console.log(res)
+					  }
+				    });
+				  },
+				  
+				});
+			}
 			
 
 		},

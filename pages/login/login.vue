@@ -4,7 +4,7 @@
 		<view>
 			<view>
 				<view class="header">
-					<image src="/static/img/public/login-wx.png"></image>
+					<image src="/static/logo5.png"></image>
 				</view>
 				<view class="content">
 					<view>申请获取以下权限</view>
@@ -38,6 +38,12 @@
 				},
 				pageOption: {}
 			};
+		},
+		onLoad(options) {
+			// 接收跳转的参数
+			this.pageOption = options
+			//默认加载
+			this.login();
 		},
 		methods: {
 			// 第一授权获取用户信息 ===》按钮触发
@@ -125,8 +131,12 @@
 					provider: 'weixin',
 					success: loginRes => {
 						_self.code = loginRes.code;
+						console.log(_self.appid)
+						console.log(_self.secret)
+						console.log(_self.code)
 						// 2. 将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 						uni.request({
+
 							url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' +
 								_self.appid + '&secret=' + _self.secret + '&js_code=' + _self.code +
 								'&grant_type=authorization_code',
@@ -176,7 +186,8 @@
 									}
 								});
 							},
-							fail: () => {
+							fail: (codeRes) => {
+								console.log(codeRes.errMsg)
 								uni.showToast({
 									title: '获取 SesssionKey OpenId 失败',
 									icon: 'none'
@@ -195,13 +206,8 @@
 				});
 				return false;
 			}
-		},
-		onLoad(options) {
-			// 接收跳转的参数
-			this.pageOption = options
-			//默认加载
-			this.login();
 		}
+
 	};
 </script>
 <style>

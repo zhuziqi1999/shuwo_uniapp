@@ -171,6 +171,12 @@ var _default =
       pageOption: {} };
 
   },
+  onLoad: function onLoad(options) {
+    // 接收跳转的参数
+    this.pageOption = options;
+    //默认加载
+    this.login();
+  },
   methods: {
     // 第一授权获取用户信息 ===》按钮触发
     wxGetUserInfo: function wxGetUserInfo() {
@@ -257,8 +263,12 @@ var _default =
         provider: 'weixin',
         success: function success(loginRes) {
           _self.code = loginRes.code;
+          console.log(_self.appid);
+          console.log(_self.secret);
+          console.log(_self.code);
           // 2. 将用户登录code传递到后台置换用户SessionKey、OpenId等信息
           uni.request({
+
             url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' +
             _self.appid + '&secret=' + _self.secret + '&js_code=' + _self.code +
             '&grant_type=authorization_code',
@@ -308,7 +318,8 @@ var _default =
                 } });
 
             },
-            fail: function fail() {
+            fail: function fail(codeRes) {
+              console.log(codeRes.errMsg);
               uni.showToast({
                 title: '获取 SesssionKey OpenId 失败',
                 icon: 'none' });
@@ -326,14 +337,7 @@ var _default =
         } });
 
       return false;
-    } },
-
-  onLoad: function onLoad(options) {
-    // 接收跳转的参数
-    this.pageOption = options;
-    //默认加载
-    this.login();
-  } };exports.default = _default;
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

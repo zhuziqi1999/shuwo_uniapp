@@ -74,4 +74,22 @@ var windowheight =  wx.getSystemInfoSync().windowHeight    // 获取当前窗口
 	      uni-page-body,html,body{  
 	        height: 100%;  
 	    } 
+		@import url("./common/aui/css/aui.css");
+		@import url("./common/aui/css/aui.iconfont.css");
+		uni-page-head{
+			display: none;
+		}
+		uni-page-wrapper{
+			height: 100vh !important;
+		}
+		uni-tabbar .uni-tabbar-border{background: rgba(100,100,100,.3) !important; transform: scaleY(.3) !important;}
+		uni-tabbar .uni-tabbar__icon{
+			width: 20px; 
+			height: 20px; 
+			/* #ifdef MP */
+			width: 18px;
+			height: 18px; 
+			/* #endif */
+			margin-top: 10px;
+		}	
 </style>

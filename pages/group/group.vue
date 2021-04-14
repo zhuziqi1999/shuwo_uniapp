@@ -25,7 +25,7 @@
 							</view> -->
 							<view class="goods">
 								<view class="goods-top">
-									<image class="goods-image" @click="gotogroup(item)" src="/static/logo.png" mode="">
+									<image class="goods-image" @click="gotogroup(item)" :src="item.groupavatarurl" mode="">
 									</image>
 									<view style="width: 440rpx;" @click="gotogroup(item)">
 										<!-- <view style="font-weight: bold;">第{{index2+1}}个商品标题</view> -->
@@ -491,6 +491,7 @@
 				.goods-image {
 					width: 100rpx;
 					height: 100rpx;
+					border-radius: 10rpx;
 					margin-right: 16rpx;
 					margin-left: 2px;
 				}
@@ -504,6 +505,7 @@
 
 				.goods-plus {
 					position: relative;
+					top: 20rpx;
 					display: flex;
 					width: 150rpx;
 					height: 50rpx;
