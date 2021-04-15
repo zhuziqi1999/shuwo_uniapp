@@ -30,7 +30,7 @@ _vue.default.prototype.checkLogin = function (backpage, backtype) {
   var loginRes = uni.getStorageSync('loginRes');
   if (SynsUserOpenid == '' || SynsUserName == '' || loginRes == 0) {
     // 使用重定向的方式跳转至登录页面
-    uni.redirectTo({ url: '../login/login?backpage=' + backpage + '&backtype=' + backtype });
+    uni.navigateTo({ url: '../login/login?backpage=' + backpage + '&backtype=' + backtype });
 
     return true;
   }
@@ -38,8 +38,8 @@ _vue.default.prototype.checkLogin = function (backpage, backtype) {
   return [SynsUserOpenid, SynsUserName];
 };
 // 定义一个全局的请求地址
-_vue.default.prototype.apiServer = 'http://localhost:8090/';
-// Vue.prototype.apiServer = 'https://shuwo.ltd/'
+// Vue.prototype.apiServer = 'http://localhost:8090/'
+_vue.default.prototype.apiServer = 'https://shuwo.ltd/';
 
 var windowheight = wx.getSystemInfoSync().windowHeight; // 获取当前窗口的高度
 

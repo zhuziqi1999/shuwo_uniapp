@@ -96,7 +96,7 @@ var components
 try {
   components = {
     swiperNavBar: function() {
-      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 130))
+      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 146))
     }
   }
 } catch (e) {
@@ -265,7 +265,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 130));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 146));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 // var navbar == 0 
 var _default = {
   components: {

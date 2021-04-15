@@ -9,7 +9,7 @@
 
 
 
-		<mSearch @search="search($event,0)" style="justify-content: center;width: 100%;"></mSearch>
+		<mSearch @search="search($event)" style="justify-content: center;width: 100%;"></mSearch>
 		<swiperNavBar :scrollIntoView="scrollIntoView" :swiperTabList='swiperTabList' :swiperTabIdx='swiperTabIdx'
 			:currentSwiperWidth='currentSwiperWidth' :currentSwiperHeight='currentSwiperHeight'
 			:swiperCurrentSize='swiperCurrentSize' :swiperColor='swiperColor' :swiperCurrentColor='swiperCurrentColor'
@@ -100,7 +100,7 @@
 				</view>
 			</scroll-view>
 		</movable-area>
-		<navigator url="../login/login" v-if="loginRes == 0"><button type="default">授权登录界面</button></navigator>
+		
 	</view>
 
 </template>
@@ -246,9 +246,13 @@
 				this.content = content
 				this.contentid = id
 			},
-			search(e, val) {
-				console.log(e, val);
-				this['val' + val] = e;
+			search(e) {
+				console.log(e);
+				let message = e
+				var navData = JSON.stringify(message);
+				uni.navigateTo({
+					url: '/pages/search/search?data=' + navData
+				})
 			},
 			//tab点击事件 自行完善需要的代码
 			CurrentTab: function(index, item) {

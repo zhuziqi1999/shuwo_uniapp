@@ -14,7 +14,8 @@
     "pages/my/myinfo",
     "components/zhouWei-navBar/index1",
     "pages/file/savefile",
-    "pages/group/addgroup"
+    "pages/group/addgroup",
+    "pages/search/search"
   ],
   "subPackages": [],
   "window": {

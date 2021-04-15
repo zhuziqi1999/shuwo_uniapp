@@ -10,8 +10,7 @@
 					<view>申请获取以下权限</view>
 					<text>获得你的公开信息(昵称，头像、地区等)</text>
 				</view>
-				<button class="bottom" type="primary" open-type="getUserInfo" withCredentials="true" lang="zh_CN"
-					@getuserinfo="wxGetUserInfo">授权登录</button>
+				<button class="bottom" type="primary" @tap="wxGetUserInfo" >授权登录</button>
 			</view>
 		</view>
 		<!-- login view html end -->
@@ -23,8 +22,7 @@
 	export default {
 		data() {
 			return {
-				appid: 'wx4de56d6b47216c84',
-				secret: '5f3c5d0f8341e036a11cb4d15f8c2ccf',
+
 				code: '',
 				sessionKey: '',
 				openId: '',
@@ -50,8 +48,10 @@
 			wxGetUserInfo() {
 				let _self = this;
 				// 1.获取用户的信息
-				uni.getUserInfo({
-					provider: 'weixin',
+				
+				wx.getUserProfile({
+					desc: '用于完善会员资料',
+
 					success: (infoRes) => {
 						_self.userInfo = infoRes.userInfo
 						
@@ -131,14 +131,13 @@
 					provider: 'weixin',
 					success: loginRes => {
 						_self.code = loginRes.code;
-						console.log(_self.appid)
-						console.log(_self.secret)
-						console.log(_self.code)
+						let appid = "wx4de56d6b47216c84"
+						let secret = "485a8d466294205d6a6bf7b276c22d7a"
 						// 2. 将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 						uni.request({
 
 							url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' +
-								_self.appid + '&secret=' + _self.secret + '&js_code=' + _self.code +
+								appid + '&secret=' + secret + '&js_code=' + _self.code +
 								'&grant_type=authorization_code',
 							success: codeRes => {
 								console.log(codeRes);

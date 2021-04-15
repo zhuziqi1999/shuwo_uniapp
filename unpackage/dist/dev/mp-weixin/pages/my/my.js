@@ -96,10 +96,10 @@ var components
 try {
   components = {
     ygcComment: function() {
-      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 116))
+      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 132))
     },
     wybActionSheet: function() {
-      return __webpack_require__.e(/*! import() | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then(__webpack_require__.bind(null, /*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 123))
+      return __webpack_require__.e(/*! import() | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then(__webpack_require__.bind(null, /*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 139))
     }
   }
 } catch (e) {
@@ -483,7 +483,7 @@ var _index = _interopRequireDefault(__webpack_require__(/*! @/components/zhouWei
 //
 //
 //
-var jiaonang;var menuButton = wx.getMenuButtonBoundingClientRect();var systemInfo = wx.getSystemInfoSync();var windowWidth = systemInfo.windowWidth;var statusBarHeight = systemInfo.statusBarHeight;var loginRes = uni.getStorageSync('loginRes');var SynsUserOpenid = uni.getStorageSync('UserOpenid');var SynsUserName = uni.getStorageSync('UserName');var windowheight = wx.getSystemInfoSync().windowHeight + 'px';var loginflag = 0;var comments = 0;var height = 0;var navbarpostion = 'postion';var wybActionSheet = function wybActionSheet() {__webpack_require__.e(/*! require.ensure | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then((function () {return resolve(__webpack_require__(/*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 123));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 116));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { components: { navBar: _index.default, ygcComment: ygcComment, wybActionSheet: wybActionSheet }, data: function data() {return { options: [{ label: '删除动态', // 显示的文字
+var jiaonang;var menuButton = wx.getMenuButtonBoundingClientRect();var systemInfo = wx.getSystemInfoSync();var windowWidth = systemInfo.windowWidth;var statusBarHeight = systemInfo.statusBarHeight;var loginRes = uni.getStorageSync('loginRes');var SynsUserOpenid = uni.getStorageSync('UserOpenid');var SynsUserName = uni.getStorageSync('UserName');var windowheight = wx.getSystemInfoSync().windowHeight + 'px';var loginflag = 0;var comments = 0;var height = 0;var navbarpostion = 'postion';var wybActionSheet = function wybActionSheet() {__webpack_require__.e(/*! require.ensure | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then((function () {return resolve(__webpack_require__(/*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 139));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { components: { navBar: _index.default, ygcComment: ygcComment, wybActionSheet: wybActionSheet }, data: function data() {return { options: [{ label: '删除动态', // 显示的文字
         color: '#ff0000', // 文字颜色
         fontSize: '', // 文字大小
         disabled: false // 是否禁用

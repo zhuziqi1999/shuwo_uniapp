@@ -68,7 +68,7 @@ export default {
 		clear() {
 			this.inputVal = '';
 			this.active = false;
-			this.$emit('search', '');
+			
 		},
 		getFocus() {
 			this.isFocus = true;

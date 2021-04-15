@@ -150,13 +150,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _default =
 {
   data: function data() {
     return {
-      appid: 'wx4de56d6b47216c84',
-      secret: '5f3c5d0f8341e036a11cb4d15f8c2ccf',
+
       code: '',
       sessionKey: '',
       openId: '',
@@ -182,8 +180,10 @@ var _default =
     wxGetUserInfo: function wxGetUserInfo() {
       var _self = this;
       // 1.获取用户的信息
-      uni.getUserInfo({
-        provider: 'weixin',
+
+      wx.getUserProfile({
+        desc: '用于完善会员资料',
+
         success: function success(infoRes) {
           _self.userInfo = infoRes.userInfo;
 
@@ -263,14 +263,13 @@ var _default =
         provider: 'weixin',
         success: function success(loginRes) {
           _self.code = loginRes.code;
-          console.log(_self.appid);
-          console.log(_self.secret);
-          console.log(_self.code);
+          var appid = "wx4de56d6b47216c84";
+          var secret = "485a8d466294205d6a6bf7b276c22d7a";
           // 2. 将用户登录code传递到后台置换用户SessionKey、OpenId等信息
           uni.request({
 
             url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' +
-            _self.appid + '&secret=' + _self.secret + '&js_code=' + _self.code +
+            appid + '&secret=' + secret + '&js_code=' + _self.code +
             '&grant_type=authorization_code',
             success: function success(codeRes) {
               console.log(codeRes);
