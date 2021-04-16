@@ -425,7 +425,7 @@
 		width: auto;
 		height: 100%;
 		font-size: 24rpx;
-		left: 270rpx;
+		left: 260rpx;
 		font-weight: bold;
 		color: #cdcdcd;
 }

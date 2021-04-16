@@ -52,22 +52,22 @@
 		<view class="content-title">
 			<text>他的小组</text>
 		</view>
-
-		<view class="group-list" v-if="group_list">
+		<view class="nogroup" v-if="group_list.length == 0">尚未加入小组</view>
+		<view class="group-list" v-if="group_list.length != 0">
 			<view class="group" v-if="group_list[0]" @click="gotogroup(group_list[0])">
-				<image src="/static/logo.png" class="groups-avatar" mode="scaleToFill" webp="true"></image>
+				<image :src="group_list[0].groupavatarurl" class="groups-avatar" mode="scaleToFill" webp="true"></image>
 				<text class="group-name">{{group_list[0].groupname}}</text>
 			</view>
 			<view class="group" v-if="group_list[1]" @click="gotogroup(group_list[1])">
-				<image src="/static/logo.png" class="groups-avatar" mode="scaleToFill" webp="true"></image>
+				<image :src="group_list[1].groupavatarurl" class="groups-avatar" mode="scaleToFill" webp="true"></image>
 				<text class="group-name">{{group_list[1].groupname}}</text>
 			</view>
 			<view class="group" v-if="group_list[2]" @click="gotogroup(group_list[2])">
-				<image src="/static/logo.png" class="groups-avatar" mode="scaleToFill" webp="true"></image>
+				<image :src="group_list[2].groupavatarurl" class="groups-avatar" mode="scaleToFill" webp="true"></image>
 				<text class="group-name">{{group_list[2].groupname}}</text>
 			</view>
 			<view class="group" v-if="group_list[3]" @click="gotogroup(group_list[3])">
-				<image src="/static/logo.png" class="groups-avatar" mode="scaleToFill" webp="true"></image>
+				<image :src="group_list[3].groupavatarurl" class="groups-avatar" mode="scaleToFill" webp="true"></image>
 				<text class="group-name">{{group_list[3].groupname}}</text>
 			</view>
 		</view>
@@ -75,9 +75,9 @@
 		<view class="content-title" style="top: 20rpx;">
 			<text>他的动态</text>
 		</view>
+		<view class="nogroup" v-if="content_list.length == 0" style="height: 100rpx;">暂无任何动态</view>
 		
-		
-		<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
+		<view class="content-list" v-if="content_list.length != 0"  hover-class="content-list-hover" v-for="(item,index) in content_list"
 			:key="index">
 			<view class="content-title">
 				<view class="content-avatar-view">
@@ -313,11 +313,10 @@
 				let _self = this
 			
 				uni.request({
-					url: _self.apiServer + 'getContentList',
+					url: _self.apiServer + 'getMyContentList',
 			
 					data: {
 						useropenid: this.content.contentcreatedby,
-						groupid: ''
 					},
 			
 					header: {
@@ -910,12 +909,22 @@
 		top: 20rpx;
 	}
 	
+	.nogroup {
+		height: 160rpx;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		color: #c7c7c7;
+		text-align: center;
+	}
+	
 	.group-list {
 		position: relative;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-	
+		height: 160rpx;
 	
 	}
 	.group {
@@ -928,6 +937,8 @@
 	}
 	
 	.group-name {
+		margin-top: 10rpx;
+		font-weight: bold;
 		font-size: 30rpx;
 		width: 120rpx;
 		overflow: hidden;

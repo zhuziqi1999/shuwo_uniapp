@@ -176,7 +176,8 @@
 										}
 										
 									},
-									fail: () => {
+									fail: (err) => {
+										console.log(err)
 										uni.showToast({
 											title: '获取授权信息失败',
 											icon: 'none'
@@ -185,14 +186,7 @@
 									}
 								});
 							},
-							fail: (codeRes) => {
-								console.log(codeRes.errMsg)
-								uni.showToast({
-									title: '获取 SesssionKey OpenId 失败',
-									icon: 'none'
-								});
-								return false;
-							}
+
 						});
 					},
 					fail: () => {

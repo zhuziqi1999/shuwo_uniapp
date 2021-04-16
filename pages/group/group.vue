@@ -25,7 +25,8 @@
 							</view> -->
 							<view class="goods">
 								<view class="goods-top">
-									<image class="goods-image" @click="gotogroup(item)" :src="item.groupavatarurl" mode="">
+									<image class="goods-image" @click="gotogroup(item)" :src="item.groupavatarurl"
+										mode="">
 									</image>
 									<view style="width: 440rpx;" @click="gotogroup(item)">
 										<!-- <view style="font-weight: bold;">第{{index2+1}}个商品标题</view> -->
@@ -35,9 +36,9 @@
 										@click="inGroup(item.groupid,index)">
 										<text class="icon icon-search"
 											style="color: #FFFFFF;font-size: 25rpx;margin-left: 7rpx;margin-top: 2rpx;">&#xf081;</text>
-										<view
-											style="color: #FFFFFF; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;">
-											加入小组</view>
+										<view style="color: #FFFFFF; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;">
+											加入小组
+										</view>
 									</view>
 									<view class="goods-plus" v-if="item.IsInGroup == 1"
 										style="background-color: #B6B9BB;" @click="outGroup(item.groupid,index)">
@@ -48,11 +49,9 @@
 								<view class="goods-bottom" @click="gotogroup(item)">
 									<text class="icon icon-search"
 										style="color: #ff8522;font-size: 25rpx;margin-left: 7rpx;margin-top: 6rpx;height: 25rpx;">&#xef7e;</text>
-									<view
-										style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 25rpx;">
+									<view style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 25rpx;">
 										{{item.groupremark}}
 									</view>
-
 								</view>
 							</view>
 						</view>
@@ -350,7 +349,7 @@
 				});
 			},
 
-			
+
 
 
 		},

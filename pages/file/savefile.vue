@@ -619,7 +619,7 @@
 		padding-left: 20rpx;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		height: 40rpx;
+		height: 44rpx;
 		white-space:nowrap;
 	}
 

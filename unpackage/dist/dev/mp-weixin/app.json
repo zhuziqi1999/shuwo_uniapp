@@ -15,7 +15,8 @@
     "components/zhouWei-navBar/index1",
     "pages/file/savefile",
     "pages/group/addgroup",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/index/updatecontent"
   ],
   "subPackages": [],
   "window": {

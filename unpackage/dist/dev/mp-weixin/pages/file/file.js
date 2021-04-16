@@ -234,6 +234,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var hFormAlert = function hFormAlert() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert */ "components/h-form-alert/h-form-alert").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert.vue */ 167));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hFormAlert1 = function hFormAlert1() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert1 */ "components/h-form-alert/h-form-alert1").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert1.vue */ 174));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 153));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 160));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
@@ -293,11 +294,12 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
 
   },
   onLoad: function onLoad() {
-    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 59;
+    this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
+    59;
 
   },
   onShow: function onShow() {
-    this.getFolderList();
+    this.getFolderList(this.curfolder);
     this.getFileList();
   },
 
@@ -510,6 +512,7 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
 
             setTimeout(function () {}, 2000);
             _this3.formalert1 = 0;
+            _this3.getFolderList(_self.curfolder);
             _this3.getFolderList();
           }
 
@@ -604,6 +607,7 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
         count: 1, //能选择文件的数量
         type: 'all', //能选择文件的类型,我这里只允许上传文件.还有视频,图片,或者都可以
         success: function success(res) {
+          console.log(res);
           var size = res.tempFiles[0].size;
           var name = res.tempFiles[0].name;
           var temporaryPdfArr = [];
@@ -611,7 +615,8 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
           var filePath = res.tempFiles[0].path;
           var newfilename = name + "";
 
-          if (size > 10485760 || newfilename.indexOf(".pdf") == -1 && newfilename.indexOf(".doc") == -1 && newfilename.indexOf(".docx") == -1) {//限制了文件的大小和具体文件类型
+          if (size > 10485760 || newfilename.indexOf(".pdf") == -1 && newfilename.indexOf(".doc") ==
+          -1 && newfilename.indexOf(".docx") == -1) {//限制了文件的大小和具体文件类型
             wx.showToast({
               title: '文件大小不能超过10MB,格式必须为pdf、doc、docx！',
               icon: "none",
@@ -648,9 +653,8 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
                   icon: "success",
                   duration: 2000 });
 
-                setTimeout(function () {
-                }, 2000);
-
+                setTimeout(function () {}, 2000);
+                _self.getFolderList(_self.curfolder);
                 _self.getFileList();
               },
               fail: function fail() {
@@ -662,13 +666,22 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
 
 
           }
+        },
+        fail: function fail(res) {
+          console.log(res);
+          uni.showToast({
+            title: '文件上传失败',
+            icon: 'none' });
+
         } });
 
     },
 
     getFileList: function getFileList() {var _this5 = this;
       var _self = this;
-
+      if (_self.curfolder == null) {
+        _self.curfolder = "";
+      }
       uni.request({
         url: _self.apiServer + 'getFileList',
         header: {
@@ -725,6 +738,7 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
       console.log("11");
       var downloadpath = 'https://shuwo.ltd/download/';
       console.log(downloadpath + file.fileid + '.' + file.filetype);
+      uni.showLoading();
       wx.downloadFile({
 
         url: downloadpath + file.fileid + '.' + file.filetype,
@@ -738,9 +752,16 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
             filePath: filePath,
             fileType: file.filetype,
             success: function success(res) {
+              uni.hideLoading();
               console.log('打开文档成功');
             },
             fail: function fail(res) {
+              uni.hideLoading();
+              uni.showToast({
+                title: '删除失败',
+                icon: "none",
+                duration: 2000 });
+
               console.log(res);
             } });
 

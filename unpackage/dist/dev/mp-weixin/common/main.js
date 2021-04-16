@@ -38,8 +38,8 @@ _vue.default.prototype.checkLogin = function (backpage, backtype) {
   return [SynsUserOpenid, SynsUserName];
 };
 // 定义一个全局的请求地址
-// Vue.prototype.apiServer = 'http://localhost:8090/'
-_vue.default.prototype.apiServer = 'https://shuwo.ltd/';
+_vue.default.prototype.apiServer = 'http://localhost:8090/';
+// Vue.prototype.apiServer = 'https://shuwo.ltd/'
 
 var windowheight = wx.getSystemInfoSync().windowHeight; // 获取当前窗口的高度
 

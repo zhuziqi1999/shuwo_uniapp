@@ -7,7 +7,10 @@
 		</view>
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
-
+			<view v-if="folder_list.length == 0 && file_list.length == 0"  class="nomessage">
+			<text>该文件夹无文件</text>
+			<view class="gotoadd" @click="gotoAdd">前往上传文件</view>
+			</view>	
 			<view class="prefolder" v-if="curfolder" @click="outfolder">
 				<text class="icon icon-prefolder">&#xf096;</text>
 			</view>
@@ -482,7 +485,11 @@
 				});
 			},
 			
-			
+			gotoAdd () {
+				uni.switchTab({
+				    url: '/pages/file/file'
+				});
+			},
 			
 
 		},
@@ -517,7 +524,8 @@
 	.content-list {
 		display: flex;
 		flex-direction: row;
-
+		position: relative;
+		top: 35rpx;
 		width: 100%;
 		background-color: #FFFFFF;
 		height: 110rpx;
@@ -544,7 +552,7 @@
 		padding-left: 20rpx;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		height: 40rpx;
+		height: 44rpx;
 		white-space:nowrap;
 	}
 
@@ -587,7 +595,8 @@
 	}
 
 	.prefolder {
-
+		top: 0rpx;
+		position: absolute;
 		width: 100%;
 		height: 40rpx;
 		padding-left: 30rpx;
@@ -633,6 +642,33 @@
 		font-size: 30rpx;
 		position: relative;
 		text-align: center;
+		align-items: center;
+	}
+	
+	
+	.nomessage {
+		position: relative;
+		top: 500rpx;
+		color: #c7c7c7;
+		font-size: 40rpx;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.gotoadd {
+		background-color: #1E8DD5;
+		border-radius: 50rpx;
+		width: 200rpx;
+		height: 50rpx;
+		font-size: 28rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-top: 20rpx;
+		display: flex;
+		justify-content: center;
 		align-items: center;
 	}
 </style>

@@ -371,7 +371,13 @@ var content = [];var _default =
 
 
   onShow: function onShow() {
-    this.getContentList();
+    if (this.swiperTabIdx == 0) {
+      this.getContentList();
+    }
+
+    if (this.swiperTabIdx == 1) {
+      this.getFollowContentList();
+    }
   },
 
   methods: {
@@ -386,14 +392,24 @@ var content = [];var _default =
         label: '投诉动态',
         color: '#000000',
         fontSize: '',
+        disabled: false },
+
+      {
+        label: '编辑动态',
+        color: '#000000',
+        fontSize: '',
         disabled: false }];
 
       var content = e;
       this.curcontent = content;
       if (content.contentcreatedby == uni.getStorageSync("UserOpenid")) {
-        console.log("sdf");
         this.options[1].disabled = true;
       }
+      if (content.contentcreatedby != uni.getStorageSync("UserOpenid")) {
+        this.options[2].disabled = true;
+        this.options[0].disabled = true;
+      }
+
       this.$refs.actionSheet.showActionSheet(); // 显示
     },
 
@@ -402,6 +418,9 @@ var content = [];var _default =
       var label = e.label;
       if (label == "删除动态") {
         this.deleteContent(this.curcontent);
+      }
+      if (label == "编辑动态") {
+        this.updateContent(this.curcontent);
       }
 
     },
@@ -424,8 +443,13 @@ var content = [];var _default =
     CurrentTab: function CurrentTab(index, item) {
       this.swiperTabIdx = index;
       this.scrollIntoView = Math.max(0, index - 1);
-      console.log(index);
+      if (index == 0) {
+        this.getContentList();
+      }
 
+      if (index == 1) {
+        this.getFollowContentList();
+      }
 
       console.log(index + '----' + item);
     },
@@ -438,15 +462,14 @@ var content = [];var _default =
       this.scrollIntoView = Math.max(0, e.detail.current - 1);
     },
 
-    getContentList: function getContentList() {var _this = this;
+    getFollowContentList: function getFollowContentList() {var _this = this;
       var _self = this;
 
       uni.request({
-        url: _self.apiServer + 'getContentList',
+        url: _self.apiServer + 'getFollowContentList',
 
         data: {
-          useropenid: uni.getStorageSync("UserOpenid"),
-          groupid: "" },
+          useropenid: uni.getStorageSync("UserOpenid") },
 
 
         header: {
@@ -468,13 +491,56 @@ var content = [];var _default =
 
     },
 
+
+    getContentList: function getContentList() {var _this2 = this;
+      var _self = this;
+
+      uni.request({
+        url: _self.apiServer + 'getContentList',
+
+        data: {
+          useropenid: uni.getStorageSync("UserOpenid"),
+          groupid: "" },
+
+
+        header: {
+          'content-type': 'application/json' },
+
+
+        method: 'POST',
+
+        success: function success(res) {
+          _this2.content_list = res.data.content;
+
+          for (var i = 0; i < res.data.content.length; i++) {
+            res.data.content[i].time = _SOtime.default.time1(res.data.content[i].
+            contentcreatedtimeunix);
+          }
+          console.log(_this2.content_list);
+
+        } });
+
+    },
+
     addcontent: function addcontent() {
       uni.navigateTo({
         url: '/pages/index/addcontent' });
 
     },
 
-    deleteContent: function deleteContent(e) {var _this2 = this;
+    updateContent: function updateContent(e) {
+      var content = e;
+      var _self = this;
+
+      var navData = JSON.stringify(content);
+      uni.navigateTo({
+        url: '/pages/index/updatecontent?data=' + navData });
+
+
+
+    },
+
+    deleteContent: function deleteContent(e) {var _this3 = this;
       var _self = this;
       var content = e;
       console.log(content.contentid);
@@ -515,8 +581,8 @@ var content = [];var _default =
 
 
             setTimeout(function () {}, 2000);
-            _this2.options[1].disabled = false;
-            _this2.getContentList();
+            _this3.options[1].disabled = false;
+            _this3.getContentList();
           }
 
         },
@@ -530,7 +596,7 @@ var content = [];var _default =
     },
 
 
-    LikeContent: function LikeContent(e, id) {var _this3 = this;
+    LikeContent: function LikeContent(e, id) {var _this4 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -568,9 +634,9 @@ var content = [];var _default =
             setTimeout(function () {
 
             }, 2000);
-            _this3.content_list[index].isliked = 1;
+            _this4.content_list[index].isliked = 1;
 
-            _this3.content_list[index].contentlikes++;
+            _this4.content_list[index].contentlikes++;
           }
 
 
@@ -585,7 +651,7 @@ var content = [];var _default =
 
     },
 
-    UnlikeContent: function UnlikeContent(e, id) {var _this4 = this;
+    UnlikeContent: function UnlikeContent(e, id) {var _this5 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -622,8 +688,8 @@ var content = [];var _default =
             setTimeout(function () {
 
             }, 2000);
-            _this4.content_list[index].isliked = 0;
-            _this4.content_list[index].contentlikes--;
+            _this5.content_list[index].isliked = 0;
+            _this5.content_list[index].contentlikes--;
           }
 
 
@@ -638,7 +704,7 @@ var content = [];var _default =
 
     },
 
-    CollectContent: function CollectContent(e, id) {var _this5 = this;
+    CollectContent: function CollectContent(e, id) {var _this6 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -671,7 +737,7 @@ var content = [];var _default =
           // 已经授权了、查询到用户的数据了
           if (res.data.code == 1) {
             // 用户信息写入缓存
-            _this5.content_list[index].iscollected = 1;
+            _this6.content_list[index].iscollected = 1;
           }
 
 
@@ -686,7 +752,7 @@ var content = [];var _default =
 
     },
 
-    UncollectContent: function UncollectContent(e, id) {var _this6 = this;
+    UncollectContent: function UncollectContent(e, id) {var _this7 = this;
       var _self = this;
       var contentid = e;
       var index = id;
@@ -717,7 +783,7 @@ var content = [];var _default =
           // 已经授权了、查询到用户的数据了
           if (res.data.code == 1) {
             // 用户信息写入缓存
-            _this6.content_list[index].iscollected = 0;
+            _this7.content_list[index].iscollected = 0;
           }
 
 
@@ -752,7 +818,7 @@ var content = [];var _default =
 
     },
 
-    pubComment: function pubComment(e, id) {var _this7 = this;
+    pubComment: function pubComment(e, id) {var _this8 = this;
       var text = e;
       var _self = this;
 
@@ -789,8 +855,8 @@ var content = [];var _default =
               title: '评论成功',
               duration: 2000 });
 
-            _this7.$refs.ygcComment.toggleMask("false");
-            _this7.content_list[_this7.contentid].contentcomments++;
+            _this8.$refs.ygcComment.toggleMask("false");
+            _this8.content_list[_this8.contentid].contentcomments++;
           }
 
         },

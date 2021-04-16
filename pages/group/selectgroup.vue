@@ -18,24 +18,36 @@
 				<view class="main">
 					<scroll-view scroll-y="true" :style="{ 'height':scrollHeight + 'px' }" @scroll="mainScroll"
 						:scroll-into-view="scrollInto" scroll-with-animation="true">
-						<view class="item main-item" v-for="(item,index) in mainArray" :key="index" :id="'item-'+index">
-							<!-- <view class="title">
-								<view>{{item.title}}</view>
-							</view> -->
-							<view class="goods">
-								<view class="goods-top" @click="itemClick(item)">
-									<image class="goods-image"  src="/static/logo.png" mode="">
+					<view v-if="group_list.length == 0 "  class="nomessage">
+					<text>您尚未加入小组</text>
+					<view class="gotoadd" @click="gotoAdd">前往加入小组</view>
+					</view>	
+						<view class="item main-item" v-for="(item,index) in group_list" :key="index" :id="'item-'+index">
+
+							
+							<view class="goods" @click="itemClick(item)">
+								<view class="goods-top">
+									<image class="goods-image" :src="item.groupavatarurl"
+										mode="">
 									</image>
-									<view style="width: 440rpx" >
-										<!-- <view style="font-weight: bold;">第{{index2+1}}个商品标题</view> -->
+									<view style="width: 560rpx;" >
 										<view class="number">{{item.groupname}}</view>
 									</view>
 
-									<text class="icon icon-right">&#xef6f;</text>
+									<text class="icon icon-delete" >&#xef6f;</text>
 
+
+							
 								</view>
-
+								<view class="goods-bottom" @click="gotogroup(item)">
+									<text class="icon icon-search"
+										style="color: #ff8522;font-size: 25rpx;margin-left: 7rpx;margin-top: 6rpx;height: 25rpx;">&#xef7e;</text>
+									<view style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 25rpx;">
+										{{item.groupremark}}
+									</view>
+								</view>
 							</view>
+							
 						</view>
 						<!-- <view class="fill-last" :style="{ 'height':fillHeight + 'px' }"></view> -->
 					</scroll-view>
@@ -71,7 +83,7 @@
 				scrollTopSize: 0,
 				fillHeight: 0, // 填充高度，用于最后一项低于滚动区域时使用
 				leftArray: [],
-				mainArray: [],
+				group_list: [],
 				topArr: [],
 				leftIndex: 0,
 				scrollInto: '',
@@ -185,8 +197,8 @@
 					console.log(res);
 
 					uni.hideLoading();
-					this.mainArray = res.main;
-					console.log(this.mainArray)
+					this.group_list = res.main;
+					console.log(this.group_list)
 					// DOM 挂载后 再调用 getElementTop 获取高度的方法。
 					this.$nextTick(() => {
 						this.getElementTop();
@@ -232,7 +244,13 @@
 				let index = e.currentTarget.dataset.index;
 				this.scrollInto = `item-${index}`;
 			},
-
+			
+			gotoAdd () {
+				uni.switchTab({
+				    url: '/pages/group/group'
+				});
+			},
+			
 			inGroup(e, id) {
 				let _self = this;
 				let groupid = e
@@ -273,8 +291,8 @@
 								duration: 2000
 							})
 
-							this.mainArray[index].IsInGroup = 1
-							console.log(this.mainArray[index].IsInGroup)
+							this.group_list[index].IsInGroup = 1
+							console.log(this.group_list[index].IsInGroup)
 						}
 
 
@@ -329,8 +347,8 @@
 								duration: 2000
 							})
 
-							this.mainArray[index].IsInGroup = 0
-							console.log(this.mainArray[index].IsInGroup)
+							this.group_list[index].IsInGroup = 0
+							console.log(this.group_list[index].IsInGroup)
 						}
 
 
@@ -600,5 +618,40 @@
 		left: 120rpx;
 		padding-top: 20rpx;
 		height: 50rpx;
+	}
+	
+	
+	.icon-delete {
+		color: #bfbfbf;
+		font-size: 30rpx;
+		position: relative;
+		text-align: center;
+		align-items: center;
+	}
+	
+	.nomessage {
+		position: relative;
+		top: 500rpx;
+		color: #c7c7c7;
+		font-size: 40rpx;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.gotoadd {
+		background-color: #1E8DD5;
+		border-radius: 50rpx;
+		width: 200rpx;
+		height: 50rpx;
+		font-size: 28rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-top: 20rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>

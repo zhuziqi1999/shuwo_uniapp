@@ -11,24 +11,24 @@
 		<hFormAlert1 v-if="formalert2" @confirm="deleteFile" @cancel="hiddenformalert2" :type="none" title="是否删除该文件">
 		</hFormAlert1>
 
-		
+
 		<view class="content-more">
 			<view class="content-plus" @click="upload">
 				<view class="content-plus-flex">
 					<text class="icon icon-plus" style="font-size: 36rpx;">&#xe60f;</text>
 				</view>
-			
+
 			</view>
-			<view class="content-plus"  @click="showformalert">
+			<view class="content-plus" @click="showformalert">
 				<view class="content-plus-flex">
 					<text class="icon icon-plus">&#xe663;</text>
 				</view>
-			
+
 			</view>
-			
+
 
 		</view>
-		
+
 
 		<ren-dropdown-filter :filterData='filterData' :defaultIndex='defaultIndex' @onSelected='onSelected()'
 			@dateChange='dateChange' style="width: 100%;position: relative;"></ren-dropdown-filter>
@@ -55,11 +55,12 @@
 
 
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in file_list" :key="index">
-				<image v-if="item.filetype == 'doc' " src=" ../../static/W.png" class="file-img"
-					mode="scaleToFill" @click="openfile(item)"></image>
-				<image v-if="item.filetype == 'docx' " src=" ../../static/W.png" class="file-img"
-					mode="scaleToFill" @click="openfile(item)"></image>
-				<image v-if="item.filetype == 'pdf' " src="../../static/P.png" class="file-img" mode="scaleToFill" @click="openfile(item)">
+				<image v-if="item.filetype == 'doc' " src=" ../../static/W.png" class="file-img" mode="scaleToFill"
+					@click="openfile(item)"></image>
+				<image v-if="item.filetype == 'docx' " src=" ../../static/W.png" class="file-img" mode="scaleToFill"
+					@click="openfile(item)"></image>
+				<image v-if="item.filetype == 'pdf' " src="../../static/P.png" class="file-img" mode="scaleToFill"
+					@click="openfile(item)">
 				</image>
 				<view class="file-infor" @click="openfile(item)">
 					<view class="file-name">{{item.filename}}</view>
@@ -90,8 +91,8 @@
 
 		data() {
 			return {
-				code1 : 0,
-				code2 : 0,
+				code1: 0,
+				code2: 0,
 				folders: [""],
 				index: 0,
 				folderflag: [],
@@ -138,11 +139,12 @@
 			}
 		},
 		onLoad() {
-			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) - 59 ;
+			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750) -
+				59;
 
 		},
 		onShow() {
-			this.getFolderList();
+			this.getFolderList(this.curfolder);
 			this.getFileList();
 		},
 
@@ -152,8 +154,8 @@
 				this['val' + val] = e;
 			},
 			onSelected(res) {
-				
-				
+
+
 				this.code1 = res[0][0].value
 				this.code2 = res[1][0].value
 				console.log(this.code1)
@@ -302,12 +304,12 @@
 			hiddenformalert1() {
 				this.formalert1 = 0;
 			},
-			
+
 			showformalert2(e) {
 				this.fileid = e.fileid;
 				this.formalert2 = 1;
 			},
-			
+
 			hiddenformalert2() {
 				this.formalert2 = 0;
 			},
@@ -335,7 +337,7 @@
 							uni.showToast({
 								title: '删除失败',
 								duration: 2000,
-								icon:"none"
+								icon: "none"
 							})
 							return false;
 						}
@@ -355,6 +357,7 @@
 
 							setTimeout(function() {}, 2000)
 							this.formalert1 = 0;
+							this.getFolderList(_self.curfolder);
 							this.getFolderList();
 						}
 
@@ -370,7 +373,7 @@
 
 			deleteFile() {
 				let _self = this
-			
+
 				uni.request({
 					url: _self.apiServer + 'deleteFile',
 					header: {
@@ -380,11 +383,11 @@
 					data: {
 						filecreatedby: uni.getStorageSync("UserOpenid"),
 						fileid: this.fileid
-			
+
 					},
 					method: 'POST',
 					success: res => {
-			
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -394,24 +397,24 @@
 							return false;
 						}
 						// 用户信息写入缓存
-			
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							console.log(res.data)
-			
+
 							wx.showToast({
 								title: '删除成功',
 								icon: "none",
 								duration: 2000
 							})
-			
+
 							setTimeout(function() {}, 2000)
 							this.formalert2 = 0;
 							this.getFolderList();
 							this.getFileList();
 						}
-			
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -449,6 +452,7 @@
 					count: 1, //能选择文件的数量
 					type: 'all', //能选择文件的类型,我这里只允许上传文件.还有视频,图片,或者都可以
 					success(res) {
+						console.log(res)
 						var size = res.tempFiles[0].size;
 						var name = res.tempFiles[0].name;
 						var temporaryPdfArr = [];
@@ -456,7 +460,8 @@
 						var filePath = res.tempFiles[0].path;
 						var newfilename = name + "";
 
-						if (size > 10485760 || (newfilename.indexOf(".pdf") == -1 && newfilename.indexOf(".doc") == -1 && newfilename.indexOf(".docx") == -1 ) ) { //限制了文件的大小和具体文件类型
+						if (size > 10485760 || (newfilename.indexOf(".pdf") == -1 && newfilename.indexOf(".doc") ==
+								-1 && newfilename.indexOf(".docx") == -1)) { //限制了文件的大小和具体文件类型
 							wx.showToast({
 								title: '文件大小不能超过10MB,格式必须为pdf、doc、docx！',
 								icon: "none",
@@ -484,19 +489,18 @@
 
 									wx.hideLoading(); //隐藏提示框
 
-										// 用户信息写入缓存
-										console.log("success")
-										wx.hideToast()
-										
-										wx.showToast({
-											title: '上传成功',
-											icon: "success",
-											duration: 2000
-										})
-										setTimeout(function() {
-										}, 2000)
-										
-										_self.getFileList()
+									// 用户信息写入缓存
+									console.log("success")
+									wx.hideToast()
+
+									wx.showToast({
+										title: '上传成功',
+										icon: "success",
+										duration: 2000
+									})
+									setTimeout(function() {}, 2000)
+									_self.getFolderList(_self.curfolder)
+									_self.getFileList()
 								},
 								fail: () => {
 									uni.showToast({
@@ -507,13 +511,22 @@
 
 							})
 						}
+					},
+					fail: (res) => {
+						console.log(res)
+						uni.showToast({
+							title: '文件上传失败',
+							icon: 'none'
+						});
 					}
 				})
 			},
-			
+
 			getFileList() {
 				let _self = this
-			
+				if (_self.curfolder == null) {
+					_self.curfolder = ""
+				}
 				uni.request({
 					url: _self.apiServer + 'getFileList',
 					header: {
@@ -523,13 +536,13 @@
 					data: {
 						filecreatedby: uni.getStorageSync("UserOpenid"),
 						filefolderid: _self.curfolder,
-						code1 : this.code1,
-						code2 : this.code2
-			
+						code1: this.code1,
+						code2: this.code2
+
 					},
 					method: 'POST',
 					success: res => {
-			
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -539,21 +552,21 @@
 							return false;
 						}
 						// 用户信息写入缓存
-			
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							console.log(res.data)
 							this.file_list = res.data.filelist
-			
+
 							for (var i = 0; i < res.data.filelist.length; i++) {
 								this.file_list[i].filecreatedtime = SOtime.time1(this.file_list[i]
 									.filecreatedtimeunix)
 							}
-			
-			
+
+
 						}
-			
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -563,37 +576,45 @@
 					}
 				});
 			},
-			
+
 			openfile(e) {
-				
+
 				let file = e
 				console.log("11")
 				let downloadpath = 'https://shuwo.ltd/download/'
-				console.log(downloadpath + file.fileid + '.' +file.filetype)
+				console.log(downloadpath + file.fileid + '.' + file.filetype)
+				uni.showLoading();
 				wx.downloadFile({
-				  
-				  url : downloadpath + file.fileid + '.' +file.filetype,
-				  header: {
-				  'Content-Type': 'application/' + file.filetype
-				  },
-				  success: function (res) {
-				    var filePath = res.tempFilePath;
-					console.log(res)
-				    wx.openDocument({
-				      filePath: filePath,
-					  fileType: file.filetype,
-				      success: function (res) {
-				        console.log('打开文档成功');
-				      },
-					  fail:function(res) {
-					  	console.log(res)
-					  }
-				    });
-				  },
-				  
+				
+					url: downloadpath + file.fileid + '.' + file.filetype,
+					header: {
+						'Content-Type': 'application/' + file.filetype
+					},
+					success: function(res) {
+						var filePath = res.tempFilePath;
+						console.log(res)
+						wx.openDocument({
+							filePath: filePath,
+							fileType: file.filetype,
+							success: function(res) {
+								uni.hideLoading();
+								console.log('打开文档成功');
+							},
+							fail: function(res) {
+								uni.hideLoading();
+								uni.showToast({
+									title: '删除失败',
+									icon: "none",
+									duration: 2000
+								})
+								console.log(res)
+							}
+						});
+					},
+
 				});
 			}
-			
+
 
 		},
 
@@ -646,8 +667,8 @@
 		padding-left: 20rpx;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		height: 40rpx;
-		white-space:nowrap;
+		height: 44rpx;
+		white-space: nowrap;
 	}
 
 	.file-time {
@@ -696,15 +717,16 @@
 	}
 
 
-@font-face {
-  font-family: 'iconfont';  /* project id 2415376 */
-  src: url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.eot');
-  src: url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.svg#iconfont') format('svg');
-}
+	@font-face {
+		font-family: 'iconfont';
+		/* project id 2415376 */
+		src: url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.eot');
+		src: url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.eot?#iefix') format('embedded-opentype'),
+			url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.woff2') format('woff2'),
+			url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.woff') format('woff'),
+			url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.ttf') format('truetype'),
+			url('//at.alicdn.com/t/font_2415376_1kvulk3jywh.svg#iconfont') format('svg');
+	}
 
 	.icon {
 		font-family: iconfont;

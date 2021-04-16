@@ -520,6 +520,22 @@ page {
   padding-left: 20rpx;
   top: 20rpx;
 }
+.nogroup {
+  height: 160rpx;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  color: #c7c7c7;
+  text-align: center;
+}
 .group-list {
   position: relative;
   display: -webkit-box;
@@ -532,6 +548,7 @@ page {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  height: 160rpx;
 }
 .group {
   display: -webkit-box;
@@ -546,6 +563,8 @@ page {
   text-align: center;
 }
 .group-name {
+  margin-top: 10rpx;
+  font-weight: bold;
   font-size: 30rpx;
   width: 120rpx;
   overflow: hidden;

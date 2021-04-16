@@ -38,7 +38,8 @@
 		-webkit-box-direction: normal;
 		-webkit-flex-direction: row;
 		        flex-direction: row;
-
+		position: relative;
+		top: 35rpx;
 		width: 100%;
 		background-color: #FFFFFF;
 		height: 110rpx;
@@ -69,7 +70,7 @@
 		padding-left: 20rpx;
 		text-overflow: ellipsis;
 		overflow: hidden;
-		height: 40rpx;
+		height: 44rpx;
 		white-space:nowrap;
 }
 .file-time {
@@ -116,7 +117,8 @@
 		        justify-content: center;
 }
 .prefolder {
-
+		top: 0rpx;
+		position: absolute;
 		width: 100%;
 		height: 40rpx;
 		padding-left: 30rpx;
@@ -159,6 +161,46 @@
 		font-size: 30rpx;
 		position: relative;
 		text-align: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.nomessage {
+		position: relative;
+		top: 500rpx;
+		color: #c7c7c7;
+		font-size: 40rpx;
+		text-align: center;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		-webkit-flex-direction: column;
+		        flex-direction: column;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		        justify-content: center;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		        align-items: center;
+}
+.gotoadd {
+		background-color: #1E8DD5;
+		-webkit-border-radius: 50rpx;
+		        border-radius: 50rpx;
+		width: 200rpx;
+		height: 50rpx;
+		font-size: 28rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-top: 20rpx;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		        justify-content: center;
 		-webkit-box-align: center;
 		-webkit-align-items: center;
 		        align-items: center;

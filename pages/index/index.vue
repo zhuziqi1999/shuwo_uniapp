@@ -43,7 +43,7 @@
 						</view>
 
 						<view class="content-name-from">
-							<view class="content-username">{{item.username}}</view>
+							<view class="content-username" @click="gotoUser(item)">{{item.username}}</view>
 							<view class="content-share-from">发布自{{item.groupname}}</view>
 						</view>
 						<view class="content-right">
@@ -205,7 +205,13 @@
 
 
 		onShow() {
-			this.getContentList();
+			if (this.swiperTabIdx == 0) {
+				this.getContentList()
+			}
+			
+			if (this.swiperTabIdx == 1) {
+				this.getFollowContentList()
+			}
 		},
 
 		methods: {
@@ -221,13 +227,23 @@
 					color: '#000000',
 					fontSize: '',
 					disabled: false
+				},
+				{
+					label: '编辑动态',
+					color: '#000000',
+					fontSize: '',
+					disabled: false
 				}]
 				let content = e
 				this.curcontent = content
 				if(content.contentcreatedby == uni.getStorageSync("UserOpenid")){
-					console.log("sdf")
 					this.options[1].disabled = true
 				}
+				if(content.contentcreatedby != uni.getStorageSync("UserOpenid")){
+					this.options[2].disabled = true
+					this.options[0].disabled = true
+				}
+				
 				this.$refs.actionSheet.showActionSheet(); // 显示
 			},
 			
@@ -236,6 +252,9 @@
 				let label = e.label
 				if (label == "删除动态") {
 					this.deleteContent(this.curcontent)
+				}
+				if (label == "编辑动态") {
+					this.updateContent(this.curcontent)
 				}
 				
 			},
@@ -258,8 +277,13 @@
 			CurrentTab: function(index, item) {
 				this.swiperTabIdx = index;
 				this.scrollIntoView = Math.max(0, index - 1);
-				console.log(index)
-
+				if (index == 0) {
+					this.getContentList()
+				}
+				
+				if (index == 1) {
+					this.getFollowContentList()
+				}
 
 				console.log(index + '----' + item)
 			},
@@ -271,7 +295,37 @@
 				this.swiperTabIdx = e.detail.current;
 				this.scrollIntoView = Math.max(0, e.detail.current - 1);
 			},
-
+			
+			getFollowContentList() {
+				let _self = this
+				
+				uni.request({
+					url: _self.apiServer + 'getFollowContentList',
+				
+					data: {
+						useropenid: uni.getStorageSync("UserOpenid"),
+					},
+				
+					header: {
+						'content-type': 'application/json',
+					},
+				
+					method: 'POST',
+				
+					success: res => {
+						this.content_list = res.data.content
+				
+						for (var i = 0; i < res.data.content.length; i++) {
+							res.data.content[i].time = SOtime.time1(res.data.content[i]
+								.contentcreatedtimeunix)
+						}
+						console.log(this.content_list)
+				
+					},
+				})
+			},
+			
+			
 			getContentList() {
 				let _self = this
 
@@ -306,6 +360,18 @@
 				uni.navigateTo({
 					url: '/pages/index/addcontent'
 				})
+			},
+			
+			updateContent(e) {
+				let content = e;
+				let _self = this;
+				
+				var navData = JSON.stringify(content);
+				uni.navigateTo({
+					url: '/pages/index/updatecontent?data=' + navData
+				})
+				
+				
 			},
 			
 			deleteContent(e) {

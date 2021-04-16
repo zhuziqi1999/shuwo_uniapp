@@ -163,6 +163,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -210,10 +213,10 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
 //
 //
 //
-var _default = { components: {}, data: function data() {return { folders: [""], index: 0, folderflag: [], curfolder: "", perfolder: "", folderid: '', fileid: '', folder_list: [], file_list: [], content_height: '', val0: '', val1: '', val2: '', val3: '' };}, onLoad: function onLoad() {this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);}, onShow: function onShow() {this.getFolderList();this.getFileList();}, methods: { search: function search(e, val) {console.log(e, val);this['val' + val] = e;}, onSelected: function onSelected(res) {uni.showToast({ icon: 'none', title: '控制台查看筛选结果' });}, dateChange: function dateChange(d) {uni.showToast({
-        icon: 'none',
-        title: d });
-
+//
+//
+//
+var _default = { components: {}, data: function data() {return { folders: [""], index: 0, folderflag: [], curfolder: "", perfolder: "", folderid: '', fileid: '', folder_list: [], file_list: [], content_height: '', val0: '', val1: '', val2: '', val3: '' };}, onLoad: function onLoad() {this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);}, onShow: function onShow() {this.getFolderList();this.getFileList();}, methods: { search: function search(e, val) {console.log(e, val);this['val' + val] = e;}, onSelected: function onSelected(res) {uni.showToast({ icon: 'none', title: '控制台查看筛选结果' });}, dateChange: function dateChange(d) {uni.showToast({ icon: 'none', title: d });
     },
 
     itemClick: function itemClick(e) {
@@ -595,6 +598,12 @@ var _default = { components: {}, data: function data() {return { folders: [""], 
             icon: 'none' });
 
         } });
+
+    },
+
+    gotoAdd: function gotoAdd() {
+      uni.switchTab({
+        url: '/pages/file/file' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

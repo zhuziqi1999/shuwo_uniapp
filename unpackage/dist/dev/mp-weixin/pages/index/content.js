@@ -420,6 +420,10 @@ var navbarpostion = 'postion';var _default =
         this.options[1].disabled = true;
       }
 
+      if (content.contentcreatedby != uni.getStorageSync("UserOpenid")) {
+        this.options[0].disabled = true;
+      }
+
 
       this.$refs.actionSheet.showActionSheet(); // 显示
     },
@@ -441,6 +445,9 @@ var navbarpostion = 'postion';var _default =
 
       if (comment.commentcreatedby == uni.getStorageSync("UserOpenid")) {
         this.options[1].disabled = true;
+      }
+      if (comment.commentcreatedby != uni.getStorageSync("UserOpenid") || this.content.contentcreatedby != uni.getStorageSync("UserOpenid")) {
+        this.options[0].disabled = true;
       }
       console.log(e);
       this.curcomment = e;
@@ -512,7 +519,15 @@ var navbarpostion = 'postion';var _default =
       }
 
     },
+    gotoUser: function gotoUser(e) {
+      var content = e;
+      var _self = this;
 
+      var navData = JSON.stringify(content);
+      uni.navigateTo({
+        url: '/pages/my/myinfo?data=' + navData });
+
+    },
     openfile: function openfile() {
       var content = this.content;
       console.log("11");
@@ -620,7 +635,7 @@ var navbarpostion = 'postion';var _default =
 
         dataType: "json",
         data: {
-          commentcreatedby: uni.getStorageSync("UserOpenid"),
+          commentcreatedby: this.curcomment.commentcreatedby,
           commentid: this.curcomment.commentid,
           commentcontentid: this.content.contentid },
 

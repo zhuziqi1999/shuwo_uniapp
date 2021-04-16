@@ -10,7 +10,7 @@
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
 			<view class="content-list">
 				<view class="content-title">
-					<view class="content-avatar-view">
+					<view class="content-avatar-view" @click="gotoUser(content)">
 						<image :src="content.useravatarurl" class="content-avatar" mode="scaleToFill" webp="true">
 						</image>
 					</view>
@@ -259,6 +259,10 @@
 					this.options[1].disabled = true
 				}
 				
+				if(content.contentcreatedby != uni.getStorageSync("UserOpenid")){
+					this.options[0].disabled = true
+				}
+				
 				
 				this.$refs.actionSheet.showActionSheet(); // 显示
 			},
@@ -280,6 +284,9 @@
 				}]
 				if(comment.commentcreatedby == uni.getStorageSync("UserOpenid")){
 					this.options[1].disabled = true
+				}
+				if(comment.commentcreatedby != uni.getStorageSync("UserOpenid") || this.content.contentcreatedby != uni.getStorageSync("UserOpenid")){
+					this.options[0].disabled = true
 				}
 				console.log(e)
 				this.curcomment = e
@@ -351,7 +358,15 @@
 				}
 
 			},
+			gotoUser(e) {
+				let content = e;
+				let _self = this;
 			
+				var navData = JSON.stringify(content);
+				uni.navigateTo({
+					url: '/pages/my/myinfo?data=' + navData
+				})
+			},
 			openfile() {
 				let content = this.content
 				console.log("11")
@@ -459,7 +474,7 @@
 					},
 					dataType: "json",
 					data: {
-						commentcreatedby : uni.getStorageSync("UserOpenid"),
+						commentcreatedby : this.curcomment.commentcreatedby,
 						commentid : this.curcomment.commentid,
 						commentcontentid : this.content.contentid
 			
@@ -1240,7 +1255,7 @@
 		width: auto;
 		height: 100%;
 		font-size: 24rpx;
-		left: 270rpx;
+		left: 260rpx;
 		font-weight: bold;
 		color: #cdcdcd;
 

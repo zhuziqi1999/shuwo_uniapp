@@ -187,6 +187,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 {
   components: {
     mSearch: mSearch },
@@ -203,7 +215,7 @@ __webpack_require__.r(__webpack_exports__);
       scrollTopSize: 0,
       fillHeight: 0, // 填充高度，用于最后一项低于滚动区域时使用
       leftArray: [],
-      mainArray: [],
+      group_list: [],
       topArr: [],
       leftIndex: 0,
       scrollInto: '',
@@ -317,8 +329,8 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res);
 
         uni.hideLoading();
-        _this3.mainArray = res.main;
-        console.log(_this3.mainArray);
+        _this3.group_list = res.main;
+        console.log(_this3.group_list);
         // DOM 挂载后 再调用 getElementTop 获取高度的方法。
         _this3.$nextTick(function () {
           _this3.getElementTop();
@@ -365,6 +377,12 @@ __webpack_require__.r(__webpack_exports__);
       this.scrollInto = "item-".concat(index);
     },
 
+    gotoAdd: function gotoAdd() {
+      uni.switchTab({
+        url: '/pages/group/group' });
+
+    },
+
     inGroup: function inGroup(e, id) {var _this5 = this;
       var _self = this;
       var groupid = e;
@@ -405,8 +423,8 @@ __webpack_require__.r(__webpack_exports__);
               duration: 2000 });
 
 
-            _this5.mainArray[index].IsInGroup = 1;
-            console.log(_this5.mainArray[index].IsInGroup);
+            _this5.group_list[index].IsInGroup = 1;
+            console.log(_this5.group_list[index].IsInGroup);
           }
 
 
@@ -461,8 +479,8 @@ __webpack_require__.r(__webpack_exports__);
               duration: 2000 });
 
 
-            _this6.mainArray[index].IsInGroup = 0;
-            console.log(_this6.mainArray[index].IsInGroup);
+            _this6.group_list[index].IsInGroup = 0;
+            console.log(_this6.group_list[index].IsInGroup);
           }
 
 
