@@ -911,6 +911,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		text-align: start;
 	}
 
 	.content-operate-likes {
@@ -995,7 +996,14 @@
 		justify-content: center;
 		height: 100rpx;
 	}
-
+	
+	.group-bottom text {
+		width: 90%;
+		height: 200rpx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
 	.goods-plus {
 		position: absolute;

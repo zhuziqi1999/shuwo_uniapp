@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 153));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 169));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -251,9 +251,13 @@ __webpack_require__.r(__webpack_exports__);
     this.getListData();
   },
   methods: {
-    search: function search(e, val) {
-      console.log(e, val);
-      this['val' + val] = e;
+    search: function search(e) {
+      console.log(e);
+      var message = e;
+      var navData = JSON.stringify(message);
+      uni.navigateTo({
+        url: '/pages/search/search?data=' + navData });
+
     },
     /* 初始化滚动区域 */
     initScrollView: function initScrollView() {var _this2 = this;

@@ -96,7 +96,7 @@ var components
 try {
   components = {
     renDropdownFilter: function() {
-      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 160))
+      return __webpack_require__.e(/*! import() | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then(__webpack_require__.bind(null, /*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 176))
     }
   }
 } catch (e) {
@@ -235,7 +235,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var hFormAlert = function hFormAlert() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert */ "components/h-form-alert/h-form-alert").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert.vue */ 167));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hFormAlert1 = function hFormAlert1() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert1 */ "components/h-form-alert/h-form-alert1").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert1.vue */ 174));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 153));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 160));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var hFormAlert = function hFormAlert() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert */ "components/h-form-alert/h-form-alert").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert.vue */ 183));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var hFormAlert1 = function hFormAlert1() {__webpack_require__.e(/*! require.ensure | components/h-form-alert/h-form-alert1 */ "components/h-form-alert/h-form-alert1").then((function () {return resolve(__webpack_require__(/*! @/components/h-form-alert/h-form-alert1.vue */ 190));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var mSearch = function mSearch() {__webpack_require__.e(/*! require.ensure | components/mehaotian-search/mehaotian-search */ "components/mehaotian-search/mehaotian-search").then((function () {return resolve(__webpack_require__(/*! @/components/mehaotian-search/mehaotian-search.vue */ 169));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var RenDropdownFilter = function RenDropdownFilter() {__webpack_require__.e(/*! require.ensure | components/ren-dropdown-filter/ren-dropdown-filter */ "components/ren-dropdown-filter/ren-dropdown-filter").then((function () {return resolve(__webpack_require__(/*! @/components/ren-dropdown-filter/ren-dropdown-filter.vue */ 176));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 {
   components: {
     mSearch: mSearch,
@@ -304,9 +304,13 @@ var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/S
   },
 
   methods: {
-    search: function search(e, val) {
-      console.log(e, val);
-      this['val' + val] = e;
+    search: function search(e) {
+      console.log(e);
+      var message = e;
+      var navData = JSON.stringify(message);
+      uni.navigateTo({
+        url: '/pages/search/search?data=' + navData });
+
     },
     onSelected: function onSelected(res) {
 

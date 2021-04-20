@@ -159,6 +159,7 @@
 			return {
 				options: [],
 				curcomment: [],
+				curcontent : [],
 				content_height: '',
 				windowheight,
 				loginRes,
@@ -219,7 +220,24 @@
 			})
 			
 			this.getCommentList()
-
+			console.log(this.content)
+		},
+		
+		onShow() {
+			var pages = getCurrentPages();
+			var currPage = pages[pages.length - 1];
+			
+			let curcontent = currPage.data.predata
+			console.log(this.curcontent)
+			if (this.curcontent) {
+				this.content.contenttext = curcontent.contenttext
+				this.content.contentshare = curcontent.contentshare
+				this.content.filename = curcontent.filename
+				this.content.filetype = curcontent.filetype
+				
+			}
+			
+			
 		},
 
 		// onPageScroll : function(e) {
@@ -254,12 +272,19 @@
 					color: '#000000',
 					fontSize: '',
 					disabled: false
-				}]
+				},{
+					label: '编辑动态',
+					color: '#000000',
+					fontSize: '',
+					disabled: false
+				}
+				]
 				if(content.contentcreatedby == uni.getStorageSync("UserOpenid")){
 					this.options[1].disabled = true
 				}
 				
 				if(content.contentcreatedby != uni.getStorageSync("UserOpenid")){
+					this.options[2].disabled = true
 					this.options[0].disabled = true
 				}
 				
@@ -330,6 +355,9 @@
 				if (label == "保存文件") {
 					this.gotosavefile()
 				}
+				if (label == "编辑动态") {
+					this.updateContent(this.content)
+				}
 				
 			},
 			
@@ -397,7 +425,17 @@
 				  
 				});
 			},
-			
+			updateContent(e) {
+				let content = e;
+				let _self = this;
+				
+				var navData = JSON.stringify(content);
+				uni.navigateTo({
+					url: '/pages/index/updatecontent?data=' + navData
+				})
+				
+				
+			},
 			gotosavefile() {
 				let content = this.content;
 				let _self = this;
@@ -1145,6 +1183,7 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 200rpx;
+		text-align: start;
 	}
 
 	.content-operate-likes {

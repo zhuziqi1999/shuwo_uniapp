@@ -149,9 +149,13 @@
 		},
 
 		methods: {
-			search(e, val) {
-				console.log(e, val);
-				this['val' + val] = e;
+			search(e) {
+				console.log(e);
+				let message = e
+				var navData = JSON.stringify(message);
+				uni.navigateTo({
+					url: '/pages/search/search?data=' + navData
+				})
 			},
 			onSelected(res) {
 

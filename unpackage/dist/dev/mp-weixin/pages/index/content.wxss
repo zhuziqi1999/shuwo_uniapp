@@ -286,6 +286,7 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 200rpx;
+		text-align: start;
 }
 .content-operate-likes {
 		display: -webkit-box;

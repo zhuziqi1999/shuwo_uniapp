@@ -266,8 +266,10 @@
 				let content = e
 				this.curcontent = content
 				if(content.contentcreatedby == uni.getStorageSync("UserOpenid")){
-					console.log("sdf")
 					this.options[1].disabled = true
+				}
+				if(content.contentcreatedby != uni.getStorageSync("UserOpenid")){
+					this.options[0].disabled = true
 				}
 				this.$refs.actionSheet.showActionSheet(); // 显示
 			},
@@ -401,7 +403,7 @@
 					},
 					dataType: "json",
 					data: {
-						useropenid: uni.getStorageSync('UserOpenid')
+						useropenid: this.content.contentcreatedby
 					},
 				
 				
@@ -710,7 +712,7 @@
 		width: 100%;
 		align-items: center;
 		position: relative;
-		top: -100rpx;
+		border-bottom: 2px solid #F6F6F6;
 	}
 	
 	.userAvatarUrl {
@@ -778,20 +780,19 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		border-bottom: 2px solid #F6F6F6;
 		padding-bottom: 20rpx;
 		position: relative;
 		width: 100%;
-		height: 10rpx;
-	
+		height: 100%;
+
 		.profily_header {
-			height: 120upx;
+			height: 140upx;
 			width: 100%;
 			background-size: 100%;
 		}
-	
-	
-	
+
+
+
 	}
 	
 	.order_status {
@@ -874,7 +875,7 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
-		top: -40rpx;
+		top: 20rpx;
 	}
 	
 	.cbn_content {
@@ -1240,5 +1241,6 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 200rpx;
+		text-align: start;
 	}
 </style>

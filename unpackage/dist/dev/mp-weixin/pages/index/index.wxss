@@ -269,6 +269,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	text-align: start;
 }
 .content-operate-likes.data-v-57280228 {
 	display: -webkit-box;

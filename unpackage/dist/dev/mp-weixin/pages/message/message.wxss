@@ -77,7 +77,7 @@
 	width: 100%;
 	height: auto;
 	background-color: #FFFFFF;
-	
+
 	border-bottom: 5rpx solid #e8e8e8;
 }
 .content-title {
@@ -102,6 +102,7 @@
 	margin-top: 24rpx;
 }
 .content-name-from {
+	width: 200rpx;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: flex;
@@ -117,7 +118,7 @@
 	height: 30rpx;
 	top: 15rpx;
 	right: 5rpx;
-	width: auto;
+	width: 200rpx;
 	font-size: 26rpx;
 	font-weight: bold;
 }
@@ -134,13 +135,14 @@
 .content-share-time {
 	position: relative;
 	top: 45rpx;
-	width: auto;
+	width: 150rpx;
 	height: 30rpx;
 	font-size: 27rpx;
-	left: 390rpx;
+	left: 240rpx;
 	font-weight: bold;
 	color: #cdcdcd;
-	margin-right: 50rpx;
+
+	text-align: end;
 }
 .content-share-more {
 	position: relative;
@@ -243,7 +245,7 @@
 	font-size: 25rpx;
 	font-weight: bold;
 }
-.content-pinlun{
+.content-pinlun {
 	position: relative;
 	width: auto;
 	height: 30rpx;
@@ -280,7 +282,7 @@
 	color: #cdcdcd;
 	margin-right: 50rpx;
 }
-.content-share-from1{
+.content-share-from1 {
 	padding-left: 30rpx;
 	position: relative;
 	width: auto;
@@ -295,5 +297,12 @@
 	top: 20rpx;
 	color: #c7c7c7;
 	text-align: center;
+}
+.contenttext {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	height: 30rpx;
+	width: 96%;
 }
 

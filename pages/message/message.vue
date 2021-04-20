@@ -12,13 +12,13 @@
 
 		<scroll-view white-space=nowrap; scroll-x="false" enable-back-to-top="true" refresher-background="#cdcdcd"
 			scroll-y :style="{height:content_height+'px',}" class="content-scroll">
-			<view v-if="like_list.length == 0 && navbar == 0"  class="nomessage">暂无点赞消息</view>
-			<view v-if="comment_list.length == 0 && navbar == 1"  class="nomessage">暂无评论消息</view>
-			<view v-if="collect_list.length == 0 && navbar == 2"  class="nomessage">暂无收藏消息</view>
+			<view v-if="like_list.length == 0 && navbar == 0" class="nomessage">暂无点赞消息</view>
+			<view v-if="comment_list.length == 0 && navbar == 1" class="nomessage">暂无评论消息</view>
+			<view v-if="collect_list.length == 0 && navbar == 2" class="nomessage">暂无收藏消息</view>
 			<!-- 点赞 -->
-			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in like_list"
-				:key="index" v-if="navbar == 0">
-				
+			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in like_list" :key="index"
+				v-if="navbar == 0">
+
 				<view class="content-title">
 
 					<image class="content-avatar" :src="item.useravatarurl"></image>
@@ -33,9 +33,11 @@
 					<view class="goods-bottom-name">
 						<text>@</text>
 						<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
-						</view>
-					<view style="color: #515151; font-weight: bold; font-size: 25rpx;height: 25rpx;margin-top: 15rpx;">
-						{{item.contenttext}}</view>
+					</view>
+					<view class="contenttext"
+						style="color: #515151; font-weight: bold; font-size: 25rpx;margin-top: 15rpx;">
+						{{item.contenttext}}
+					</view>
 
 				</view>
 			</view>
@@ -43,29 +45,30 @@
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in comment_list"
 				:key="index" v-if="navbar == 1">
 				<view class="content-title">
-			
+
 					<image class="content-avatar" :src="item.useravatarurl"></image>
 					<view class="content-name-from">
 						<view class="content-username1">{{item.username}}</view>
 						<view class="content-pinlun">评论了你</view>
 					</view>
 					<view class="content-share-time">{{item.time}}</view>
-			
+
 				</view>
 				<view class="content-share-from">{{item.commenttext}}</view>
 				<view class="goods-bottom">
 					<view class="goods-bottom-name">
-					<text>@</text>
-					<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
+						<text>@</text>
+						<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
 					</view>
-					<view style="color: #515151; font-weight: bold; font-size: 25rpx;height: 25rpx;margin-top: 15rpx;">
-						{{item.contenttext}}</view>
-			
+					<view class="contenttext" style="color: #515151; font-weight: bold; font-size: 25rpx;margin-top: 15rpx;">
+						{{item.contenttext}}
+					</view>
+
 				</view>
 			</view>
-			
+
 			<!-- 小组 -->
-<!-- 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
+			<!-- 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in content_list"
 				:key="index" v-if="navbar == 2">
 				<view class="content-title">
 			
@@ -83,24 +86,25 @@
 			<view class="content-list" hover-class="content-list-hover" v-for="(item,index) in collect_list"
 				:key="index" v-if="navbar == 2">
 				<view class="content-title">
-			
+
 					<image class="content-avatar" :src="item.useravatarurl"></image>
 					<view class="content-name-from">
 						<view class="content-username">{{item.username}}</view>
 					</view>
 					<view class="content-share-time">{{item.time}}</view>
-			
+
 				</view>
 				<view class="content-share-from">收藏了你的内容</view>
 				<view class="goods-bottom">
 					<view class="goods-bottom-name">
 						<text>@</text>
 						<open-data type="userNickName" lang="zh_CN" class="userNickName"></open-data>
-			
-						</view>
-					<view style="color: #515151; font-weight: bold; font-size: 25rpx;height: 25rpx;margin-top: 15rpx;">
-						{{item.contenttext}}</view>
-			
+
+					</view>
+					<view class="contenttext" style="color: #515151; font-weight: bold; font-size: 25rpx;margin-top: 15rpx;">
+						{{item.contenttext}}
+					</view>
+
 				</view>
 			</view>
 		</scroll-view>
@@ -125,10 +129,10 @@
 				val3: '',
 				placeholder: '动态占位内容',
 				navbar: '',
-				like_list : [],
-				comment_list : [],
-				collect_list : [],
-				
+				like_list: [],
+				comment_list: [],
+				collect_list: [],
+
 				//导航
 				scrollIntoView: 0, //设置哪个方向可滚动，则在哪个方向滚动到该元素
 				swiperTabList: ['点赞', '评论', '收藏'], //导航列表
@@ -152,7 +156,7 @@
 		},
 		onLoad() {
 			this.content_height = uni.getSystemInfoSync().windowHeight - uni.getSystemInfoSync().windowWidth * (95 / 750);
-			
+
 		},
 		onShow() {
 			this.GetLikeList();
@@ -166,15 +170,15 @@
 				this.scrollIntoView = Math.max(0, index - 1);
 				this.navbar = index;
 				console.log(index)
-				if(index == 0) {
+				if (index == 0) {
 					this.GetLikeList();
 				}
-				
-				if(index == 1) {
+
+				if (index == 1) {
 					this.GetCommentList()
 				}
-				
-				if(index == 2) {
+
+				if (index == 2) {
 					this.GetCollectList()
 				}
 			},
@@ -186,10 +190,10 @@
 				this.swiperTabIdx = e.detail.current;
 				this.scrollIntoView = Math.max(0, e.detail.current - 1);
 			},
-			
-			GetLikeList (){
+
+			GetLikeList() {
 				let _self = this
-				
+
 				uni.request({
 					url: _self.apiServer + 'getLikeMessageList',
 					header: {
@@ -198,11 +202,11 @@
 					dataType: "json",
 					data: {
 						useropenid: uni.getStorageSync("UserOpenid")
-				
+
 					},
 					method: 'POST',
 					success: res => {
-				
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -212,19 +216,19 @@
 							return false;
 						}
 						// 用户信息写入缓存
-				
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							console.log(res.data)
-							
+
 							for (var i = 0; i < res.data.likelist.length; i++) {
 								res.data.likelist[i].time = SOtime.time1(res.data.likelist[i].intimeunix)
 							}
-							
+
 							this.like_list = res.data.likelist
 						}
-				
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -234,10 +238,10 @@
 					}
 				});
 			},
-			
-			GetCommentList (){
+
+			GetCommentList() {
 				let _self = this
-				
+
 				uni.request({
 					url: _self.apiServer + 'getCommentMessageList',
 					header: {
@@ -246,11 +250,11 @@
 					dataType: "json",
 					data: {
 						useropenid: uni.getStorageSync("UserOpenid")
-				
+
 					},
 					method: 'POST',
 					success: res => {
-				
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -260,19 +264,20 @@
 							return false;
 						}
 						// 用户信息写入缓存
-				
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							console.log(res.data)
-							
+
 							for (var i = 0; i < res.data.commentlist.length; i++) {
-								res.data.commentlist[i].time = SOtime.time1(res.data.commentlist[i].commentcreatedtimeunix)
+								res.data.commentlist[i].time = SOtime.time1(res.data.commentlist[i]
+									.commentcreatedtimeunix)
 							}
-							
+
 							this.comment_list = res.data.commentlist
 						}
-				
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -282,10 +287,10 @@
 					}
 				});
 			},
-			
-			GetCollectList (){
+
+			GetCollectList() {
 				let _self = this
-				
+
 				uni.request({
 					url: _self.apiServer + 'getCollectMessageList',
 					header: {
@@ -294,11 +299,11 @@
 					dataType: "json",
 					data: {
 						useropenid: uni.getStorageSync("UserOpenid")
-				
+
 					},
 					method: 'POST',
 					success: res => {
-				
+
 						if (res.data.code == 0) {
 							uni.hideLoading();
 							uni.showToast({
@@ -308,19 +313,19 @@
 							return false;
 						}
 						// 用户信息写入缓存
-				
+
 						// 已经授权了、查询到用户的数据了
 						if (res.data.code == 1) {
 							// 用户信息写入缓存
 							console.log(res.data)
-							
+
 							for (var i = 0; i < res.data.collectlist.length; i++) {
 								res.data.collectlist[i].time = SOtime.time1(res.data.collectlist[i].intimeunix)
 							}
-							
+
 							this.collect_list = res.data.collectlist
 						}
-				
+
 					},
 					fail: () => {
 						uni.showToast({
@@ -396,7 +401,7 @@
 		width: 100%;
 		height: auto;
 		background-color: #FFFFFF;
-		
+
 		border-bottom: 5rpx solid #e8e8e8;
 	}
 
@@ -419,6 +424,7 @@
 	}
 
 	.content-name-from {
+		width: 200rpx;
 		display: flex;
 		flex-direction: column;
 		margin-left: 28rpx;
@@ -430,7 +436,7 @@
 		height: 30rpx;
 		top: 15rpx;
 		right: 5rpx;
-		width: auto;
+		width: 200rpx;
 		font-size: 26rpx;
 		font-weight: bold;
 	}
@@ -450,13 +456,14 @@
 	.content-share-time {
 		position: relative;
 		top: 45rpx;
-		width: auto;
+		width: 150rpx;
 		height: 30rpx;
 		font-size: 27rpx;
-		left: 390rpx;
+		left: 240rpx;
 		font-weight: bold;
 		color: #cdcdcd;
-		margin-right: 50rpx;
+
+		text-align: end;
 	}
 
 	.content-share-more {
@@ -551,8 +558,8 @@
 		font-weight: bold;
 
 	}
-	
-	.content-pinlun{
+
+	.content-pinlun {
 		position: relative;
 		width: auto;
 		height: 30rpx;
@@ -561,7 +568,7 @@
 		top: 10rpx;
 		color: #cdcdcd;
 	}
-	
+
 	.content-username1 {
 		position: relative;
 		height: 30rpx;
@@ -569,7 +576,7 @@
 		font-size: 26rpx;
 		font-weight: bold;
 	}
-	
+
 	.content-group-avatar {
 		position: relative;
 		width: 70rpx;
@@ -579,7 +586,7 @@
 		background-size: 100% 100%;
 		margin-top: 24rpx;
 	}
-	
+
 	.content-share-time1 {
 		position: relative;
 		top: 45rpx;
@@ -591,8 +598,8 @@
 		color: #cdcdcd;
 		margin-right: 50rpx;
 	}
-	
-	.content-share-from1{
+
+	.content-share-from1 {
 		padding-left: 30rpx;
 		position: relative;
 		width: auto;
@@ -602,11 +609,19 @@
 		color: #000;
 		padding-bottom: 40rpx;
 	}
-	
+
 	.nomessage {
 		position: relative;
 		top: 20rpx;
 		color: #c7c7c7;
 		text-align: center;
+	}
+
+	.contenttext {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		height: 30rpx;
+		width: 96%;
 	}
 </style>

@@ -359,4 +359,10 @@ page,
   -webkit-align-items: center;
           align-items: center;
 }
+.group-remark {
+  width: 600rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 

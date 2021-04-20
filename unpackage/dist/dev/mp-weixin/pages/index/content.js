@@ -96,13 +96,13 @@ var components
 try {
   components = {
     ygcComment: function() {
-      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 132))
+      return __webpack_require__.e(/*! import() | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then(__webpack_require__.bind(null, /*! @/components/ygc-comment/ygc-comment.vue */ 148))
     },
     wybActionSheet: function() {
-      return __webpack_require__.e(/*! import() | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then(__webpack_require__.bind(null, /*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 139))
+      return __webpack_require__.e(/*! import() | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then(__webpack_require__.bind(null, /*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 155))
     },
     swiperNavBar: function() {
-      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 146))
+      return __webpack_require__.e(/*! import() | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then(__webpack_require__.bind(null, /*! @/components/swiperNavBar/swiperNavBar.vue */ 162))
     }
   }
 } catch (e) {
@@ -299,7 +299,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var wybActionSheet = function wybActionSheet() {__webpack_require__.e(/*! require.ensure | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then((function () {return resolve(__webpack_require__(/*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 139));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 146));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var _SOtime = _interopRequireDefault(__webpack_require__(/*! @/utils/fl-SOtime/SOtime.js */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var wybActionSheet = function wybActionSheet() {__webpack_require__.e(/*! require.ensure | components/wyb-action-sheet/wyb-action-sheet */ "components/wyb-action-sheet/wyb-action-sheet").then((function () {return resolve(__webpack_require__(/*! @/components/wyb-action-sheet/wyb-action-sheet.vue */ 155));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var ygcComment = function ygcComment() {__webpack_require__.e(/*! require.ensure | components/ygc-comment/ygc-comment */ "components/ygc-comment/ygc-comment").then((function () {return resolve(__webpack_require__(/*! @/components/ygc-comment/ygc-comment.vue */ 148));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var swiperNavBar = function swiperNavBar() {__webpack_require__.e(/*! require.ensure | components/swiperNavBar/swiperNavBar */ "components/swiperNavBar/swiperNavBar").then((function () {return resolve(__webpack_require__(/*! @/components/swiperNavBar/swiperNavBar.vue */ 162));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 var loginRes = uni.getStorageSync('loginRes');
 var SynsUserOpenid = uni.getStorageSync('UserOpenid');
@@ -320,6 +320,7 @@ var navbarpostion = 'postion';var _default =
     return {
       options: [],
       curcomment: [],
+      curcontent: [],
       content_height: '',
       windowheight: windowheight,
       loginRes: loginRes,
@@ -380,6 +381,23 @@ var navbarpostion = 'postion';var _default =
 
 
     this.getCommentList();
+    console.log(this.content);
+  },
+
+  onShow: function onShow() {
+    var pages = getCurrentPages();
+    var currPage = pages[pages.length - 1];
+
+    var curcontent = currPage.data.predata;
+    console.log(this.curcontent);
+    if (this.curcontent) {
+      this.content.contenttext = curcontent.contenttext;
+      this.content.contentshare = curcontent.contentshare;
+      this.content.filename = curcontent.filename;
+      this.content.filetype = curcontent.filetype;
+
+    }
+
 
   },
 
@@ -414,13 +432,20 @@ var navbarpostion = 'postion';var _default =
         label: '投诉动态',
         color: '#000000',
         fontSize: '',
+        disabled: false },
+      {
+        label: '编辑动态',
+        color: '#000000',
+        fontSize: '',
         disabled: false }];
+
 
       if (content.contentcreatedby == uni.getStorageSync("UserOpenid")) {
         this.options[1].disabled = true;
       }
 
       if (content.contentcreatedby != uni.getStorageSync("UserOpenid")) {
+        this.options[2].disabled = true;
         this.options[0].disabled = true;
       }
 
@@ -491,6 +516,9 @@ var navbarpostion = 'postion';var _default =
       if (label == "保存文件") {
         this.gotosavefile();
       }
+      if (label == "编辑动态") {
+        this.updateContent(this.content);
+      }
 
     },
 
@@ -558,7 +586,17 @@ var navbarpostion = 'postion';var _default =
 
 
     },
+    updateContent: function updateContent(e) {
+      var content = e;
+      var _self = this;
 
+      var navData = JSON.stringify(content);
+      uni.navigateTo({
+        url: '/pages/index/updatecontent?data=' + navData });
+
+
+
+    },
     gotosavefile: function gotosavefile() {
       var content = this.content;
       var _self = this;

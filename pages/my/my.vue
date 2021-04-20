@@ -712,7 +712,7 @@
 		width: 100%;
 		align-items: center;
 		position: relative;
-		top: -100rpx;
+		border-bottom: 2px solid #F6F6F6;
 	}
 
 	.userAvatarUrl {
@@ -767,7 +767,7 @@
 				height: 300rpx;
 				margin: 0 auto;
 				top: -100upx;
-
+				display: flex;
 				background: #FEFEFE;
 				padding: 35upx;
 				box-sizing: border-box;
@@ -780,14 +780,13 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		border-bottom: 2px solid #F6F6F6;
 		padding-bottom: 20rpx;
 		position: relative;
 		width: 100%;
-		height: 10rpx;
+		height: 100%;
 
 		.profily_header {
-			height: 120upx;
+			height: 140upx;
 			width: 100%;
 			background-size: 100%;
 		}
@@ -891,7 +890,7 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
-		top: -40rpx;
+		top: 20rpx;
 	}
 
 	.cbn_content {

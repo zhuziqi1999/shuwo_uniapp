@@ -279,4 +279,10 @@ page,
   font-style: normal;
   color: #999;
 }
+.group-remark {
+  width: 600rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 

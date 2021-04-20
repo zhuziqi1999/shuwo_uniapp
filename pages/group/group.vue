@@ -49,7 +49,7 @@
 								<view class="goods-bottom" @click="gotogroup(item)">
 									<text class="icon icon-search"
 										style="color: #ff8522;font-size: 25rpx;margin-left: 7rpx;margin-top: 6rpx;height: 25rpx;">&#xef7e;</text>
-									<view style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 25rpx;">
+									<view class="group-remark" style="color: #515151; font-weight: bold; margin-left: 15rpx;font-size: 25rpx;height: 30rpx;">
 										{{item.groupremark}}
 									</view>
 								</view>
@@ -119,9 +119,13 @@
 			this.getListData()
 		},
 		methods: {
-			search(e, val) {
-				console.log(e, val);
-				this['val' + val] = e;
+			search(e) {
+				console.log(e);
+				let message = e
+				var navData = JSON.stringify(message);
+				uni.navigateTo({
+					url: '/pages/search/search?data=' + navData
+				})
 			},
 			/* 初始化滚动区域 */
 			initScrollView() {
@@ -576,5 +580,12 @@
 		font-size: 32upx;
 		font-style: normal;
 		color: #999;
+	}
+	
+	.group-remark {
+		width: 600rpx;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 </style>

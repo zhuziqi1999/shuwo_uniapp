@@ -56,7 +56,7 @@ page {
   -webkit-align-items: center;
           align-items: center;
   position: relative;
-  top: -100rpx;
+  border-bottom: 2px solid #F6F6F6;
 }
 .userAvatarUrl {
   width: 100rpx;
@@ -127,14 +127,13 @@ page {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  border-bottom: 2px solid #F6F6F6;
   padding-bottom: 20rpx;
   position: relative;
   width: 100%;
-  height: 10rpx;
+  height: 100%;
 }
 .base .profily_header {
-  height: 120rpx;
+  height: 140rpx;
   width: 100%;
   background-size: 100%;
 }
@@ -229,7 +228,7 @@ page {
   -webkit-justify-content: center;
           justify-content: center;
   position: relative;
-  top: -40rpx;
+  top: 20rpx;
 }
 .cbn_content {
   display: -webkit-box;
@@ -645,5 +644,6 @@ page {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 200rpx;
+  text-align: start;
 }
 

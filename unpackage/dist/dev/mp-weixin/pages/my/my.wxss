@@ -281,7 +281,7 @@ page {
   -webkit-align-items: center;
           align-items: center;
   position: relative;
-  top: -100rpx;
+  border-bottom: 2px solid #F6F6F6;
 }
 .userAvatarUrl {
   width: 100rpx;
@@ -334,6 +334,9 @@ page {
   height: 300rpx;
   margin: 0 auto;
   top: -100rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
   background: #FEFEFE;
   padding: 35rpx;
   -webkit-box-sizing: border-box;
@@ -352,14 +355,13 @@ page {
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
-  border-bottom: 2px solid #F6F6F6;
   padding-bottom: 20rpx;
   position: relative;
   width: 100%;
-  height: 10rpx;
+  height: 100%;
 }
 .base .profily_header {
-  height: 120rpx;
+  height: 140rpx;
   width: 100%;
   background-size: 100%;
 }
@@ -478,7 +480,7 @@ page {
   -webkit-justify-content: center;
           justify-content: center;
   position: relative;
-  top: -40rpx;
+  top: 20rpx;
 }
 .cbn_content {
   display: -webkit-box;
