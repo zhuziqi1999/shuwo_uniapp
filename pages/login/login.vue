@@ -131,8 +131,8 @@
 					provider: 'weixin',
 					success: loginRes => {
 						_self.code = loginRes.code;
-						let appid = "wx4de56d6b47216c84"
-						let secret = "485a8d466294205d6a6bf7b276c22d7a"
+						let appid = "" //你的appid
+						let secret = "" //你的secret
 						// 2. 将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 						uni.request({
 
